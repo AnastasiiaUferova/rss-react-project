@@ -2,10 +2,11 @@
     background-color:  #9EA1D4;
     display: flex;
     justify-content: space-between;
-    padding: 20px 40px;
+    padding: 20px 50px;
+    font-size: 20px;
 }
 
 .header__navlinks {
     display: flex;
-    gap: 10px;
+    gap: 15px;
 }
