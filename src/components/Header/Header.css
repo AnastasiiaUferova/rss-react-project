@@ -1,0 +1,11 @@
+.header {
+    background-color:  #9EA1D4;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+}
+
+.header__navlinks {
+    display: flex;
+    gap: 10px;
+}
