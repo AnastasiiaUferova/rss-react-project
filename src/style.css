@@ -20,8 +20,8 @@
 
 a {
   font-weight: 500;
-  color: #FD8A8A;
   text-decoration: inherit;
+  color: rgba(255, 255, 255, 0.87);
 }
 a:hover {
   color: #535bf2;
