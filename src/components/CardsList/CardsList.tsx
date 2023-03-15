@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import './CardsList.css';
+import { CardProps } from '../Card/Card';
+import CardData from '../../data/items.json';
+import Card from '../Card/Card';
 
-export default class CardsList extends Component {
+type CardsListProps = {
+  cards: CardProps[];
+};
+
+export default class CardsList extends Component<CardsListProps> {
   render() {
     return (
       <div>
         <div className="card-list">
           <div className="card-list__container">
-            <div>Card</div>
-            <div>Card</div>
-            <div>Card</div>
-            <div>Card</div>
-            <div>Card</div>
-            <div>Card</div>
-            <div>Card</div>
+            {CardData.map((card) => {
+              return <Card key={card.id} {...card} />;
+            })}
           </div>
         </div>
       </div>

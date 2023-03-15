@@ -5,9 +5,9 @@ type State = {
   input: string;
 };
 
-type Props = Partial<State>;
+type SearchBarProps = Partial<State>;
 
-export default class SearchBar extends Component<Props> {
+export default class SearchBar extends Component<SearchBarProps> {
   state = { input: '' };
 
   handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
