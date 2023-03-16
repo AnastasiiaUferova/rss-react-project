@@ -5,7 +5,8 @@
       "imgUrl": "/imgs/shoes.jpg",
       "favourite": false,
       "popleLiked": 67,
-      "category": "Shoes"
+      "category": "Shoes",
+      "price": 300
     },
     {
       "id": 2,

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './SearchBar.css';
 
-type State = {
-  input: string;
+type SearchBarProps = {
+  input?: string;
 };
 
-type SearchBarProps = Partial<State>;
+type State = SearchBarProps;
 
-export default class SearchBar extends Component<SearchBarProps> {
+export default class SearchBar extends Component<SearchBarProps, State> {
   state = { input: '' };
 
   handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
