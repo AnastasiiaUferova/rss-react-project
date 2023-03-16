@@ -20,25 +20,38 @@
     cursor: pointer;
 }
 
+.card__additional-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 
 .card__button {
-    background-image: url(../../images/Unsaved.svg);
+    background-image: url("../../images/empty-heart.svg");
     background-position: center;
     background-repeat: no-repeat;
-    width: 10px;
-    height: 8.5px;
+    background-size: contain;
+    width: 20px;
+    height: 13px;
     align-self: center;
     border: none;
     cursor: pointer;
+    background-color: transparent;
 }
 
-.card__button_type_delete {
-    background-image: url(../../images/crossCard.svg);
+.card__pic_people {
+   background-size: cover;
+   display: inline-block;
+   width: 20px; 
+   height: 20px;
+   padding-right: 5px;
 }
 
-.card__button_type_saved {
-    background-image: url(../../images/Saved.svg);
+.card__subtext_people-container {
+    display: flex;
+    margin-top: 10px;
 }
+
 
 .card__button-container {
     width: 24px;
@@ -47,7 +60,8 @@
     background-color: #f4f4f4;
     display: flex;
     justify-content: center;
-    margin-bottom: 25px;
+    margin-bottom: 19px;
+    align-self:self-end
 }
 
 .card__text {
@@ -55,14 +69,14 @@
     font-family: "Inter", sans-serif;
     font-style: normal;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 17px;
     line-height: 16px;
     color: #000000;
     padding-bottom: 13px;
     margin-top: 0;
 }
 
-.card__time {
+.card__subtext {
     margin-top: 6px;
     margin-bottom: 0;
     font-family: "Inter", sans-serif;
@@ -92,7 +106,7 @@
         line-height: 15px;
     }
 
-    .card__time {
+    .card__subtext {
         font-size: 10px;
         line-height: 12px;
     }
