@@ -27,8 +27,8 @@ export default class Card extends Component<CardProps> {
           <div>
             <p className="card__subtext">{category}</p>
             <div className="card__subtext_people-container">
-              <img src={Like} className="card__pic_people"></img>
-              <p className="card__subtext card__subtext_people">{popleLiked} </p>
+              <img src={Like} alt="thumbs up" className="card__pic_people"></img>
+              <p className="card__subtext card__subtext_people">{popleLiked}</p>
             </div>
           </div>
           <div className="card__button-container">

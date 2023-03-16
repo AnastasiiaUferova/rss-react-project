@@ -4,7 +4,7 @@ import { CardProps } from '../Card/Card';
 import CardData from '../../data/items.json';
 import Card from '../Card/Card';
 
-type CardsListProps = {
+export type CardsListProps = {
   cards?: CardProps[];
 };
 
@@ -17,11 +17,15 @@ export default class CardsList extends Component<CardsListProps, State> {
     return (
       <div>
         <div className="card-list">
-          <div className="card-list__container">
+          <ul className="card-list__container">
             {this.state.cards.map((card) => {
-              return <Card key={card.id} {...card} />;
+              return (
+                <li key={card.id}>
+                  <Card {...card} />
+                </li>
+              );
             })}
-          </div>
+          </ul>
         </div>
       </div>
     );
