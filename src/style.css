@@ -36,5 +36,9 @@ p, h1, h2, h3, h4 {
   margin-inline-end: 0px;
 }
 
+ul {
+  list-style: none;
+}
+
 
 

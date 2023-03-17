@@ -8,7 +8,11 @@ type SearchBarProps = {
 type State = SearchBarProps;
 
 export default class SearchBar extends Component<SearchBarProps, State> {
-  state = { input: '' };
+  constructor(props: SearchBarProps) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = { input: '' };
+  }
 
   handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const inputValue = e.currentTarget.value;
@@ -22,7 +26,7 @@ export default class SearchBar extends Component<SearchBarProps, State> {
   }
 
   componentWillUnmount() {
-    localStorage.setItem('input', this.state.input);
+    localStorage.setItem('input', this.state.input || '');
   }
 
   render() {
