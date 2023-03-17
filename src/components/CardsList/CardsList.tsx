@@ -11,14 +11,17 @@ export type CardsListProps = {
 type State = CardsListProps;
 
 export default class CardsList extends Component<CardsListProps, State> {
-  state = { cards: CardData };
+  constructor(props: CardsListProps) {
+    super(props);
+    this.state = { cards: CardData as CardProps[] };
+  }
 
   render() {
     return (
       <div>
         <div className="card-list">
           <ul className="card-list__container">
-            {this.state.cards.map((card) => {
+            {this.state?.cards?.map((card) => {
               return (
                 <li key={card.id}>
                   <Card {...card} />
