@@ -1,0 +1,55 @@
+import React, { Component } from 'react';
+import './SearchBar.css';
+
+type SearchBarProps = {
+  input?: string;
+};
+
+type State = SearchBarProps;
+
+export default class SearchBar extends Component<SearchBarProps, State> {
+  constructor(props: SearchBarProps) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = { input: '' };
+  }
+
+  saveToLocalStorage = (value: string): void => {
+    localStorage.setItem('input', value);
+  };
+
+  handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    const inputValue = e.currentTarget.value;
+    this.setState({ input: inputValue });
+  };
+
+  componentDidMount() {
+    const inputFromLocalStorage = localStorage.getItem('input') || '';
+    this.setState({ input: inputFromLocalStorage });
+  }
+
+  componentWillUnmount() {
+    window.addEventListener('beforeunload', () => {
+      this.saveToLocalStorage(this.state.input || '');
+    });
+  }
+
+  render() {
+    return (
+      <div className="search">
+        <div className="search-container">
+          <form className="search__form">
+            <input
+              className="search__form__input"
+              type="text"
+              value={this.state.input || ''}
+              onChange={this.handleChange}
+            ></input>
+            <button className="search__form__button" type="submit"></button>
+          </form>
+        </div>
+        <p>Input from LocalStorage:{localStorage.getItem('input')}</p>
+      </div>
+    );
+  }
+}

@@ -1,0 +1,38 @@
+[
+    {
+      "id": 1,
+      "name": "Shoes",
+      "imgUrl": "/imgs/shoes.jpg",
+      "favourite": false,
+      "popleLiked": 67,
+      "category": "Shoes",
+      "price": 300
+    },
+    {
+      "id": 2,
+      "name": "T-Shirt",
+      "price": 150,
+      "imgUrl": "/imgs/shirt.jpg",
+      "favourite": false,
+      "popleLiked": 34,
+      "category": "Clothes, summer"
+    },
+    {
+      "id": 3,
+      "name": "Dress",
+      "price": 300,
+      "imgUrl": "/imgs/dress.jpg",
+      "favourite": false,
+      "popleLiked": 45,
+      "category": "Clothes, summer"
+    },
+    {
+      "id": 4,
+      "name": "Hat",
+      "price": 40,
+      "imgUrl": "/imgs/hat.jpg",
+      "favourite": false,
+      "popleLiked": 90,
+      "category": "Clothes, summer"
+    }
+  ]
