@@ -14,9 +14,12 @@ export default class SearchBar extends Component<SearchBarProps, State> {
     this.state = { input: '' };
   }
 
+  saveToLocalStorage = (value: string): void => {
+    localStorage.setItem('input', value);
+  };
+
   handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const inputValue = e.currentTarget.value;
-    localStorage.setItem('input', inputValue);
     this.setState({ input: inputValue });
   };
 
@@ -26,7 +29,9 @@ export default class SearchBar extends Component<SearchBarProps, State> {
   }
 
   componentWillUnmount() {
-    localStorage.setItem('input', this.state.input || '');
+    window.addEventListener('beforeunload', () => {
+      this.saveToLocalStorage(this.state.input || '');
+    });
   }
 
   render() {
@@ -37,7 +42,7 @@ export default class SearchBar extends Component<SearchBarProps, State> {
             <input
               className="search__form__input"
               type="text"
-              value={this.state.input}
+              value={this.state.input || ''}
               onChange={this.handleChange}
             ></input>
             <button className="search__form__button" type="submit"></button>
