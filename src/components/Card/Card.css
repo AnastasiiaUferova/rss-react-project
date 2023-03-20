@@ -64,9 +64,14 @@
     font-weight: 500;
     font-size: 17px;
     line-height: 16px;
-    color: #000000;
+    color: #fcf9f9;
     padding-bottom: 13px;
     margin-top: 0;
+}
+
+.card__text_category {
+    color: rgb(29, 28, 33);
+    font-size: 15px;
 }
 
 .card__subtext {
@@ -81,7 +86,7 @@
 }
 
 .card__subtext_category {
-    color: white;
+    color: rgb(30, 3, 3);
     font-size: 13px;
 }
 

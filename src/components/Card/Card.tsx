@@ -21,7 +21,7 @@ export default class Card extends Component<CardProps> {
 
         <div className="card__text-container">
           <p className="card__text">{name}</p>
-          <p className="card__text">{category}</p>
+          <p className="card__text card__text_category">{category}</p>
         </div>
         <div className="card__subtext-container">
           <div>
