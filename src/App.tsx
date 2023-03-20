@@ -4,6 +4,7 @@ import NotFound from './components/NotFound/NotFound';
 import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Header from './components/Header/Header';
+import WithFormPage from './components/WithFormPage/WithFormPage';
 
 export default class App extends Component {
   render() {
@@ -13,6 +14,7 @@ export default class App extends Component {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/about-us" element={<AboutUs />}></Route>
+          <Route path="/form" element={<WithFormPage />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

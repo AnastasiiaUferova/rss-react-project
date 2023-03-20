@@ -12,6 +12,7 @@ class Header extends Component<WithRouterProps> {
     const pathNames: StringObject = {
       '/about-us': 'About Us',
       '/': 'Home',
+      '/form': 'Form for movies',
     };
     return (
       <div className="header">
@@ -19,6 +20,7 @@ class Header extends Component<WithRouterProps> {
         <div className="header__navlinks">
           <NavLink to="/">Home</NavLink>
           <NavLink to="about-us">About Us</NavLink>
+          <NavLink to="form">Add Your Movie</NavLink>
         </div>
       </div>
     );
