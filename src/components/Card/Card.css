@@ -20,9 +20,10 @@
     cursor: pointer;
 }
 
-.card__additional-container {
+.card__subtext-container {
     display: flex;
     justify-content: space-between;
+    margin-top: 10px;
 }
 
 
@@ -39,15 +40,7 @@
     background-color: transparent;
 }
 
-.card__pic_people {
-   background-size: cover;
-   display: inline-block;
-   width: 20px; 
-   height: 20px;
-   padding-right: 5px;
-}
-
-.card__subtext_people-container {
+.card__subtext_date-container {
     display: flex;
     margin-top: 10px;
 }
@@ -85,6 +78,11 @@
     font-size: 11px;
     line-height: 13px;
     color: #a0a0a0;
+}
+
+.card__subtext_category {
+    color: white;
+    font-size: 13px;
 }
 
 

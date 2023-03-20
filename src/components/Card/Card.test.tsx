@@ -8,7 +8,7 @@ const defaultProps: CardProps = {
   name: 'Example product',
   popleLiked: 10,
   price: 20,
-  favourite: false,
+  recommended: false,
   category: 'Example category',
 };
 
@@ -29,7 +29,7 @@ describe('Card', () => {
   });
 
   it('renders with like button', () => {
-    render(<Card {...defaultProps} favourite={true} />);
+    render(<Card {...defaultProps} recommended={true} />);
     const favouriteButton = screen.getByRole('button');
 
     expect(favouriteButton).toBeInTheDocument();

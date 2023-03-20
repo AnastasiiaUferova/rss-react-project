@@ -1,38 +1,39 @@
 [
+
     {
       "id": 1,
-      "name": "Shoes",
-      "imgUrl": "/imgs/shoes.jpg",
-      "favourite": false,
-      "popleLiked": 67,
-      "category": "Shoes",
-      "price": 300
+      "name": "Bad Santa",
+      "imgUrl": "/imgs/BadSanta.jpeg",
+      "recommended": false,
+      "occasion": "Hangout with friends",
+      "category": "Comedy",
+      "date": "2015-03-25"
     },
     {
       "id": 2,
-      "name": "T-Shirt",
-      "price": 150,
-      "imgUrl": "/imgs/shirt.jpg",
-      "favourite": false,
-      "popleLiked": 34,
-      "category": "Clothes, summer"
+      "name": "Midsommar",
+      "imgUrl": "/imgs/Midsommar.jpeg",
+      "recommended": false,
+      "occasion": "Date night",
+      "category": "Thriller",
+      "date": "2015-03-25"
     },
     {
       "id": 3,
-      "name": "Dress",
-      "price": 300,
-      "imgUrl": "/imgs/dress.jpg",
-      "favourite": false,
-      "popleLiked": 45,
-      "category": "Clothes, summer"
+      "name": "Black Widow",
+      "imgUrl": "/imgs/BlackWidow.jpeg",
+      "recommended": false,
+      "occasion": "Hangout with friends, Date night",
+      "category": "Action",
+      "date": "2015-03-25"
     },
     {
       "id": 4,
-      "name": "Hat",
-      "price": 40,
-      "imgUrl": "/imgs/hat.jpg",
-      "favourite": false,
-      "popleLiked": 90,
-      "category": "Clothes, summer"
+      "name": "Us",
+      "imgUrl": "/imgs/Us.jpeg",
+      "recommended": true,
+      "occasion": "Watching solo",
+      "category": "Horror",
+      "date": "2015-03-25"
     }
   ]
