@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Card.css';
-import Like from '../../images/thumbs-up.png';
 
 export type CardProps = {
   id: number;

@@ -27,7 +27,7 @@
     font-family: "Inter", sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 13px;
     line-height: 12px;
     color: whitesmoke;
     margin-bottom: 10px;
@@ -39,7 +39,6 @@
     background-color: #f4f4f4;
     border: none;
     border-radius: 8px;
-    width: calc(100% - 15px);
     padding-left: 15px;
     font-family: "Inter", sans-serif;
     font-style: normal;
@@ -47,7 +46,69 @@
     font-size: 13px;
     line-height: 16px;
     color: #000000;
+    cursor: pointer;
 }
+
+.form__item-input_cat {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    height: auto;
+}
+
+.form-control {
+    display: grid;
+    grid-template-columns: 1em auto;
+    gap: 0.5em;
+  }
+
+.form__checkbox {
+    background-color: transparent;
+}
+
+input[type="file"] {
+    background-color: #8808a9;
+    border: none;
+    cursor: pointer;
+    color:#fff;
+    padding-top: 20px;
+}
+
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid currentColor;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+}
+
+
+
+input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em rgb(179, 17, 215);
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+  }
 
 .form__item-input:active {
     outline: #3456f3;
@@ -66,10 +127,10 @@
     text-align: center;
     color: black;
     height: 60px;
-    background: #E15FED;
+    background: #ec89f4;
     border-radius: 10px;
-    border: 4px solid #6EDCD9;
-    margin-top: 69px;
+    border: 2px solid #5e0575;
+    margin-top: 40px;
 }
 
 .form__button_disabled {
@@ -92,7 +153,7 @@
     }
 
     .form__button {
-        margin-top: 157px;
+        margin-top: 15px;
         margin-bottom: 2px;
     }
 }
