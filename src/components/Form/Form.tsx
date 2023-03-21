@@ -1,3 +1,4 @@
+import Switcher from '../Switcher/Switcher';
 import React, { Component } from 'react';
 import './Form.css';
 
@@ -10,7 +11,6 @@ export default class Form extends Component {
         <h1 className="form__title">Add your Movie</h1>
         <label className="form__item-text">Movie Name</label>
         <input id="input_name" name="email" type="email" className="form__item-input" />
-
         <legend className="form__item-text">Film categories</legend>
         <fieldset className="form__item-input form__item-input_cat">
           <label className="form-control">
@@ -83,7 +83,6 @@ export default class Form extends Component {
             Western
           </label>
         </fieldset>
-
         <label className="form__item-text">When I watched it</label>
         <input
           className="form__item-input"
@@ -93,7 +92,6 @@ export default class Form extends Component {
           min="1900-01-01"
           max="2023-12-31"
         ></input>
-
         <label className="form__item-text">Occasion</label>
         <select id="input_occasion" className="form__item-input">
           <option className="form__item-input" value="Date night">
@@ -115,7 +113,6 @@ export default class Form extends Component {
             Watching with your kids
           </option>
         </select>
-
         <label className="form__item-text">Cover Image</label>
         <input
           id="cover-image"
@@ -124,12 +121,8 @@ export default class Form extends Component {
           className="form__item-input form__item-input_img"
           accept="image/png, image/jpeg"
         />
-
         <label className="form__item-text">I recommend you to watch this film</label>
-        <div className="rec">
-          <input className="input__rec" id="input_rec" type="checkbox" name="rec" readOnly />
-        </div>
-
+        <Switcher />
         <button className={ifDisabledClass} type="submit">
           Add Movie
         </button>

@@ -75,7 +75,7 @@ input[type="file"] {
 }
 
 
-input[type="checkbox"] {
+.form__checkbox {
     -webkit-appearance: none;
     appearance: none;
     background-color: #fff;
@@ -94,7 +94,7 @@ input[type="checkbox"] {
 
 
 
-input[type="checkbox"]::before {
+.form__checkbox::before {
     content: "";
     width: 0.65em;
     height: 0.65em;
@@ -106,7 +106,7 @@ input[type="checkbox"]::before {
 }
 
 
-input[type="checkbox"]:checked::before {
+.form__checkbox:checked::before {
     transform: scale(1);
   }
 
