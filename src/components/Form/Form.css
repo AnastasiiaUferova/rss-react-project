@@ -2,14 +2,9 @@
     display: flex;
     flex-direction: column;
     width: 396px;
+    align-self: center;
 }
 
-.with-form {
-    padding-top: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .form__title {
     font-family: "Inter", sans-serif;

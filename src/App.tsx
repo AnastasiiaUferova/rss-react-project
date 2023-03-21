@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Header from './components/Header/Header';
 import WithFormPage from './components/WithFormPage/WithFormPage';
+import CardData from './data/items.json';
 
 export default class App extends Component {
   render() {

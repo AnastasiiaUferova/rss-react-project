@@ -2,15 +2,64 @@ import Switcher from '../Switcher/Switcher';
 import React, { Component } from 'react';
 import './Form.css';
 
+/*interface FormProps {
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+}*/
+
+type FormState = {
+  name: string;
+  categories: string[];
+  date: '';
+  occasion: string;
+  image: '';
+  recommended: boolean;
+};
+
 export default class Form extends Component {
+  private inputRef = React.createRef<HTMLInputElement>();
+  private selectRef = React.createRef<HTMLSelectElement>();
+  state = {
+    name: '',
+    categories: [],
+    date: '',
+    occasion: '',
+    image: '',
+    recommended: false,
+  };
+
+  handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    alert(this.state.name);
+    alert(this.state.categories);
+  };
+
+  handleInputChange = () => {
+    if (this.inputRef.current) {
+      this.setState({ name: this.inputRef.current.value });
+    }
+  };
+
+  handleSelectChange = () => {
+    if (this.selectRef.current) {
+      this.setState({ select: this.selectRef.current.value });
+    }
+  };
+
   render() {
     const isValid = true;
     const ifDisabledClass = `${isValid ? `form__button` : `form__button form__button_disabled`}`;
     return (
-      <form className="form">
+      <form className="form" onSubmit={this.handleSubmit}>
         <h1 className="form__title">Add your Movie</h1>
         <label className="form__item-text">Movie Name</label>
-        <input id="input_name" name="email" type="email" className="form__item-input" />
+        <input
+          ref={this.inputRef}
+          onChange={this.handleInputChange}
+          id="input_name"
+          name="name"
+          type="text"
+          className="form__item-input"
+        />
         <legend className="form__item-text">Film categories</legend>
         <fieldset className="form__item-input form__item-input_cat">
           <label className="form-control">

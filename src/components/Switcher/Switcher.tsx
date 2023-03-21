@@ -4,10 +4,11 @@ import './Switcher.css';
 export default class Switcher extends Component {
   render() {
     return (
-      <div className="switcher">
-        <label id="label-YES">Y</label>
-        <label id="label-NO">N</label>
-        <input id="swithcer-checkbox" type="checkbox" />
+      <div className="switch-field">
+        <input type="radio" id="radio-one" name="switch-one" value="yes" checked />
+        <label htmlFor="radio-one">Yes</label>
+        <input type="radio" id="radio-two" name="switch-one" value="no" />
+        <label htmlFor="radio-two">No</label>
       </div>
     );
   }
