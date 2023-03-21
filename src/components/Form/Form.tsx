@@ -8,7 +8,7 @@ import './Form.css';
 
 type FormState = {
   name: string;
-  categories: string[];
+  categories: object;
   date: '';
   occasion: string;
   image: '';
@@ -17,46 +17,49 @@ type FormState = {
 
 export default class Form extends Component {
   private nameRef = React.createRef<HTMLInputElement>();
-  private selectRef = React.createRef<HTMLSelectElement>();
+  selectRefs = Array.from({ length: 10 }, () => React.createRef<HTMLInputElement>());
+
   state = {
     name: '',
-    categories: {
-      Action: false,
-      Adventure: false,
-      Drama: false,
-      Comedy: false,
-      Horror: false,
-      Fantasy: false,
-      Mystery: false,
-      Sport: false,
-      Thriller: false,
-      'Sci Fi': false,
-      Documentary: false,
-      'For Kids': false,
-      Romance: false,
-      Western: false,
-    },
+    categories: {},
     date: '',
     occasion: '',
     image: '',
     recommended: false,
   };
 
-  handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    alert(this.state.name);
-    alert(this.state.categories);
+  filterCategory = (obj: object) => {
+    return Object.fromEntries(Object.entries(obj).filter(([, val]) => val === true));
   };
 
-  handleInputChange = () => {
+  handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(Object.keys(this.filterCategory(this.state.categories)));
+  };
+
+  handleNameChange = () => {
     if (this.nameRef.current) {
       this.setState({ name: this.nameRef.current.value });
     }
   };
 
-  handleSelectChange = () => {
-    if (this.selectRef.current) {
-      this.setState({ select: this.selectRef.current.value });
+  handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+
+    if (this.selectRefs.some((ref) => ref.current?.checked)) {
+      this.setState((prevState: FormState) => ({
+        categories: {
+          ...prevState.categories,
+          [name]: checked,
+        },
+      }));
+    } else {
+      this.setState((prevState: FormState) => ({
+        categories: {
+          ...prevState.categories,
+          [name]: false,
+        },
+      }));
     }
   };
 
@@ -69,7 +72,7 @@ export default class Form extends Component {
         <label className="form__item-text">Movie Name</label>
         <input
           ref={this.nameRef}
-          onChange={this.handleInputChange}
+          onChange={this.handleNameChange}
           id="input_name"
           name="name"
           type="text"
@@ -77,75 +80,28 @@ export default class Form extends Component {
         />
         <legend className="form__item-text">Film categories</legend>
         <fieldset className="form__item-input form__item-input_cat">
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="Action" name="Action" />
-            Action
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="Adventure" name="Adventure" />
-            Adventure
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="Drama" name="Drama" />
-            Drama
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="Comedy" name="Comedy" />
-            Comedy
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="Horror" name="Horror" />
-            Horror
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="Fantasy" name="Fantasy" />
-            Fantasy
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="Mystery" name="Mystery" />
-            Mystery
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="Sport" name="Sport" />
-            Sport
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="Thriller" name="Thriller" />
-            Thriller
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id=" Sci Fi" name="Sci Fi" />
-            Sci Fi
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="Documentary" name="Documentary" />
-            Documentary
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="For Kids" name="For Kids" />
-            For Kids
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="Romance" name="Romance" />
-            Romance
-          </label>
-
-          <label className="form-control">
-            <input className="form__checkbox" type="checkbox" id="Western" name="Western" />
-            Western
-          </label>
+          {[
+            'Action',
+            'Adventure',
+            'Drama',
+            'Comedy',
+            'Horror',
+            'Fantasy',
+            'Thriller',
+            'Sci Fi',
+          ].map((name, index) => (
+            <label className="form-control" key={index}>
+              <input
+                ref={this.selectRefs[index]}
+                onChange={this.handleCategoryChange}
+                className="form__checkbox"
+                type="checkbox"
+                id={name}
+                name={name}
+              />
+              {name}
+            </label>
+          ))}
         </fieldset>
         <label className="form__item-text">When I watched it</label>
         <input
