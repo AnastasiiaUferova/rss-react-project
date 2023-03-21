@@ -16,11 +16,26 @@ type FormState = {
 };
 
 export default class Form extends Component {
-  private inputRef = React.createRef<HTMLInputElement>();
+  private nameRef = React.createRef<HTMLInputElement>();
   private selectRef = React.createRef<HTMLSelectElement>();
   state = {
     name: '',
-    categories: [],
+    categories: {
+      Action: false,
+      Adventure: false,
+      Drama: false,
+      Comedy: false,
+      Horror: false,
+      Fantasy: false,
+      Mystery: false,
+      Sport: false,
+      Thriller: false,
+      'Sci Fi': false,
+      Documentary: false,
+      'For Kids': false,
+      Romance: false,
+      Western: false,
+    },
     date: '',
     occasion: '',
     image: '',
@@ -34,8 +49,8 @@ export default class Form extends Component {
   };
 
   handleInputChange = () => {
-    if (this.inputRef.current) {
-      this.setState({ name: this.inputRef.current.value });
+    if (this.nameRef.current) {
+      this.setState({ name: this.nameRef.current.value });
     }
   };
 
@@ -53,7 +68,7 @@ export default class Form extends Component {
         <h1 className="form__title">Add your Movie</h1>
         <label className="form__item-text">Movie Name</label>
         <input
-          ref={this.inputRef}
+          ref={this.nameRef}
           onChange={this.handleInputChange}
           id="input_name"
           name="name"
