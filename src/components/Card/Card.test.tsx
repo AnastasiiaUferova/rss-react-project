@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import Card, { CardProps } from './Card';
 
 const defaultProps: CardProps = {
-  id: 1,
-  imgUrl: 'https://example.com/image.jpg',
+  id: 'd',
+  image: 'https://example.com/image.jpg',
   name: 'Example product',
   popleLiked: 10,
   price: 20,

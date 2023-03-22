@@ -1,38 +1,38 @@
 [
   {
-    "id": 1,
+    "id": "1",
     "name": "Bad Santa",
-    "imgUrl": "/imgs/BadSanta.jpeg",
+    "image": "/imgs/BadSanta.jpeg",
     "recommended": false,
     "occasion": "Hangout with friends",
-    "category": "Comedy",
+    "categories": ["Comedy"],
     "date": "2015-03-25"
   },
   {
-    "id": 2,
+    "id": "2",
     "name": "Midsommar",
-    "imgUrl": "/imgs/Midsommar.jpeg",
+    "image": "/imgs/Midsommar.jpeg",
     "recommended": false,
     "occasion": "Date night",
-    "category": "Thriller",
+    "categories": ["Thriller"],
     "date": "2015-03-25"
   },
   {
-    "id": 3,
+    "id": "3",
     "name": "Black Widow",
-    "imgUrl": "/imgs/BlackWidow.jpeg",
+    "image": "/imgs/BlackWidow.jpeg",
     "recommended": false,
     "occasion": "Hangout with friends, Date night",
-    "category": "Action",
+    "categories": ["Action"],
     "date": "2015-03-25"
   },
   {
-    "id": 4,
+    "id": "4",
     "name": "Us",
-    "imgUrl": "/imgs/Us.jpeg",
+    "image": "/imgs/Us.jpeg",
     "recommended": true,
     "occasion": "Watching solo",
-    "category": "Horror",
+    "categories": ["Horror"],
     "date": "2015-03-25"
   }
 ]

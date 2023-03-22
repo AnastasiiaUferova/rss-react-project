@@ -2,25 +2,26 @@ import React, { Component } from 'react';
 import './Card.css';
 
 export type CardProps = {
-  id: number;
-  imgUrl: string;
+  id: string;
+  image: string;
   name: string;
-  recommended?: boolean;
-  category: string;
-  date?: string;
-  occasion?: string;
+  recommended: boolean;
+  categories: string[];
+  date: string;
+  occasion: string;
 };
 
 export default class Card extends Component<CardProps> {
   render() {
-    const { name, imgUrl, category, occasion, date } = this.props;
+    const { name, image, categories, occasion, date, recommended } = this.props;
+    const recClass = recommended ? `card__button` : `card__button card__button_rec`;
     return (
       <div className="card">
-        <img className="card__pic" src={imgUrl} alt={`Picture of "${name}"`}></img>
+        <img className="card__pic" src={image} alt={`Picture of "${name}"`}></img>
 
         <div className="card__text-container">
           <p className="card__text">{name}</p>
-          <p className="card__text card__text_category">{category}</p>
+          <p className="card__text card__text_category">{categories.join(', ')}</p>
         </div>
         <div className="card__subtext-container">
           <div>
@@ -28,7 +29,7 @@ export default class Card extends Component<CardProps> {
             <p className="card__subtext">{date}</p>
           </div>
           <div className="card__button-container">
-            <button className="card__button"></button>
+            <button className={recClass}></button>
           </div>
         </div>
       </div>

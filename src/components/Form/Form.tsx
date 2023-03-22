@@ -2,19 +2,14 @@ import React, { Component } from 'react';
 import { MOVIE_CATEGORIES, OCCASION_OPTIONS, OccasionOption } from '../../constants/constants';
 import './Form.css';
 import './Switcher.css';
+import { nanoid } from 'nanoid';
+import { CardProps } from '../Card/Card';
 
 interface FormProps {
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onAddCard: (card: FormState) => void;
 }
 
-type FormState = {
-  name: string;
-  categories: object;
-  date: string;
-  occasion: string;
-  image: string;
-  recommended: boolean;
-};
+type FormState = CardProps;
 
 export default class Form extends Component<FormProps, FormState> {
   private nameRef: React.RefObject<HTMLInputElement>;
@@ -27,6 +22,7 @@ export default class Form extends Component<FormProps, FormState> {
   constructor(props: FormProps) {
     super(props);
     this.state = {
+      id: nanoid(),
       name: '',
       categories: [],
       date: '',
@@ -41,11 +37,26 @@ export default class Form extends Component<FormProps, FormState> {
     this.fileRef = React.createRef<HTMLInputElement>();
     this.radioYesRef = React.createRef<HTMLInputElement>();
     this.radioNoRef = React.createRef<HTMLInputElement>();
+    this.handleSubmit.bind(this);
+    this.handleNameChange.bind(this);
+    this.handleCategoryChange.bind(this);
+    this.handleDateChange.bind(this);
+    this.handleOccasionChange.bind(this);
+    this.handleFileUpload.bind(this);
+    this.handleRecChange.bind(this);
   }
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(this.state);
+    this.props.onAddCard({
+      id: nanoid(),
+      name: this.state.name,
+      categories: Object.keys(this.state.categories),
+      date: this.state.date,
+      occasion: this.state.occasion,
+      image: this.state.image,
+      recommended: this.state.recommended,
+    });
   };
 
   handleNameChange = () => {

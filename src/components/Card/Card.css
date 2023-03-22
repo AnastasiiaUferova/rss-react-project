@@ -39,6 +39,10 @@
   background-color: transparent;
 }
 
+.card__button_rec {
+  background-image: url('../../images/filled-heart.svg');
+}
+
 .card__subtext_date-container {
   display: flex;
   margin-top: 10px;
