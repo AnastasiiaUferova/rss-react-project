@@ -1,12 +1,12 @@
 .header {
-    background-color:  #9EA1D4;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 50px;
-    font-size: 20px;
+  background-color: #9ea1d4;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  font-size: 20px;
 }
 
 .header__navlinks {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }

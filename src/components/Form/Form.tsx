@@ -18,6 +18,7 @@ type FormState = {
 export default class Form extends Component {
   private nameRef = React.createRef<HTMLInputElement>();
   selectRefs = Array.from({ length: 10 }, () => React.createRef<HTMLInputElement>());
+  private dateRef = React.createRef<HTMLInputElement>();
 
   state = {
     name: '',
@@ -34,7 +35,7 @@ export default class Form extends Component {
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(Object.keys(this.filterCategory(this.state.categories)));
+    console.log(this.state);
   };
 
   handleNameChange = () => {
@@ -60,6 +61,12 @@ export default class Form extends Component {
           [name]: false,
         },
       }));
+    }
+  };
+
+  handleDateChange = () => {
+    if (this.dateRef.current) {
+      this.setState({ date: this.dateRef.current.value });
     }
   };
 
@@ -105,7 +112,9 @@ export default class Form extends Component {
         </fieldset>
         <label className="form__item-text">When I watched it</label>
         <input
+          ref={this.dateRef}
           className="form__item-input"
+          onChange={this.handleDateChange}
           type="date"
           id="input_date"
           name="date"

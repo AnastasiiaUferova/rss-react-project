@@ -1,39 +1,38 @@
 [
-
-    {
-      "id": 1,
-      "name": "Bad Santa",
-      "imgUrl": "/imgs/BadSanta.jpeg",
-      "recommended": false,
-      "occasion": "Hangout with friends",
-      "category": "Comedy",
-      "date": "2015-03-25"
-    },
-    {
-      "id": 2,
-      "name": "Midsommar",
-      "imgUrl": "/imgs/Midsommar.jpeg",
-      "recommended": false,
-      "occasion": "Date night",
-      "category": "Thriller",
-      "date": "2015-03-25"
-    },
-    {
-      "id": 3,
-      "name": "Black Widow",
-      "imgUrl": "/imgs/BlackWidow.jpeg",
-      "recommended": false,
-      "occasion": "Hangout with friends, Date night",
-      "category": "Action",
-      "date": "2015-03-25"
-    },
-    {
-      "id": 4,
-      "name": "Us",
-      "imgUrl": "/imgs/Us.jpeg",
-      "recommended": true,
-      "occasion": "Watching solo",
-      "category": "Horror",
-      "date": "2015-03-25"
-    }
-  ]
+  {
+    "id": 1,
+    "name": "Bad Santa",
+    "imgUrl": "/imgs/BadSanta.jpeg",
+    "recommended": false,
+    "occasion": "Hangout with friends",
+    "category": "Comedy",
+    "date": "2015-03-25"
+  },
+  {
+    "id": 2,
+    "name": "Midsommar",
+    "imgUrl": "/imgs/Midsommar.jpeg",
+    "recommended": false,
+    "occasion": "Date night",
+    "category": "Thriller",
+    "date": "2015-03-25"
+  },
+  {
+    "id": 3,
+    "name": "Black Widow",
+    "imgUrl": "/imgs/BlackWidow.jpeg",
+    "recommended": false,
+    "occasion": "Hangout with friends, Date night",
+    "category": "Action",
+    "date": "2015-03-25"
+  },
+  {
+    "id": 4,
+    "name": "Us",
+    "imgUrl": "/imgs/Us.jpeg",
+    "recommended": true,
+    "occasion": "Watching solo",
+    "category": "Horror",
+    "date": "2015-03-25"
+  }
+]
