@@ -9,9 +9,9 @@ import './Form.css';
 type FormState = {
   name: string;
   categories: object;
-  date: '';
+  date: string;
   occasion: string;
-  image: '';
+  image: string;
   recommended: boolean;
 };
 
@@ -19,6 +19,8 @@ export default class Form extends Component {
   private nameRef = React.createRef<HTMLInputElement>();
   selectRefs = Array.from({ length: 10 }, () => React.createRef<HTMLInputElement>());
   private dateRef = React.createRef<HTMLInputElement>();
+  private occasionRef = React.createRef<HTMLSelectElement>();
+  private fileRef = React.createRef<HTMLInputElement>();
 
   state = {
     name: '',
@@ -69,6 +71,28 @@ export default class Form extends Component {
       this.setState({ date: this.dateRef.current.value });
     }
   };
+
+  handleOccasionChange = () => {
+    if (this.occasionRef.current) {
+      this.setState({ occasion: this.occasionRef.current.value });
+    }
+  };
+
+  handleFileUpload = () => {
+    if (this.fileRef.current) {
+      const selectedImage = this.fileRef.current?.files?.[0];
+      if (selectedImage) {
+        const objectUrl = URL.createObjectURL(selectedImage);
+        this.setState({ image: objectUrl });
+      }
+    }
+  };
+
+  componentWillUnmount() {
+    if (this.state.image) {
+      URL.revokeObjectURL(this.state.image);
+    }
+  }
 
   render() {
     const isValid = true;
@@ -122,7 +146,13 @@ export default class Form extends Component {
           max="2023-12-31"
         ></input>
         <label className="form__item-text">Occasion</label>
-        <select id="input_occasion" className="form__item-input">
+        <select
+          value={this.state.occasion}
+          id="input_occasion"
+          className="form__item-input"
+          ref={this.occasionRef}
+          onChange={this.handleOccasionChange}
+        >
           <option className="form__item-input" value="Date night">
             Date night
           </option>
@@ -144,6 +174,8 @@ export default class Form extends Component {
         </select>
         <label className="form__item-text">Cover Image</label>
         <input
+          ref={this.fileRef}
+          onChange={this.handleFileUpload}
           id="cover-image"
           type="file"
           name="cover-image"
