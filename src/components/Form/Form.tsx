@@ -3,9 +3,9 @@ import { MOVIE_CATEGORIES, OCCASION_OPTIONS, OccasionOption } from '../../consta
 import './Form.css';
 import './Switcher.css';
 
-/*interface FormProps {
+interface FormProps {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-}*/
+}
 
 type FormState = {
   name: string;
@@ -16,27 +16,32 @@ type FormState = {
   recommended: boolean;
 };
 
-export default class Form extends Component {
-  private nameRef = React.createRef<HTMLInputElement>();
-  selectRefs = Array.from({ length: 10 }, () => React.createRef<HTMLInputElement>());
-  private dateRef = React.createRef<HTMLInputElement>();
-  private occasionRef = React.createRef<HTMLSelectElement>();
-  private fileRef = React.createRef<HTMLInputElement>();
-  private radioYesRef = React.createRef<HTMLInputElement>();
-  private radioNoRef = React.createRef<HTMLInputElement>();
-
-  state = {
-    name: '',
-    categories: [],
-    date: '',
-    occasion: '',
-    image: '',
-    recommended: false,
-  };
-
-  filterCategory = (obj: object) => {
-    return Object.fromEntries(Object.entries(obj).filter(([, val]) => val === true));
-  };
+export default class Form extends Component<FormProps, FormState> {
+  private nameRef: React.RefObject<HTMLInputElement>;
+  private selectRefs: React.RefObject<HTMLInputElement>[];
+  private dateRef: React.RefObject<HTMLInputElement>;
+  private occasionRef: React.RefObject<HTMLSelectElement>;
+  private fileRef: React.RefObject<HTMLInputElement>;
+  private radioYesRef: React.RefObject<HTMLInputElement>;
+  private radioNoRef: React.RefObject<HTMLInputElement>;
+  constructor(props: FormProps) {
+    super(props);
+    this.state = {
+      name: '',
+      categories: [],
+      date: '',
+      occasion: '',
+      image: '',
+      recommended: false,
+    };
+    this.nameRef = React.createRef<HTMLInputElement>();
+    this.selectRefs = Array.from({ length: 10 }, () => React.createRef<HTMLInputElement>());
+    this.dateRef = React.createRef<HTMLInputElement>();
+    this.occasionRef = React.createRef<HTMLSelectElement>();
+    this.fileRef = React.createRef<HTMLInputElement>();
+    this.radioYesRef = React.createRef<HTMLInputElement>();
+    this.radioNoRef = React.createRef<HTMLInputElement>();
+  }
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
