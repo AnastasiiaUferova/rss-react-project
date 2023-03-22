@@ -1,5 +1,6 @@
 import Switcher from '../Switcher/Switcher';
 import React, { Component } from 'react';
+import { MOVIE_CATEGORIES, OCCASION_OPTIONS, OccasionOption } from '../../constants/constants';
 import './Form.css';
 
 /*interface FormProps {
@@ -24,7 +25,7 @@ export default class Form extends Component {
 
   state = {
     name: '',
-    categories: {},
+    categories: [],
     date: '',
     occasion: '',
     image: '',
@@ -111,16 +112,7 @@ export default class Form extends Component {
         />
         <legend className="form__item-text">Film categories</legend>
         <fieldset className="form__item-input form__item-input_cat">
-          {[
-            'Action',
-            'Adventure',
-            'Drama',
-            'Comedy',
-            'Horror',
-            'Fantasy',
-            'Thriller',
-            'Sci Fi',
-          ].map((name, index) => (
+          {MOVIE_CATEGORIES.map((name, index) => (
             <label className="form-control" key={index}>
               <input
                 ref={this.selectRefs[index]}
@@ -153,24 +145,11 @@ export default class Form extends Component {
           ref={this.occasionRef}
           onChange={this.handleOccasionChange}
         >
-          <option className="form__item-input" value="Date night">
-            Date night
-          </option>
-          <option className="form__item-input" value="Hanging out with friends">
-            Hanging out with friends
-          </option>
-          <option className="form__item-input" value="Studies">
-            Studies
-          </option>
-          <option className="form__item-input" value="Watching solo">
-            Watching solo
-          </option>
-          <option className="form__item-input" value="Family time">
-            Family time
-          </option>
-          <option className="form__item-input" value="Watching with your kids">
-            Watching with your kids
-          </option>
+          {OCCASION_OPTIONS.map((option: OccasionOption) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
         <label className="form__item-text">Cover Image</label>
         <input
