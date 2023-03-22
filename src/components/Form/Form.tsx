@@ -1,7 +1,7 @@
-import Switcher from '../Switcher/Switcher';
 import React, { Component } from 'react';
 import { MOVIE_CATEGORIES, OCCASION_OPTIONS, OccasionOption } from '../../constants/constants';
 import './Form.css';
+import './Switcher.css';
 
 /*interface FormProps {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -22,6 +22,8 @@ export default class Form extends Component {
   private dateRef = React.createRef<HTMLInputElement>();
   private occasionRef = React.createRef<HTMLSelectElement>();
   private fileRef = React.createRef<HTMLInputElement>();
+  private radioYesRef = React.createRef<HTMLInputElement>();
+  private radioNoRef = React.createRef<HTMLInputElement>();
 
   state = {
     name: '',
@@ -86,6 +88,14 @@ export default class Form extends Component {
         const objectUrl = URL.createObjectURL(selectedImage);
         this.setState({ image: objectUrl });
       }
+    }
+  };
+
+  handleRecChange = () => {
+    if (this.radioYesRef.current?.checked) {
+      this.setState({ recommended: true });
+    } else if (this.radioNoRef.current?.checked) {
+      this.setState({ recommended: false });
     }
   };
 
@@ -162,7 +172,27 @@ export default class Form extends Component {
           accept="image/png, image/jpeg"
         />
         <label className="form__item-text">I recommend you to watch this film</label>
-        <Switcher />
+        <div className="switch-field">
+          <input
+            ref={this.radioYesRef}
+            onChange={this.handleRecChange}
+            defaultChecked
+            type="radio"
+            id="radio-one"
+            name="switch-one"
+            value="yes"
+          />
+          <label htmlFor="radio-one">Yes</label>
+          <input
+            onChange={this.handleRecChange}
+            ref={this.radioNoRef}
+            type="radio"
+            id="radio-two"
+            name="switch-one"
+            value="no"
+          />
+          <label htmlFor="radio-two">No</label>
+        </div>
         <button className={ifDisabledClass} type="submit">
           Add Movie
         </button>
