@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid';
 import { CardProps } from '../Card/Card';
 import NameInput from './NameInput';
 import CategoriesInput from './CategoriesInput';
+import DateInput from './DateInput';
 
 interface FormProps {
   onAddCard: (card: FormState) => void;
@@ -141,17 +142,7 @@ export default class Form extends Component<FormProps, FormState> {
             />
           ))}
         </fieldset>
-        <label className="form__item-text">When I watched it</label>
-        <input
-          ref={this.dateRef}
-          className="form__item-input"
-          onChange={this.handleDateChange}
-          type="date"
-          id="input_date"
-          name="date"
-          min="1900-01-01"
-          max="2023-12-31"
-        ></input>
+        <DateInput ref={this.dateRef} onChange={this.handleDateChange} />
         <label className="form__item-text">Occasion</label>
         <select
           value={this.state.occasion}
