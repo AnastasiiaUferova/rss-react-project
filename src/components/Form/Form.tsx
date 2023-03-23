@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MOVIE_CATEGORIES, OCCASION_OPTIONS, OccasionOption } from '../../constants/constants';
+import { MOVIE_CATEGORIES } from '../../constants/constants';
 import './Form.css';
 import './Switcher.css';
 import { nanoid } from 'nanoid';
@@ -7,6 +7,7 @@ import { CardProps } from '../Card/Card';
 import NameInput from './NameInput';
 import CategoriesInput from './CategoriesInput';
 import DateInput from './DateInput';
+import OccasionInput from './OccasionInput';
 
 interface FormProps {
   onAddCard: (card: FormState) => void;
@@ -143,20 +144,11 @@ export default class Form extends Component<FormProps, FormState> {
           ))}
         </fieldset>
         <DateInput ref={this.dateRef} onChange={this.handleDateChange} />
-        <label className="form__item-text">Occasion</label>
-        <select
-          value={this.state.occasion}
-          id="input_occasion"
-          className="form__item-input"
+        <OccasionInput
           ref={this.occasionRef}
           onChange={this.handleOccasionChange}
-        >
-          {OCCASION_OPTIONS.map((option: OccasionOption) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+          occasion={this.state.occasion}
+        />
         <label className="form__item-text">Cover Image</label>
         <input
           ref={this.fileRef}
