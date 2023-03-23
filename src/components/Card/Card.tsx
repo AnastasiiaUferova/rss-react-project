@@ -14,7 +14,7 @@ export type CardProps = {
 export default class Card extends Component<CardProps> {
   render() {
     const { name, image, categories, occasion, date, recommended } = this.props;
-    const recClass = recommended ? `card__button` : `card__button card__button_rec`;
+    const recClass = recommended ? `card__button card__button_rec` : `card__button`;
     return (
       <div className="card">
         <img className="card__pic" src={image} alt={`Picture of "${name}"`}></img>

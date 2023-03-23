@@ -8,12 +8,17 @@ import NameInput from './NameInput';
 import CategoriesInput from './CategoriesInput';
 import DateInput from './DateInput';
 import OccasionInput from './OccasionInput';
+import ImageInput from './ImageInput';
+import RadioInput from './RadioInput';
 
 interface FormProps {
   onAddCard: (card: FormState) => void;
 }
 
-type FormState = CardProps;
+type FormState = CardProps & {
+  noIsChecked?: boolean;
+  yesIsChecked?: boolean;
+};
 
 export default class Form extends Component<FormProps, FormState> {
   private nameRef: React.RefObject<HTMLInputElement>;
@@ -33,6 +38,8 @@ export default class Form extends Component<FormProps, FormState> {
       occasion: '',
       image: '',
       recommended: false,
+      noIsChecked: true,
+      yesIsChecked: false,
     };
     this.nameRef = React.createRef<HTMLInputElement>();
     this.selectRefs = Array.from({ length: 10 }, () => React.createRef<HTMLInputElement>());
@@ -47,7 +54,8 @@ export default class Form extends Component<FormProps, FormState> {
     this.handleDateChange.bind(this);
     this.handleOccasionChange.bind(this);
     this.handleFileUpload.bind(this);
-    this.handleRecChange.bind(this);
+    this.handleYesChange.bind(this);
+    this.handleNoChange.bind(this);
   }
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -61,6 +69,7 @@ export default class Form extends Component<FormProps, FormState> {
       image: this.state.image,
       recommended: this.state.recommended,
     });
+    console.log(this.state);
   };
 
   handleNameChange = () => {
@@ -111,12 +120,12 @@ export default class Form extends Component<FormProps, FormState> {
     }
   };
 
-  handleRecChange = () => {
-    if (this.radioYesRef.current?.checked) {
-      this.setState({ recommended: true });
-    } else if (this.radioNoRef.current?.checked) {
-      this.setState({ recommended: false });
-    }
+  handleYesChange = () => {
+    this.setState({ recommended: true, noIsChecked: false, yesIsChecked: true });
+  };
+
+  handleNoChange = () => {
+    this.setState({ recommended: false, noIsChecked: true, yesIsChecked: false });
   };
 
   componentWillUnmount() {
@@ -149,37 +158,27 @@ export default class Form extends Component<FormProps, FormState> {
           onChange={this.handleOccasionChange}
           occasion={this.state.occasion}
         />
-        <label className="form__item-text">Cover Image</label>
-        <input
-          ref={this.fileRef}
-          onChange={this.handleFileUpload}
-          id="cover-image"
-          type="file"
-          name="cover-image"
-          className="form__item-input form__item-input_img"
-          accept="image/png, image/jpeg"
-        />
+        <ImageInput ref={this.fileRef} onChange={this.handleFileUpload} />
         <label className="form__item-text">I recommend you to watch this film</label>
         <div className="switch-field">
-          <input
+          <RadioInput
+            onChange={this.handleYesChange}
             ref={this.radioYesRef}
-            onChange={this.handleRecChange}
-            defaultChecked
-            type="radio"
             id="radio-one"
-            name="switch-one"
             value="yes"
-          />
-          <label htmlFor="radio-one">Yes</label>
-          <input
-            onChange={this.handleRecChange}
-            ref={this.radioNoRef}
-            type="radio"
-            id="radio-two"
+            label="Yes"
             name="switch-one"
-            value="no"
+            checked={this.state.yesIsChecked}
           />
-          <label htmlFor="radio-two">No</label>
+          <RadioInput
+            onChange={this.handleNoChange}
+            ref={this.radioNoRef}
+            id="radio-two"
+            value="no"
+            label="No"
+            name="switch-two"
+            checked={this.state.noIsChecked}
+          />
         </div>
         <button className={ifDisabledClass} type="submit">
           Add Movie
