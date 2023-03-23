@@ -4,6 +4,8 @@ import './Form.css';
 import './Switcher.css';
 import { nanoid } from 'nanoid';
 import { CardProps } from '../Card/Card';
+import NameInput from './NameInput';
+import CategoriesInput from './CategoriesInput';
 
 interface FormProps {
   onAddCard: (card: FormState) => void;
@@ -127,29 +129,16 @@ export default class Form extends Component<FormProps, FormState> {
     return (
       <form className="form" onSubmit={this.handleSubmit}>
         <h1 className="form__title">Add your Movie</h1>
-        <label className="form__item-text">Movie Name</label>
-        <input
-          ref={this.nameRef}
-          onChange={this.handleNameChange}
-          id="input_name"
-          name="name"
-          type="text"
-          className="form__item-input"
-        />
+        <NameInput ref={this.nameRef} onChange={this.handleNameChange} />
         <legend className="form__item-text">Film categories</legend>
         <fieldset className="form__item-input form__item-input_cat">
           {MOVIE_CATEGORIES.map((name, index) => (
-            <label className="form-control" key={index}>
-              <input
-                ref={this.selectRefs[index]}
-                onChange={this.handleCategoryChange}
-                className="form__checkbox"
-                type="checkbox"
-                id={name}
-                name={name}
-              />
-              {name}
-            </label>
+            <CategoriesInput
+              ref={this.selectRefs[index]}
+              name={name}
+              key={index}
+              onChange={this.handleCategoryChange}
+            />
           ))}
         </fieldset>
         <label className="form__item-text">When I watched it</label>
