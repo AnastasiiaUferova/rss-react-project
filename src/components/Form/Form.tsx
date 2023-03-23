@@ -20,6 +20,7 @@ type FormState = CardProps & {
   noIsChecked?: boolean;
   yesIsChecked?: boolean;
   isSubmitted?: boolean;
+  errors?: { [key: string]: string };
 };
 
 export default class Form extends Component<FormProps, FormState> {
@@ -30,6 +31,7 @@ export default class Form extends Component<FormProps, FormState> {
   private fileRef: React.RefObject<HTMLInputElement>;
   private radioYesRef: React.RefObject<HTMLInputElement>;
   private radioNoRef: React.RefObject<HTMLInputElement>;
+  private formRef: React.RefObject<HTMLFormElement>;
   constructor(props: FormProps) {
     super(props);
     this.state = {
@@ -42,6 +44,7 @@ export default class Form extends Component<FormProps, FormState> {
       recommended: false,
       noIsChecked: true,
       yesIsChecked: false,
+      errors: {},
     };
     this.nameRef = React.createRef<HTMLInputElement>();
     this.selectRefs = Array.from({ length: 10 }, () => React.createRef<HTMLInputElement>());
@@ -50,6 +53,7 @@ export default class Form extends Component<FormProps, FormState> {
     this.fileRef = React.createRef<HTMLInputElement>();
     this.radioYesRef = React.createRef<HTMLInputElement>();
     this.radioNoRef = React.createRef<HTMLInputElement>();
+    this.formRef = React.createRef<HTMLFormElement>();
     this.handleSubmit.bind(this);
     this.handleNameChange.bind(this);
     this.handleCategoryChange.bind(this);
@@ -60,8 +64,87 @@ export default class Form extends Component<FormProps, FormState> {
     this.handleNoChange.bind(this);
   }
 
+  /*validate = (): { [key: string]: string } => {
+    const errors: { [key: string]: string } = {};
+
+    if (!this.state.name) {
+      errors.name = 'Name is required';
+    }
+
+    if (Object.keys(this.state.categories).length === 0) {
+      errors.categories = 'At least one category must be selected';
+    }
+
+    if (!this.state.date) {
+      errors.date = 'Release date is required';
+    }
+
+    if (!this.state.occasion) {
+      errors.occasion = 'Occasion is required';
+    }
+
+    if (!this.state.image) {
+      errors.image = 'Image is required';
+    }
+
+    this.setState({ errors });
+
+    return errors;
+  };*/
+
+  validateForm = (): boolean => {
+    const { name, categories, date, image } = this.state;
+
+    // check if name is filled
+    if (!name.trim()) {
+      this.setState((prevState: FormState) => ({
+        errors: {
+          ...prevState.errors,
+          name: 'Please enter a name',
+        },
+      }));
+    }
+
+    // check if at least one category is selected
+    if (categories.length === 0) {
+      this.setState((prevState: FormState) => ({
+        errors: {
+          ...prevState.errors,
+          categories: 'Please select at least one category',
+        },
+      }));
+    }
+
+    // check if image is uploaded
+    if (!image) {
+      this.setState((prevState: FormState) => ({
+        errors: {
+          ...prevState.errors,
+          image: 'Please upload an image',
+        },
+      }));
+    }
+
+    if (!date) {
+      this.setState((prevState: FormState) => ({
+        errors: {
+          ...prevState.errors,
+          date: 'Please enter a date',
+        },
+      }));
+    }
+
+    // set errors state if there are any errors
+    if (this.state.errors && Object.keys(this.state.errors).length === 0) {
+      return false;
+    }
+
+    return true;
+  };
+
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    this.validateForm();
     this.props.onAddCard({
       id: nanoid(),
       name: this.state.name,
@@ -72,6 +155,9 @@ export default class Form extends Component<FormProps, FormState> {
       recommended: this.state.recommended,
     });
     this.setState({ isSubmitted: true });
+    if (this.formRef.current) {
+      this.formRef.current.reset();
+    }
     setTimeout(() => {
       this.setState({ isSubmitted: false });
     }, 3000);
@@ -143,9 +229,10 @@ export default class Form extends Component<FormProps, FormState> {
     const isValid = true;
     const ifDisabledClass = `${isValid ? `form__button` : `form__button form__button_disabled`}`;
     return (
-      <form className="form" onSubmit={this.handleSubmit}>
+      <form ref={this.formRef} className="form" onSubmit={this.handleSubmit}>
         <h1 className="form__title">Add your Movie</h1>
         <NameInput ref={this.nameRef} onChange={this.handleNameChange} />
+        <div>{this.state.errors?.name}</div>
         <legend className="form__item-text">Film categories</legend>
         <fieldset className="form__item-input form__item-input_cat">
           {MOVIE_CATEGORIES.map((name, index) => (
@@ -157,13 +244,16 @@ export default class Form extends Component<FormProps, FormState> {
             />
           ))}
         </fieldset>
+        <div>{this.state.errors?.categories}</div>
         <DateInput ref={this.dateRef} onChange={this.handleDateChange} />
+        <div>{this.state.errors?.date}</div>
         <OccasionInput
           ref={this.occasionRef}
           onChange={this.handleOccasionChange}
           occasion={this.state.occasion}
         />
         <ImageInput ref={this.fileRef} onChange={this.handleFileUpload} />
+        <div>{this.state.errors?.image}</div>
         <label className="form__item-text">I recommend you to watch this film</label>
         <div className="switch-field">
           <RadioInput
@@ -193,3 +283,5 @@ export default class Form extends Component<FormProps, FormState> {
     );
   }
 }
+
+//  <ErrorMessage  isValid={isValid} text={errors.email}/>
