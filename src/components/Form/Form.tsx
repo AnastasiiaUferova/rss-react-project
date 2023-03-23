@@ -10,6 +10,7 @@ import DateInput from './DateInput';
 import OccasionInput from './OccasionInput';
 import ImageInput from './ImageInput';
 import RadioInput from './RadioInput';
+import ConfirmMessage from '../ConfirmMessage/ConfirmMessage';
 
 interface FormProps {
   onAddCard: (card: FormState) => void;
@@ -18,6 +19,7 @@ interface FormProps {
 type FormState = CardProps & {
   noIsChecked?: boolean;
   yesIsChecked?: boolean;
+  isSubmitted?: boolean;
 };
 
 export default class Form extends Component<FormProps, FormState> {
@@ -69,7 +71,10 @@ export default class Form extends Component<FormProps, FormState> {
       image: this.state.image,
       recommended: this.state.recommended,
     });
-    console.log(this.state);
+    this.setState({ isSubmitted: true });
+    setTimeout(() => {
+      this.setState({ isSubmitted: false });
+    }, 3000);
   };
 
   handleNameChange = () => {
@@ -180,6 +185,7 @@ export default class Form extends Component<FormProps, FormState> {
             checked={this.state.noIsChecked}
           />
         </div>
+        {this.state.isSubmitted && <ConfirmMessage />}
         <button className={ifDisabledClass} type="submit">
           Add Movie
         </button>
