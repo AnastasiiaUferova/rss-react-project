@@ -125,26 +125,40 @@ export default class Form extends Component<FormProps, FormState> {
     }
 
     const d = new Date(date);
+    const dateLimitations = d.getFullYear() < 2024 && d.getFullYear() > 1900;
 
-    if (d.getFullYear() > 2024 || d.getFullYear() < 1900) {
-      this.setState((prevState: FormState) => ({
-        errors: {
-          ...prevState.errors,
-          date: 'Please enter year between 1900 and 2024',
-        },
-      }));
-    }
+    console.log(d.getFullYear());
+    console.log(dateLimitations);
 
-    if (date) {
+    if (!date) {
       this.setState((prevState: FormState) => ({
         errors: {
           ...prevState.errors,
           date: 'Please enter a date',
         },
       }));
+    } else if (!dateLimitations) {
+      this.setState((prevState: FormState) => ({
+        errors: {
+          ...prevState.errors,
+          date: 'Please enter year between 1900 and 2024',
+        },
+      }));
+    } else {
+      this.setState((prevState: FormState) => ({
+        errors: {
+          ...prevState.errors,
+          date: ' ',
+        },
+      }));
     }
 
-    if (this.state.image && this.state.name && this.state.categories.length > 0) {
+    if (
+      this.state.image &&
+      this.state.name &&
+      this.state.categories.length > 0 &&
+      dateLimitations
+    ) {
       return true;
     } else {
       return false;
@@ -153,7 +167,7 @@ export default class Form extends Component<FormProps, FormState> {
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(this.state.date);
+    console.log(this.validateForm());
     if (this.validateForm()) {
       this.props.onAddCard({
         id: nanoid(),
