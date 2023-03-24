@@ -23,6 +23,7 @@ type FormState = CardProps & {
   isSubmitted?: boolean;
   errors?: { [key: string]: string };
   isValid?: boolean;
+  isButtonDisabled?: boolean;
 };
 
 export default class Form extends Component<FormProps, FormState> {
@@ -48,6 +49,7 @@ export default class Form extends Component<FormProps, FormState> {
       noIsChecked: true,
       yesIsChecked: false,
       errors: {},
+      isButtonDisabled: true,
     };
     this.nameRef = React.createRef<HTMLInputElement>();
     this.selectRefs = Array.from({ length: 10 }, () => React.createRef<HTMLInputElement>());
@@ -67,34 +69,6 @@ export default class Form extends Component<FormProps, FormState> {
     this.handleYesChange.bind(this);
     this.handleNoChange.bind(this);
   }
-
-  /*validate = (): { [key: string]: string } => {
-    const errors: { [key: string]: string } = {};
-
-    if (!this.state.name) {
-      errors.name = 'Name is required';
-    }
-
-    if (Object.keys(this.state.categories).length === 0) {
-      errors.categories = 'At least one category must be selected';
-    }
-
-    if (!this.state.date) {
-      errors.date = 'Release date is required';
-    }
-
-    if (!this.state.occasion) {
-      errors.occasion = 'Occasion is required';
-    }
-
-    if (!this.state.image) {
-      errors.image = 'Image is required';
-    }
-
-    this.setState({ errors });
-
-    return errors;
-  };*/
 
   validateForm = (): boolean => {
     const { name, categories, date, image } = this.state;
@@ -116,8 +90,6 @@ export default class Form extends Component<FormProps, FormState> {
       }));
     }
 
-    console.log(this.state.categories);
-
     // check if at least one category is selected
     if (categories.length === 0 || !categories) {
       this.setState((prevState: FormState) => ({
@@ -126,8 +98,6 @@ export default class Form extends Component<FormProps, FormState> {
           categories: 'Please select at least one category',
         },
       }));
-
-      console.log(this.state.categories);
     } else {
       this.setState((prevState: FormState) => ({
         errors: {
@@ -137,7 +107,6 @@ export default class Form extends Component<FormProps, FormState> {
       }));
     }
 
-    // check if image is uploaded
     if (!image) {
       this.setState((prevState: FormState) => ({
         errors: {
@@ -203,13 +172,14 @@ export default class Form extends Component<FormProps, FormState> {
     } else return;
   };
 
-  handleNameChange = () => {
+  handleNameChange: () => void = () => {
     if (this.nameRef.current) {
       this.setState({ name: this.nameRef.current.value });
     }
+    console.log(this.state.isButtonDisabled);
   };
 
-  handleCategoryChange = () => {
+  handleCategoryChange: () => void = () => {
     const filteredCategories = this.selectRefs
       .filter((ref) => ref.current && ref.current.checked)
       .map((ref) => ref.current && ref.current.name)
@@ -240,7 +210,7 @@ export default class Form extends Component<FormProps, FormState> {
     }
   };
 
-  handeFormReset = () => {
+  handeFormReset: () => void = () => {
     if (this.formRef.current) {
       this.formRef.current.reset();
     }
@@ -269,8 +239,6 @@ export default class Form extends Component<FormProps, FormState> {
   }
 
   render() {
-    const isValid = true;
-    const ifDisabledClass = `${isValid ? `form__button` : `form__button form__button_disabled`}`;
     return (
       <form ref={this.formRef} className="form" onSubmit={this.handleSubmit} noValidate>
         <h1 className="form__title">Add your Movie</h1>
@@ -319,26 +287,10 @@ export default class Form extends Component<FormProps, FormState> {
           />
         </div>
         {this.state.isSubmitted && <ConfirmMessage />}
-        <button ref={this.buttonRef} className={ifDisabledClass} type="submit">
+        <button ref={this.buttonRef} className="form__button" type="submit">
           Add Movie
         </button>
       </form>
     );
   }
 }
-
-//  <ErrorMessage  isValid={isValid} text={errors.email}/>
-
-/*  console.log(this.state.errors && Object.values(this.state.errors).every((item) => item === ''));
-    if (this.state.errors && Object.values(this.state.errors).every((item) => item === '')) {
-      this.setState(() => ({
-        isValid: true,
-      }));
-      console.log(this.state.errors);
-    } else {
-      this.setState(() => ({
-        isValid: false,
-      }));
-      console.log(this.state.errors);
-    }
-  }*/

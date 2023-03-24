@@ -124,7 +124,8 @@ input[type='file'] {
 }
 
 .form__button_disabled {
-  opacity: 0.3;
+  opacity: 0.5;
+  background-color: red;
 }
 
 .form__button:hover {
