@@ -120,7 +120,6 @@ input[type='file'] {
   background: #ec89f4;
   border-radius: 10px;
   border: 2px solid #5e0575;
-  margin-top: 40px;
 }
 
 .form__button_disabled {
@@ -144,7 +143,6 @@ input[type='file'] {
   }
 
   .form__button {
-    margin-top: 15px;
     margin-bottom: 2px;
   }
 }

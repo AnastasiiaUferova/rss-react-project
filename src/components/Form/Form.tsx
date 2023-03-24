@@ -12,12 +12,13 @@ import ImageInput from './ImageInput';
 import RadioInput from './RadioInput';
 import ConfirmMessage from '../ConfirmMessage/ConfirmMessage';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import { validateForm } from '../../utils/validation';
 
 interface FormProps {
   onAddCard: (card: FormState) => void;
 }
 
-type FormState = CardProps & {
+export type FormState = CardProps & {
   noIsChecked?: boolean;
   yesIsChecked?: boolean;
   isSubmitted?: boolean;
@@ -70,105 +71,10 @@ export default class Form extends Component<FormProps, FormState> {
     this.handleNoChange.bind(this);
   }
 
-  validateForm = (): boolean => {
-    const { name, categories, date, image } = this.state;
-
-    // check if name is filled
-    if (!name.trim()) {
-      this.setState((prevState: FormState) => ({
-        errors: {
-          ...prevState.errors,
-          name: 'Please enter a name',
-        },
-      }));
-    } else {
-      this.setState((prevState: FormState) => ({
-        errors: {
-          ...prevState.errors,
-          name: ' ',
-        },
-      }));
-    }
-
-    // check if at least one category is selected
-    if (categories.length === 0 || !categories) {
-      this.setState((prevState: FormState) => ({
-        errors: {
-          ...prevState.errors,
-          categories: 'Please select at least one category',
-        },
-      }));
-    } else {
-      this.setState((prevState: FormState) => ({
-        errors: {
-          ...prevState.errors,
-          categories: ' ',
-        },
-      }));
-    }
-
-    if (!image) {
-      this.setState((prevState: FormState) => ({
-        errors: {
-          ...prevState.errors,
-          image: 'Please upload an image',
-        },
-        isValid: false,
-      }));
-    } else {
-      this.setState((prevState: FormState) => ({
-        errors: {
-          ...prevState.errors,
-          image: ' ',
-        },
-      }));
-    }
-
-    const d = new Date(date);
-    const dateLimitations = d.getFullYear() < 2024 && d.getFullYear() > 1900;
-
-    console.log(d.getFullYear());
-    console.log(dateLimitations);
-
-    if (!date) {
-      this.setState((prevState: FormState) => ({
-        errors: {
-          ...prevState.errors,
-          date: 'Please enter a date',
-        },
-      }));
-    } else if (!dateLimitations) {
-      this.setState((prevState: FormState) => ({
-        errors: {
-          ...prevState.errors,
-          date: 'Please enter year between 1900 and 2024',
-        },
-      }));
-    } else {
-      this.setState((prevState: FormState) => ({
-        errors: {
-          ...prevState.errors,
-          date: ' ',
-        },
-      }));
-    }
-
-    if (
-      this.state.image &&
-      this.state.name &&
-      this.state.categories.length > 0 &&
-      dateLimitations
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(this.validateForm());
-    if (this.validateForm()) {
+    const { errors, isValid } = validateForm(this.state);
+    if (isValid) {
       this.props.onAddCard({
         id: nanoid(),
         name: this.state.name,
@@ -178,12 +84,14 @@ export default class Form extends Component<FormProps, FormState> {
         image: this.state.image,
         recommended: this.state.recommended,
       });
-      this.setState({ isSubmitted: true });
+      this.setState({ isSubmitted: true, errors: {} });
       this.handeFormReset();
       setTimeout(() => {
         this.setState({ isSubmitted: false });
       }, 3000);
-    } else return;
+    } else {
+      this.setState({ errors, isValid });
+    }
   };
 
   handleNameChange: () => void = () => {
