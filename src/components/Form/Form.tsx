@@ -72,8 +72,8 @@ export default class Form extends Component<FormProps, FormState> {
   }
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
     const { errors, isValid } = validateForm(this.state);
+    event.preventDefault();
     if (isValid) {
       this.props.onAddCard({
         id: nanoid(),
@@ -95,10 +95,11 @@ export default class Form extends Component<FormProps, FormState> {
   };
 
   handleNameChange: () => void = () => {
+    console.log(this.state.errors);
+    console.log(!this.state.occasion || this.state.occasion === 'Choose occasion for the movie');
     if (this.nameRef.current) {
       this.setState({ name: this.nameRef.current.value });
     }
-    console.log(this.state.isButtonDisabled);
   };
 
   handleCategoryChange: () => void = () => {
@@ -185,6 +186,7 @@ export default class Form extends Component<FormProps, FormState> {
           onChange={this.handleOccasionChange}
           occasion={this.state.occasion}
         />
+        <ErrorMessage errorMessage={this.state.errors?.occasion} />
         <ImageInput ref={this.fileRef} onChange={this.handleFileUpload} />
         <ErrorMessage errorMessage={this.state.errors?.image} />
         <label className="form__item-text">I recommend you to watch this film</label>

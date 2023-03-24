@@ -3,10 +3,16 @@ export const MOVIE_CATEGORIES: string[] = [
   'Adventure',
   'Drama',
   'Comedy',
+  'Romance',
   'Horror',
   'Fantasy',
+  'Mistery',
+  'Sport',
+  'Documentary',
   'Thriller',
   'Sci Fi',
+  'For Kids',
+  'Western',
 ];
 
 export type OccasionOption = {
@@ -15,6 +21,7 @@ export type OccasionOption = {
 };
 
 export const OCCASION_OPTIONS: OccasionOption[] = [
+  { value: 'Choose occasion for the movie', label: 'Choose occasion for the movie' },
   { value: 'Date night', label: 'Date night' },
   { value: 'Hanging out with friends', label: 'Hanging out with friends' },
   { value: 'Studies', label: 'Studies' },

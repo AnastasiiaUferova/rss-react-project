@@ -72,7 +72,7 @@
 }
 
 .card__text_category {
-  color: rgb(29, 28, 33);
+  color: #ada4a4;
   font-size: 15px;
 }
 
@@ -84,11 +84,11 @@
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
-  color: #3e3c3c;
+  color: #ada4a4;
 }
 
 .card__subtext_category {
-  color: rgb(30, 3, 3);
+  color: rgb(15, 2, 2);
   font-size: 13px;
 }
 

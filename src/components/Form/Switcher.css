@@ -1,11 +1,11 @@
 .switch-field {
   display: flex;
-  margin-bottom: 36px;
+  margin-bottom: 15px;
   overflow: hidden;
+  border-radius: 5px;
 }
 
 .switch-field input {
-  position: absolute !important;
   clip: rect(0, 0, 0, 0);
   height: 1px;
   width: 1px;

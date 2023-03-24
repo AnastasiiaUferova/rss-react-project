@@ -13,7 +13,7 @@
   line-height: 29px;
   color: whitesmoke;
   margin-top: 0;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
   align-self: center;
 }
 
@@ -41,6 +41,7 @@
   line-height: 16px;
   color: #000000;
   cursor: pointer;
+  box-shadow: 2px 5px 5px rgb(30, 2, 58);
 }
 
 .form__item-input_cat {
@@ -61,11 +62,19 @@
 }
 
 input[type='file'] {
-  background-color: #8808a9;
+  background-color: #b076e3;
+
   border: none;
   cursor: pointer;
-  color: #fff;
+  color: black;
   padding-top: 20px;
+}
+
+input[type='file']::file-selector-button {
+  background-color: #5d0872;
+  border: none;
+  border-radius: 5px;
+  padding: 6px;
 }
 
 .form__checkbox {
@@ -117,9 +126,10 @@ input[type='file'] {
   text-align: center;
   color: black;
   height: 60px;
-  background: #ec89f4;
+  background: #b076e3;
   border-radius: 10px;
-  border: 2px solid #5e0575;
+  border: none;
+  box-shadow: 2px 2px 2px rgb(30, 2, 58);
 }
 
 .form__button_disabled {
@@ -135,6 +145,10 @@ input[type='file'] {
 @media (max-width: 500px) {
   .form {
     width: 260px;
+  }
+
+  .form__item-input_cat {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .form__title {
