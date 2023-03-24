@@ -11,6 +11,7 @@ import OccasionInput from './OccasionInput';
 import ImageInput from './ImageInput';
 import RadioInput from './RadioInput';
 import ConfirmMessage from '../ConfirmMessage/ConfirmMessage';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 interface FormProps {
   onAddCard: (card: FormState) => void;
@@ -21,6 +22,7 @@ type FormState = CardProps & {
   yesIsChecked?: boolean;
   isSubmitted?: boolean;
   errors?: { [key: string]: string };
+  isValid?: boolean;
 };
 
 export default class Form extends Component<FormProps, FormState> {
@@ -32,6 +34,7 @@ export default class Form extends Component<FormProps, FormState> {
   private radioYesRef: React.RefObject<HTMLInputElement>;
   private radioNoRef: React.RefObject<HTMLInputElement>;
   private formRef: React.RefObject<HTMLFormElement>;
+  private buttonRef: React.RefObject<HTMLButtonElement>;
   constructor(props: FormProps) {
     super(props);
     this.state = {
@@ -54,6 +57,7 @@ export default class Form extends Component<FormProps, FormState> {
     this.radioYesRef = React.createRef<HTMLInputElement>();
     this.radioNoRef = React.createRef<HTMLInputElement>();
     this.formRef = React.createRef<HTMLFormElement>();
+    this.buttonRef = React.createRef<HTMLButtonElement>();
     this.handleSubmit.bind(this);
     this.handleNameChange.bind(this);
     this.handleCategoryChange.bind(this);
@@ -103,14 +107,32 @@ export default class Form extends Component<FormProps, FormState> {
           name: 'Please enter a name',
         },
       }));
+    } else {
+      this.setState((prevState: FormState) => ({
+        errors: {
+          ...prevState.errors,
+          name: ' ',
+        },
+      }));
     }
 
+    console.log(this.state.categories);
+
     // check if at least one category is selected
-    if (categories.length === 0) {
+    if (categories.length === 0 || !categories) {
       this.setState((prevState: FormState) => ({
         errors: {
           ...prevState.errors,
           categories: 'Please select at least one category',
+        },
+      }));
+
+      console.log(this.state.categories);
+    } else {
+      this.setState((prevState: FormState) => ({
+        errors: {
+          ...prevState.errors,
+          categories: ' ',
         },
       }));
     }
@@ -122,10 +144,29 @@ export default class Form extends Component<FormProps, FormState> {
           ...prevState.errors,
           image: 'Please upload an image',
         },
+        isValid: false,
+      }));
+    } else {
+      this.setState((prevState: FormState) => ({
+        errors: {
+          ...prevState.errors,
+          image: ' ',
+        },
       }));
     }
 
-    if (!date) {
+    const d = new Date(date);
+
+    if (d.getFullYear() > 2024 || d.getFullYear() < 1900) {
+      this.setState((prevState: FormState) => ({
+        errors: {
+          ...prevState.errors,
+          date: 'Please enter year between 1900 and 2024',
+        },
+      }));
+    }
+
+    if (date) {
       this.setState((prevState: FormState) => ({
         errors: {
           ...prevState.errors,
@@ -134,33 +175,32 @@ export default class Form extends Component<FormProps, FormState> {
       }));
     }
 
-    // set errors state if there are any errors
-    if (this.state.errors && Object.keys(this.state.errors).length === 0) {
+    if (this.state.image && this.state.name && this.state.categories.length > 0) {
+      return true;
+    } else {
       return false;
     }
-
-    return true;
   };
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    this.validateForm();
-    this.props.onAddCard({
-      id: nanoid(),
-      name: this.state.name,
-      categories: Object.keys(this.state.categories),
-      date: this.state.date,
-      occasion: this.state.occasion,
-      image: this.state.image,
-      recommended: this.state.recommended,
-    });
-    this.setState({ isSubmitted: true });
-    if (this.formRef.current) {
-      this.formRef.current.reset();
-    }
-    setTimeout(() => {
-      this.setState({ isSubmitted: false });
-    }, 3000);
+    console.log(this.state.date);
+    if (this.validateForm()) {
+      this.props.onAddCard({
+        id: nanoid(),
+        name: this.state.name,
+        categories: this.state.categories,
+        date: this.state.date,
+        occasion: this.state.occasion,
+        image: this.state.image,
+        recommended: this.state.recommended,
+      });
+      this.setState({ isSubmitted: true });
+      this.handeFormReset();
+      setTimeout(() => {
+        this.setState({ isSubmitted: false });
+      }, 3000);
+    } else return;
   };
 
   handleNameChange = () => {
@@ -169,39 +209,28 @@ export default class Form extends Component<FormProps, FormState> {
     }
   };
 
-  handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target;
+  handleCategoryChange = () => {
+    const filteredCategories = this.selectRefs
+      .filter((ref) => ref.current && ref.current.checked)
+      .map((ref) => ref.current && ref.current.name)
+      .filter((name) => name !== undefined) as string[];
 
-    if (this.selectRefs.some((ref) => ref.current?.checked)) {
-      this.setState((prevState: FormState) => ({
-        categories: {
-          ...prevState.categories,
-          [name]: checked,
-        },
-      }));
-    } else {
-      this.setState((prevState: FormState) => ({
-        categories: {
-          ...prevState.categories,
-          [name]: false,
-        },
-      }));
-    }
+    this.setState({ categories: filteredCategories });
   };
 
-  handleDateChange = () => {
+  handleDateChange: () => void = () => {
     if (this.dateRef.current) {
       this.setState({ date: this.dateRef.current.value });
     }
   };
 
-  handleOccasionChange = () => {
+  handleOccasionChange: () => void = () => {
     if (this.occasionRef.current) {
       this.setState({ occasion: this.occasionRef.current.value });
     }
   };
 
-  handleFileUpload = () => {
+  handleFileUpload: () => void = () => {
     if (this.fileRef.current) {
       const selectedImage = this.fileRef.current?.files?.[0];
       if (selectedImage) {
@@ -209,6 +238,20 @@ export default class Form extends Component<FormProps, FormState> {
         this.setState({ image: objectUrl });
       }
     }
+  };
+
+  handeFormReset = () => {
+    if (this.formRef.current) {
+      this.formRef.current.reset();
+    }
+    this.setState({
+      name: '',
+      categories: [],
+      date: '',
+      occasion: '',
+      image: '',
+      recommended: false,
+    });
   };
 
   handleYesChange = () => {
@@ -229,10 +272,10 @@ export default class Form extends Component<FormProps, FormState> {
     const isValid = true;
     const ifDisabledClass = `${isValid ? `form__button` : `form__button form__button_disabled`}`;
     return (
-      <form ref={this.formRef} className="form" onSubmit={this.handleSubmit}>
+      <form ref={this.formRef} className="form" onSubmit={this.handleSubmit} noValidate>
         <h1 className="form__title">Add your Movie</h1>
         <NameInput ref={this.nameRef} onChange={this.handleNameChange} />
-        <div>{this.state.errors?.name}</div>
+        <ErrorMessage errorMessage={this.state.errors?.name} />
         <legend className="form__item-text">Film categories</legend>
         <fieldset className="form__item-input form__item-input_cat">
           {MOVIE_CATEGORIES.map((name, index) => (
@@ -244,16 +287,16 @@ export default class Form extends Component<FormProps, FormState> {
             />
           ))}
         </fieldset>
-        <div>{this.state.errors?.categories}</div>
+        <ErrorMessage errorMessage={this.state.errors?.categories} />
         <DateInput ref={this.dateRef} onChange={this.handleDateChange} />
-        <div>{this.state.errors?.date}</div>
+        <ErrorMessage errorMessage={this.state.errors?.date} />
         <OccasionInput
           ref={this.occasionRef}
           onChange={this.handleOccasionChange}
           occasion={this.state.occasion}
         />
         <ImageInput ref={this.fileRef} onChange={this.handleFileUpload} />
-        <div>{this.state.errors?.image}</div>
+        <ErrorMessage errorMessage={this.state.errors?.image} />
         <label className="form__item-text">I recommend you to watch this film</label>
         <div className="switch-field">
           <RadioInput
@@ -276,7 +319,7 @@ export default class Form extends Component<FormProps, FormState> {
           />
         </div>
         {this.state.isSubmitted && <ConfirmMessage />}
-        <button className={ifDisabledClass} type="submit">
+        <button ref={this.buttonRef} className={ifDisabledClass} type="submit">
           Add Movie
         </button>
       </form>
@@ -285,3 +328,17 @@ export default class Form extends Component<FormProps, FormState> {
 }
 
 //  <ErrorMessage  isValid={isValid} text={errors.email}/>
+
+/*  console.log(this.state.errors && Object.values(this.state.errors).every((item) => item === ''));
+    if (this.state.errors && Object.values(this.state.errors).every((item) => item === '')) {
+      this.setState(() => ({
+        isValid: true,
+      }));
+      console.log(this.state.errors);
+    } else {
+      this.setState(() => ({
+        isValid: false,
+      }));
+      console.log(this.state.errors);
+    }
+  }*/

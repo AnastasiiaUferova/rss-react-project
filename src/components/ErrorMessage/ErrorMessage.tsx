@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import './ErrorMessage.css';
 
-export default class ErrorMessage extends Component {
+type ErrorProps = {
+  errorMessage?: string;
+};
+
+export default class ErrorMessage extends Component<ErrorProps> {
   render() {
-    return <div>Error</div>;
+    return <div className="error">{this.props.errorMessage}</div>;
   }
 }
