@@ -36,7 +36,7 @@ export default class SearchBar extends Component<SearchBarProps, State> {
 
   render() {
     return (
-      <div className="search">
+      <div id="search" className="search">
         <div className="search-container">
           <form className="search__form">
             <input

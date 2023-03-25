@@ -1,62 +1,37 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import CardsList, { CardsListProps } from './CardsList';
-
-const defaultProps: CardsListProps = {
-  cards: [
-    {
-      id: 1,
-      imgUrl: 'https://example.com/image.jpg',
-      name: 'Example product',
-      popleLiked: 10,
-      price: 20,
-      favourite: false,
-      category: 'Category1',
-    },
-    {
-      id: 2,
-      imgUrl: 'https://example.com/image2.jpg',
-      name: 'Example product 2',
-      popleLiked: 5,
-      price: 10,
-      favourite: true,
-      category: 'Category2',
-    },
-    {
-      id: 2,
-      imgUrl: 'https://example.com/image3.jpg',
-      name: 'Example product 2',
-      popleLiked: 5,
-      price: 10,
-      favourite: true,
-      category: 'Category3',
-    },
-    {
-      id: 2,
-      imgUrl: 'https://example.com/image4.jpg',
-      name: 'Example product 2',
-      popleLiked: 5,
-      price: 10,
-      favourite: true,
-      category: 'Category4',
-    },
-  ],
-};
-
-describe('Card', () => {
-  it('renders CardList', () => {
-    render(<CardsList />);
-    screen.debug();
-  });
-});
+import CardsList from './CardsList';
+import { CardProps } from '../Card/Card';
 
 describe('CardsList', () => {
-  it('renders with correct props', () => {
-    render(<CardsList {...defaultProps} />);
-    const cardList = screen.getByRole('list');
-    const cards = screen.getAllByRole('listitem');
+  const cards: CardProps[] = [
+    {
+      id: '1',
+      image: 'http://example.com/image1.jpg',
+      name: 'Example Name 1',
+      recommended: true,
+      categories: ['Category 1', 'Category 2'],
+      date: '2023-03-25',
+      occasion: 'Example Occasion 1',
+    },
+    {
+      id: '2',
+      image: 'http://example.com/image2.jpg',
+      name: 'Example Name 2',
+      recommended: false,
+      categories: ['Category 3'],
+      date: '2023-03-26',
+      occasion: 'Example Occasion 2',
+    },
+  ];
 
-    expect(cardList).toBeInTheDocument();
-    expect(cards).toHaveLength(defaultProps.cards!.length);
+  it('should render the cards list with the correct number of cards', () => {
+    render(<CardsList cards={cards} />);
+    expect(screen.getAllByRole('listitem')).toHaveLength(2);
+  });
+
+  it('should not render the cards list when cards prop is not present', () => {
+    render(<CardsList />);
+    expect(screen.queryByRole('listitem')).not.toBeInTheDocument();
   });
 });

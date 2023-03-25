@@ -7,7 +7,9 @@ type NameInputProps = {
 const NameInput = forwardRef((props: NameInputProps, ref: Ref<HTMLInputElement>) => {
   return (
     <>
-      <label className="form__item-text">Movie Name</label>
+      <label htmlFor="input_name" className="form__item-text">
+        Movie Name
+      </label>
       <input
         ref={ref}
         onChange={props.onChange}

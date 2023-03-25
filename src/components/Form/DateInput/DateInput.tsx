@@ -7,7 +7,9 @@ type DateInputProps = {
 const DateInput = forwardRef((props: DateInputProps, ref: Ref<HTMLInputElement>) => {
   return (
     <>
-      <label className="form__item-text">Release Date</label>
+      <label htmlFor="input_date" className="form__item-text">
+        Release Date
+      </label>
       <input
         ref={ref}
         className="form__item-input"

@@ -1,37 +1,31 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Card, { CardProps } from './Card';
-
-const defaultProps: CardProps = {
-  id: 'd',
-  image: 'https://example.com/image.jpg',
-  name: 'Example product',
-  popleLiked: 10,
-  price: 20,
-  recommended: false,
-  category: 'Example category',
-};
+import Card from './Card';
 
 describe('Card', () => {
-  it('renders with correct props', () => {
-    render(<Card {...defaultProps} />);
-    const cardPic = screen.getByAltText(`Picture of "${defaultProps.name}"`);
-    const cardText = screen.getByText(defaultProps.name);
-    const cardPrice = screen.getByText(`$${defaultProps.price}`);
-    const cardCategory = screen.getByText(defaultProps.category);
-    const cardLikes = screen.getByText(defaultProps.popleLiked.toString());
+  const props = {
+    id: '1',
+    image: 'http://example.com/image.jpg',
+    name: 'Example Name',
+    recommended: true,
+    categories: ['Category 1', 'Category 2'],
+    date: '2023-03-25',
+    occasion: 'Example Occasion',
+  };
 
-    expect(cardPic).toBeInTheDocument();
-    expect(cardText).toBeInTheDocument();
-    expect(cardPrice).toBeInTheDocument();
-    expect(cardCategory).toBeInTheDocument();
-    expect(cardLikes).toBeInTheDocument();
+  it('should render the card with the correct data', () => {
+    render(<Card {...props} />);
+    expect(screen.getByAltText(`Picture of "${props.name}"`)).toBeInTheDocument();
+    expect(screen.getByText(props.name)).toBeInTheDocument();
+    expect(screen.getByText(props.categories?.join(', '))).toBeInTheDocument();
+    expect(screen.getByText(props.occasion)).toBeInTheDocument();
+    expect(screen.getByText(props.date)).toBeInTheDocument();
+    expect(screen.getByRole('button')).toHaveClass('card__button_rec');
   });
 
-  it('renders with like button', () => {
-    render(<Card {...defaultProps} recommended={true} />);
-    const favouriteButton = screen.getByRole('button');
-
-    expect(favouriteButton).toBeInTheDocument();
+  it('should render the card without recommended class when recommended is false', () => {
+    const propsWithoutRecommended = { ...props, recommended: false };
+    render(<Card {...propsWithoutRecommended} />);
+    expect(screen.getByRole('button')).not.toHaveClass('card__button_rec');
   });
 });

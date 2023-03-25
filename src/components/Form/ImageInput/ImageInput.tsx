@@ -7,7 +7,9 @@ type ImageInputProps = {
 const ImageInput = forwardRef((props: ImageInputProps, ref: Ref<HTMLInputElement>) => {
   return (
     <>
-      <label className="form__item-text">Cover Image</label>
+      <label htmlFor="cover-image" className="form__item-text">
+        Cover Image
+      </label>
       <input
         ref={ref}
         onChange={props.onChange}

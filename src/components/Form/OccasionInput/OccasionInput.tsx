@@ -1,4 +1,4 @@
-import { OCCASION_OPTIONS, OccasionOption } from '../../constants/constants';
+import { OCCASION_OPTIONS, OccasionOption } from '../../../constants/constants';
 import React, { forwardRef, Ref } from 'react';
 
 type OccasionInputProps = {
@@ -9,7 +9,9 @@ type OccasionInputProps = {
 const OccasionInput = forwardRef((props: OccasionInputProps, ref: Ref<HTMLSelectElement>) => {
   return (
     <>
-      <label className="form__item-text">Occasion</label>
+      <label htmlFor="input_occasion" className="form__item-text">
+        Occasion
+      </label>
       <select
         value={props.occasion}
         id="input_occasion"

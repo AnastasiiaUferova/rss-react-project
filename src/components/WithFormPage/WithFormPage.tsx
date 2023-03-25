@@ -34,16 +34,3 @@ export default class WithFormPage extends Component<CardsListState, CardsListPro
     );
   }
 }
-
-/*
-function handleAddPlaceSubmit(newCard) {
-    return api
-        .addCard(newCard)
-        .then((newCard) => {
-            setCards([newCard, ...cards]);
-            closeAllPopups();
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}*/

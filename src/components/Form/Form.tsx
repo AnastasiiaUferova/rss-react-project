@@ -4,12 +4,12 @@ import './Form.css';
 import './Switcher.css';
 import { nanoid } from 'nanoid';
 import { CardProps } from '../Card/Card';
-import NameInput from './NameInput';
-import CategoriesInput from './CategoriesInput';
-import DateInput from './DateInput';
-import OccasionInput from './OccasionInput';
-import ImageInput from './ImageInput';
-import RadioInput from './RadioInput';
+import NameInput from './NameInput/NameInput';
+import CategoriesInput from './CategoriesInput/CategoriesInput';
+import DateInput from './DateInput/DateInput';
+import OccasionInput from './OccasionInput/OccasionInput';
+import ImageInput from './ImageInput/ImageInput';
+import RadioInput from './RadioInput/RadioInput';
 import ConfirmMessage from '../ConfirmMessage/ConfirmMessage';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { validateForm } from '../../utils/validation';
@@ -95,8 +95,6 @@ export default class Form extends Component<FormProps, FormState> {
   };
 
   handleNameChange: () => void = () => {
-    console.log(this.state.errors);
-    console.log(!this.state.occasion || this.state.occasion === 'Choose occasion for the movie');
     if (this.nameRef.current) {
       this.setState({ name: this.nameRef.current.value });
     }
@@ -168,7 +166,7 @@ export default class Form extends Component<FormProps, FormState> {
         <NameInput ref={this.nameRef} onChange={this.handleNameChange} />
         <ErrorMessage errorMessage={this.state.errors?.name} />
         <legend className="form__item-text">Film categories</legend>
-        <fieldset className="form__item-input form__item-input_cat">
+        <fieldset id="categories" className="form__item-input form__item-input_cat">
           {MOVIE_CATEGORIES.map((name, index) => (
             <CategoriesInput
               ref={this.selectRefs[index]}
