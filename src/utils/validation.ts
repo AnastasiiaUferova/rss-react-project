@@ -1,4 +1,5 @@
 import { FormState } from '../components/Form/Form';
+import getDateLimitations from './getDateLimitations';
 
 export const validateForm = (formData: FormState) => {
   const { name, categories, date, occasion, image } = formData;
@@ -16,18 +17,11 @@ export const validateForm = (formData: FormState) => {
     errors.image = 'Please upload an image';
   }
 
-  const d = new Date(date);
-  const dateLimitations = d.getFullYear() < 2024 && d.getFullYear() > 1900;
+  const { yearLimitations } = getDateLimitations(date);
 
   if (!date) {
     errors.date = 'Please enter a date';
-  } else if (!dateLimitations) {
-    errors.date = 'Please enter a year between 1900 and 2024';
-  }
-
-  if (!date) {
-    errors.date = 'Please enter a date';
-  } else if (!dateLimitations) {
+  } else if (!yearLimitations) {
     errors.date = 'Please enter a year between 1900 and 2024';
   }
 

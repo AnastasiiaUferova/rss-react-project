@@ -1,5 +1,5 @@
 import Form from '../Form/Form';
-import React, { Component } from 'react';
+import React, { Component, PropsWithChildren } from 'react';
 import '../WithFormPage/WithFormPage.css';
 import CardsList from '../CardsList/CardsList';
 import { CardProps } from '../Card/Card';
@@ -8,10 +8,8 @@ type CardsListState = {
   cards: CardProps[];
 };
 
-type CardsListProps = CardsListState;
-
-export default class WithFormPage extends Component<CardsListState, CardsListProps> {
-  constructor(props: CardsListProps) {
+export default class WithFormPage extends Component<PropsWithChildren, CardsListState> {
+  constructor(props: PropsWithChildren) {
     super(props);
     this.state = {
       cards: [],

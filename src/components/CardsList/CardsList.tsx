@@ -7,9 +7,7 @@ export type CardsListProps = {
   cards?: CardProps[];
 };
 
-type State = CardsListProps;
-
-export default class CardsList extends Component<CardsListProps, State> {
+export default class CardsList extends Component<CardsListProps> {
   constructor(props: CardsListProps) {
     super(props);
   }

@@ -1,37 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, PropsWithChildren } from 'react';
 import './SearchBar.css';
 
-type SearchBarProps = {
-  input?: string;
+type SearchBarState = {
+  input: string | null;
 };
 
-type State = SearchBarProps;
-
-export default class SearchBar extends Component<SearchBarProps, State> {
-  constructor(props: SearchBarProps) {
+export default class SearchBar extends Component<PropsWithChildren, SearchBarState> {
+  constructor(props: PropsWithChildren) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.state = { input: '' };
+    this.state = {
+      input: localStorage.getItem('input') !== null ? localStorage.getItem('input') : '',
+    };
   }
-
-  saveToLocalStorage = (value: string): void => {
-    localStorage.setItem('input', value);
-  };
 
   handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const inputValue = e.currentTarget.value;
     this.setState({ input: inputValue });
   };
 
-  componentDidMount() {
-    const inputFromLocalStorage = localStorage.getItem('input') || '';
-    this.setState({ input: inputFromLocalStorage });
-  }
-
   componentWillUnmount() {
-    window.addEventListener('beforeunload', () => {
-      this.saveToLocalStorage(this.state.input || '');
-    });
+    localStorage.setItem('inputValue', this.state.input ? this.state.input : '');
   }
 
   render() {
@@ -48,7 +37,7 @@ export default class SearchBar extends Component<SearchBarProps, State> {
             <button className="search__form__button" type="submit"></button>
           </form>
         </div>
-        <p>Input from LocalStorage:{localStorage.getItem('input')}</p>
+        <p>Input from LocalStorage:{localStorage.getItem('inputValue')}</p>
       </div>
     );
   }

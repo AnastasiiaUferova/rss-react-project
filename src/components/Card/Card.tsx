@@ -12,6 +12,9 @@ export type CardProps = {
 };
 
 export default class Card extends Component<CardProps> {
+  constructor(props: CardProps) {
+    super(props);
+  }
   render() {
     const { name, image, categories, occasion, date, recommended } = this.props;
     const recClass = recommended ? `card__button card__button_rec` : `card__button`;
