@@ -14,7 +14,6 @@ export default class WithFormPage extends Component<PropsWithChildren, CardsList
     this.state = {
       cards: [],
     };
-    this.onAddCard = this.onAddCard.bind(this);
   }
 
   onAddCard = (newCard: CardProps) => {

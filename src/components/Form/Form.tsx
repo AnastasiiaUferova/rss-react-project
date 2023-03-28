@@ -53,7 +53,7 @@ export default class Form extends Component<FormProps, FormState> {
       isButtonDisabled: true,
     };
     this.nameRef = React.createRef<HTMLInputElement>();
-    this.selectRefs = Array.from({ length: 10 }, () => React.createRef<HTMLInputElement>());
+    this.selectRefs = Array.from({ length: 14 }, () => React.createRef<HTMLInputElement>());
     this.dateRef = React.createRef<HTMLInputElement>();
     this.occasionRef = React.createRef<HTMLSelectElement>();
     this.fileRef = React.createRef<HTMLInputElement>();
@@ -92,6 +92,7 @@ export default class Form extends Component<FormProps, FormState> {
     } else {
       this.setState({ errors, isValid });
     }
+    this.handeFormReset();
   };
 
   handleNameChange: () => void = () => {
@@ -102,11 +103,14 @@ export default class Form extends Component<FormProps, FormState> {
 
   handleCategoryChange: () => void = () => {
     const filteredCategories = this.selectRefs
-      .filter((ref) => ref.current && ref.current.checked)
-      .map((ref) => ref.current && ref.current.name)
+      .filter((ref) => ref?.current?.checked)
+      .map((ref) => ref?.current?.name)
       .filter((name) => name !== undefined) as string[];
 
-    this.setState({ categories: filteredCategories });
+    this.setState((prevState) => ({
+      ...prevState,
+      categories: [...filteredCategories],
+    }));
   };
 
   handleDateChange: () => void = () => {
@@ -137,11 +141,17 @@ export default class Form extends Component<FormProps, FormState> {
     }
     this.setState({
       name: '',
-      categories: [],
       date: '',
       occasion: '',
+      categories: [],
       image: '',
       recommended: false,
+    });
+
+    Object.values(this.selectRefs).forEach((ref) => {
+      if (ref.current) {
+        ref.current.checked = false;
+      }
     });
   };
 
