@@ -19,8 +19,11 @@ export default class SearchBar extends Component<PropsWithChildren, SearchBarSta
     this.setState({ input: inputValue });
   };
 
-  componentWillUnmount() {
-    localStorage.setItem('inputValue', this.state.input ? this.state.input : '');
+  componentWillUnmount(): void {
+    const { input } = this.state;
+    if (input !== null) {
+      localStorage.setItem('inputValue', input);
+    }
   }
 
   render() {
