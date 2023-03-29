@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import CardsList from './CardsList';
+import { CardsList } from './CardsList';
 import { CardProps } from '../Card/Card';
 
 describe('CardsList', () => {

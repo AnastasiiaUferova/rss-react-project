@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import SearchBar from './SearchBar';
+import { SearchBar } from './SearchBar';
 
 describe('SearchBar', () => {
   beforeEach(() => {

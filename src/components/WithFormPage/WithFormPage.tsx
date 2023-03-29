@@ -1,7 +1,7 @@
 import Form from '../Form/Form';
 import React, { Component, PropsWithChildren } from 'react';
 import '../WithFormPage/WithFormPage.css';
-import CardsList from '../CardsList/CardsList';
+import { CardsList } from '../CardsList/CardsList';
 import { CardProps } from '../Card/Card';
 
 type CardsListState = {

@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React, { FC } from 'react';
 import './ConfirmMessage.css';
 
-export default class ConfirmMessage extends Component {
-  render() {
-    return <div className="confirm">Your movie is submitted successfully</div>;
-  }
-}
+export const ConfirmMessage: FC = () => {
+  return <div className="confirm">Your movie is submitted successfully</div>;
+};

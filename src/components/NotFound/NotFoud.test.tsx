@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import NotFound from './NotFound';
+import { NotFound } from './NotFound';
 
 describe('NotFound component', () => {
   it('renders the not-found image', () => {

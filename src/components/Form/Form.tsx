@@ -10,8 +10,8 @@ import DateInput from './DateInput/DateInput';
 import OccasionInput from './OccasionInput/OccasionInput';
 import ImageInput from './ImageInput/ImageInput';
 import RadioInput from './RadioInput/RadioInput';
-import ConfirmMessage from '../ConfirmMessage/ConfirmMessage';
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import { ConfirmMessage } from '../ConfirmMessage/ConfirmMessage';
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { validateForm } from '../../utils/validation';
 
 interface FormProps {
