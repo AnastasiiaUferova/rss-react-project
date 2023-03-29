@@ -1,4 +1,4 @@
-export const MOVIE_CATEGORIES: string[] = [
+export const MOVIE_CATEGORIES = [
   'Action',
   'Adventure',
   'Drama',
@@ -14,13 +14,7 @@ export const MOVIE_CATEGORIES: string[] = [
   'For Kids',
   'Western',
 ];
-
-export type OccasionOption = {
-  value: string;
-  label: string;
-};
-
-export const OCCASION_OPTIONS: OccasionOption[] = [
+export const OCCASION_OPTIONS = [
   { value: 'Choose occasion for the movie', label: 'Choose occasion for the movie' },
   { value: 'Date night', label: 'Date night' },
   { value: 'Hanging out with friends', label: 'Hanging out with friends' },
@@ -29,7 +23,6 @@ export const OCCASION_OPTIONS: OccasionOption[] = [
   { value: 'Family time', label: 'Family time' },
   { value: 'Watching with your kids', label: 'Watching with your kids' },
 ];
-
 export const registerOptions = {
   name: { required: 'Please enter a name' },
   date: { required: 'Please enter a date' },

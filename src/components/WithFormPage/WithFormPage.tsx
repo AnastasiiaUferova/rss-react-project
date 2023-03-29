@@ -1,33 +1,22 @@
 import Form from '../Form/Form';
-import React, { Component, PropsWithChildren } from 'react';
+import React, { FC, useState } from 'react';
 import '../WithFormPage/WithFormPage.css';
 import { CardsList } from '../CardsList/CardsList';
 import { CardProps } from '../Card/Card';
 
-type CardsListState = {
-  cards: CardProps[];
-};
+const WithFormPage: FC = () => {
+  const [cards, setCards] = useState<CardProps[]>([]);
 
-export default class WithFormPage extends Component<PropsWithChildren, CardsListState> {
-  constructor(props: PropsWithChildren) {
-    super(props);
-    this.state = {
-      cards: [],
-    };
-  }
-
-  onAddCard = (newCard: CardProps) => {
-    this.setState((prevState) => ({
-      cards: [...prevState.cards, newCard],
-    }));
+  const onAddCard = (newCard: CardProps) => {
+    setCards([...cards, newCard]);
   };
 
-  render() {
-    return (
-      <div className="with-form">
-        <Form onAddCard={this.onAddCard} />
-        <CardsList cards={this.state.cards} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="with-form">
+      <Form />
+      <CardsList cards={cards} />
+    </div>
+  );
+};
+
+export default WithFormPage;
