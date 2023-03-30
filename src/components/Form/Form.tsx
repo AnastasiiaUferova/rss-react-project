@@ -25,18 +25,24 @@ export interface FormValues {
   occasion: string;
   categories: string[];
   image: string;
-  recommended: '';
+  recommended?: boolean;
 }
 
-type FormState = FormValues & {
+type FormState = {
   id: string;
+  name: string;
+  date: string;
+  occasion: string;
+  categories: string[];
+  image: string;
+  recommended?: boolean;
 };
 
 interface FormProps {
-  onAddCard?: (card: FormState) => void;
+  onAddCard: (card: FormState) => void;
 }
 
-const Form: FC<FormProps> = ({ props: FormProps }) => {
+const Form: FC<FormProps> = ({ onAddCard }) => {
   const {
     register,
     handleSubmit,
@@ -45,19 +51,12 @@ const Form: FC<FormProps> = ({ props: FormProps }) => {
   } = useForm<FormValues>();
 
   const onSubmit = (data: FormValues) => {
-    props.onAddCard({
-      id: nanoid(),
-      name: this.state.name,
-      categories: this.state.categories,
-      date: this.state.date,
-      occasion: this.state.occasion,
-      image: this.state.image,
-      recommended: this.state.recommended,
-    });
+    //const rec = data.recommended === 'yes' ? true : false;
+    console.log(onAddCard({ ...data, id: nanoid() }));
     console.log(data);
   };
 
-  handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  /*handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (isValid) {
       this.props.onAddCard({
@@ -78,7 +77,7 @@ const Form: FC<FormProps> = ({ props: FormProps }) => {
       this.setState({ errors, isValid });
     }
     this.handeFormReset();
-  };
+  };*/
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
@@ -232,10 +231,6 @@ export type FormState = CardProps & {
   isValid?: boolean;
 };
 
-interface FormValues {
-  name: string;
-  password: number;
-}
 
 const Form: FC<FormProps> = () => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);

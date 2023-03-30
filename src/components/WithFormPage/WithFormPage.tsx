@@ -7,13 +7,13 @@ import { CardProps } from '../Card/Card';
 const WithFormPage: FC = () => {
   const [cards, setCards] = useState<CardProps[]>([]);
 
-  const onAddCard = (newCard: CardProps) => {
+  function onAddCard(newCard: CardProps) {
     setCards([...cards, newCard]);
-  };
+  }
 
   return (
     <div className="with-form">
-      <Form />
+      <Form onAddCard={onAddCard} />
       <CardsList cards={cards} />
     </div>
   );

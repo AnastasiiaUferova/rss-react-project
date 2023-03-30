@@ -5,7 +5,7 @@ export type CardProps = {
   id: string;
   image: string;
   name: string;
-  recommended: boolean;
+  recommended?: boolean;
   categories: string[];
   date: string;
   occasion: string;
