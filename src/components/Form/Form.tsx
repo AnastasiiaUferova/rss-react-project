@@ -11,8 +11,7 @@ import ImageInput from './ImageInput/ImageInput';
 import RadioInput from './RadioInput/RadioInput';
 import { ConfirmMessage } from '../ConfirmMessage/ConfirmMessage';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
-import { validateForm } from '../../utils/validation';
-import { useForm, Controller, useController } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { registerOptions } from '../../utils/validationRules';
 
 export interface FormValues {
@@ -20,6 +19,7 @@ export interface FormValues {
   date: string;
   occasion: string;
   categories: string[];
+  image: string;
 }
 
 export default function Form() {
@@ -30,7 +30,9 @@ export default function Form() {
     control,
   } = useForm<FormValues>();
 
-  const onSubmit = (data: FormValues) => console.log(data);
+  const onSubmit = (data: FormValues) => {
+    console.log(data);
+  };
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -46,6 +48,7 @@ export default function Form() {
         className="form__item-input"
       />
       <ErrorMessage errorMessage={errors?.name && errors.name.message} />
+
       <label htmlFor="input_date" className="form__item-text">
         Release Date
       </label>
@@ -59,6 +62,41 @@ export default function Form() {
         max="2024-01-31"
       ></input>
       <ErrorMessage errorMessage={errors?.date && errors.date.message} />
+
+      <legend className="form__item-text">Film categories</legend>
+      <Controller
+        name="categories"
+        control={control}
+        rules={{ required: 'Please choose at least one category' }}
+        defaultValue={[]}
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
+          <>
+            <fieldset id="categories" className="form__item-input form__item-input_cat">
+              {MOVIE_CATEGORIES.map((category) => (
+                <label className="form-control" key={category.value} htmlFor={category.value}>
+                  <input
+                    className="form__checkbox"
+                    name={category.value}
+                    type="checkbox"
+                    value={category.value}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const updatedValue = value.includes(val)
+                        ? value.filter((v: string) => v !== val)
+                        : [...value, val];
+                      onChange(updatedValue);
+                    }}
+                    checked={value.includes(category.value)}
+                  />
+                  {category.label}
+                </label>
+              ))}
+            </fieldset>
+            <ErrorMessage errorMessage={error && error.message} />
+          </>
+        )}
+      />
+
       <label htmlFor="input_occasion" className="form__item-text">
         Occasion
       </label>
@@ -74,37 +112,32 @@ export default function Form() {
         ))}
       </select>
       <ErrorMessage errorMessage={errors?.occasion && errors.occasion.message} />
-      <legend className="form__item-text">Film categories</legend>
+
+      <label htmlFor="image" className="form__item-text">
+        Cover Image
+      </label>
       <Controller
-        name="categories"
+        rules={{ required: 'Please choose an image' }}
+        name="image"
         control={control}
-        rules={{ required: 'Please choose at least one category' }}
-        defaultValue={[]}
-        render={({ field: { onChange, value }, fieldState: { error } }) => (
+        defaultValue=""
+        render={({ field: { onChange }, fieldState: { error } }) => (
           <>
-            <fieldset id="categories" className="form__item-input form__item-input_cat">
-              {MOVIE_CATEGORIES.map((interest) => (
-                <label className="form-control" key={interest.value} htmlFor={interest.value}>
-                  <input
-                    className="form__checkbox"
-                    name={interest.value}
-                    type="checkbox"
-                    value={interest.value}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      const updatedValue = value.includes(val)
-                        ? value.filter((v: string) => v !== val)
-                        : [...value, val];
-                      onChange(updatedValue);
-                      console.log(value);
-                    }}
-                    checked={value.includes(interest.value)}
-                  />
-                  {interest.label}
-                </label>
-              ))}
-            </fieldset>
-            <ErrorMessage errorMessage={error && 'Please choose at least one category'} />
+            <input
+              type="file"
+              id="cover-image"
+              className="form__item-input form__item-input_img"
+              accept="image/png, image/jpeg"
+              onChange={(e) => {
+                if (e.target.files) {
+                  const file = e.target.files[0];
+                  if (file) {
+                    onChange(URL.createObjectURL(file));
+                  }
+                }
+              }}
+            />
+            <ErrorMessage errorMessage={error && error.message} />
           </>
         )}
       />
@@ -168,50 +201,8 @@ const Form: FC<FormProps> = () => {
 
 export default Form;
 
-    <Controller
-        name="categories"
-        control={control}
-        rules={{ required: true }}
-        render={({ field: { onChange: onCheckChange, value }, fieldState: { error } }) => (
-          <>
-            {MOVIE_CATEGORIES.map((interest) => (
-              <label key={interest.value}>
-                <input
-                  name={interest.value}
-                  type="checkbox"
-                  value={interest.value}
-                  //onChange={() => onCheckChange(value.push(interest.value))}
-                />
-                {interest.label}
-              </label>
-            ))}
-            <ErrorMessage errorMessage={error && error.message} />
-          </>
-        )}
-      />
 
 
-
- <legend className="form__item-text">Film categories</legend>
-      <fieldset id="categories" className="form__item-input form__item-input_cat">
-        {MOVIE_CATEGORIES.map((name, index) => (
-          <CategoriesInput
-            ref={this.selectRefs[index]}
-            name={name}
-            key={index}
-            onChange={this.handleCategoryChange}
-          />
-        ))}
-      </fieldset>
-      <ErrorMessage errorMessage={this.state.errors?.categories} />
-      <DateInput ref={this.dateRef} onChange={this.handleDateChange} />
-      <ErrorMessage errorMessage={this.state.errors?.date} />
-      <OccasionInput
-        ref={this.occasionRef}
-        onChange={this.handleOccasionChange}
-        occasion={this.state.occasion}
-      />
-      <ErrorMessage errorMessage={this.state.errors?.occasion} />
       <ImageInput ref={this.fileRef} onChange={this.handleFileUpload} />
       <ErrorMessage errorMessage={this.state.errors?.image} />
       <label className="form__item-text">I recommend you to watch this film</label>
@@ -318,15 +309,7 @@ this.state = {
     }
   };
 
-  handleFileUpload: () => void = () => {
-    if (this.fileRef.current) {
-      const selectedImage = this.fileRef.current?.files?.[0];
-      if (selectedImage) {
-        const objectUrl = URL.createObjectURL(selectedImage);
-        this.setState({ image: objectUrl });
-      }
-    }
-  };
+
 
   handeFormReset: () => void = () => {
     if (this.formRef.current) {
