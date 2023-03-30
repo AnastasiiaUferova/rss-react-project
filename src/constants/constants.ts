@@ -34,3 +34,8 @@ export const OCCASION_OPTIONS: OccasionOption[] = [
   { value: 'Family time', label: 'Family time' },
   { value: 'Watching with your kids', label: 'Watching with your kids' },
 ];
+
+export const RADIO_OPTIONS = [
+  { value: 'Yes', label: 'Yes' },
+  { value: 'No', label: 'No' },
+];

@@ -1,5 +1,10 @@
 import React, { FC, useState } from 'react';
-import { MOVIE_CATEGORIES, OccasionOption, OCCASION_OPTIONS } from '../../constants/constants';
+import {
+  MOVIE_CATEGORIES,
+  OccasionOption,
+  OCCASION_OPTIONS,
+  RADIO_OPTIONS,
+} from '../../constants/constants';
 import './Form.css';
 import './Switcher.css';
 import { nanoid } from 'nanoid';
@@ -20,9 +25,18 @@ export interface FormValues {
   occasion: string;
   categories: string[];
   image: string;
+  recommended: '';
 }
 
-export default function Form() {
+type FormState = FormValues & {
+  id: string;
+};
+
+interface FormProps {
+  onAddCard?: (card: FormState) => void;
+}
+
+const Form: FC<FormProps> = ({ props: FormProps }) => {
   const {
     register,
     handleSubmit,
@@ -31,8 +45,42 @@ export default function Form() {
   } = useForm<FormValues>();
 
   const onSubmit = (data: FormValues) => {
+    props.onAddCard({
+      id: nanoid(),
+      name: this.state.name,
+      categories: this.state.categories,
+      date: this.state.date,
+      occasion: this.state.occasion,
+      image: this.state.image,
+      recommended: this.state.recommended,
+    });
     console.log(data);
   };
+
+  handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isValid) {
+      this.props.onAddCard({
+        id: nanoid(),
+        name: this.state.name,
+        categories: this.state.categories,
+        date: this.state.date,
+        occasion: this.state.occasion,
+        image: this.state.image,
+        recommended: this.state.recommended,
+      });
+      this.setState({ isSubmitted: true, errors: {} });
+      this.handeFormReset();
+      setTimeout(() => {
+        this.setState({ isSubmitted: false });
+      }, 3000);
+    } else {
+      this.setState({ errors, isValid });
+    }
+    this.handeFormReset();
+  };
+
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -142,13 +190,22 @@ export default function Form() {
         )}
       />
 
+      <label className="form__item-text">I recommend you to watch this film</label>
+      <div className="switch-field">
+        <input {...register('recommended')} type="radio" id="radio-one" value="yes" />
+        <label htmlFor="radio-one">Yes</label>
+        <input {...register('recommended')} type="radio" id="radio-two" value="no" />
+        <label htmlFor="radio-two">No</label>
+      </div>
+
       <button className="form__button" type="submit">
         Submit
       </button>
     </form>
   );
-}
+};
 
+export default Form;
 /*
 
 
