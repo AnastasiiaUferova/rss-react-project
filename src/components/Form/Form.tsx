@@ -1,10 +1,9 @@
 import React, { FC, useState } from 'react';
-import { MOVIE_CATEGORIES, registerOptions } from '../../constants/constants';
+import { MOVIE_CATEGORIES, OccasionOption, OCCASION_OPTIONS } from '../../constants/constants';
 import './Form.css';
 import './Switcher.css';
 import { nanoid } from 'nanoid';
 import { CardProps } from '../Card/Card';
-import Input from './NameInput/NameInput';
 import CategoriesInput from './CategoriesInput/CategoriesInput';
 import DateInput from './DateInput/DateInput';
 import OccasionInput from './OccasionInput/OccasionInput';
@@ -13,13 +12,14 @@ import RadioInput from './RadioInput/RadioInput';
 import { ConfirmMessage } from '../ConfirmMessage/ConfirmMessage';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { validateForm } from '../../utils/validation';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller, useController } from 'react-hook-form';
+import { registerOptions } from '../../utils/validationRules';
 
 export interface FormValues {
   name: string;
   date: string;
-  email: string;
-  password: string;
+  occasion: string;
+  categories: string[];
 }
 
 export default function Form() {
@@ -27,6 +27,7 @@ export default function Form() {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm<FormValues>();
 
   const onSubmit = (data: FormValues) => console.log(data);
@@ -45,6 +46,68 @@ export default function Form() {
         className="form__item-input"
       />
       <ErrorMessage errorMessage={errors?.name && errors.name.message} />
+      <label htmlFor="input_date" className="form__item-text">
+        Release Date
+      </label>
+      <input
+        className="form__item-input"
+        {...register('date', registerOptions.date)}
+        type="date"
+        id="input_date"
+        name="date"
+        min="1900-01-01"
+        max="2024-01-31"
+      ></input>
+      <ErrorMessage errorMessage={errors?.date && errors.date.message} />
+      <label htmlFor="input_occasion" className="form__item-text">
+        Occasion
+      </label>
+      <select
+        {...register('occasion', registerOptions.occasion)}
+        id="input_occasion"
+        className="form__item-input"
+      >
+        {OCCASION_OPTIONS.map((option: OccasionOption) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <ErrorMessage errorMessage={errors?.occasion && errors.occasion.message} />
+      <legend className="form__item-text">Film categories</legend>
+      <Controller
+        name="categories"
+        control={control}
+        rules={{ required: 'Please choose at least one category' }}
+        defaultValue={[]}
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
+          <>
+            <fieldset id="categories" className="form__item-input form__item-input_cat">
+              {MOVIE_CATEGORIES.map((interest) => (
+                <label className="form-control" key={interest.value} htmlFor={interest.value}>
+                  <input
+                    className="form__checkbox"
+                    name={interest.value}
+                    type="checkbox"
+                    value={interest.value}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const updatedValue = value.includes(val)
+                        ? value.filter((v: string) => v !== val)
+                        : [...value, val];
+                      onChange(updatedValue);
+                      console.log(value);
+                    }}
+                    checked={value.includes(interest.value)}
+                  />
+                  {interest.label}
+                </label>
+              ))}
+            </fieldset>
+            <ErrorMessage errorMessage={error && 'Please choose at least one category'} />
+          </>
+        )}
+      />
 
       <button className="form__button" type="submit">
         Submit
@@ -54,6 +117,18 @@ export default function Form() {
 }
 
 /*
+
+
+      <legend className="form__item-text">Film categories</legend>
+     
+
+
+
+
+   
+
+
+
 
 interface FormProps {
   onAddCard?: (card: FormState) => void;
@@ -93,7 +168,27 @@ const Form: FC<FormProps> = () => {
 
 export default Form;
 
-/*
+    <Controller
+        name="categories"
+        control={control}
+        rules={{ required: true }}
+        render={({ field: { onChange: onCheckChange, value }, fieldState: { error } }) => (
+          <>
+            {MOVIE_CATEGORIES.map((interest) => (
+              <label key={interest.value}>
+                <input
+                  name={interest.value}
+                  type="checkbox"
+                  value={interest.value}
+                  //onChange={() => onCheckChange(value.push(interest.value))}
+                />
+                {interest.label}
+              </label>
+            ))}
+            <ErrorMessage errorMessage={error && error.message} />
+          </>
+        )}
+      />
 
 
 

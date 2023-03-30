@@ -1,5 +1,5 @@
 import { FormState } from '../components/Form/Form';
-import getDateLimitations from './getDateLimitations';
+import getDateLimitations from './validationRules';
 
 export const validateForm = (formData: FormState) => {
   const { name, categories, date, occasion, image } = formData;
