@@ -1,19 +1,8 @@
 import React, { FC, useState } from 'react';
-import {
-  MOVIE_CATEGORIES,
-  OccasionOption,
-  OCCASION_OPTIONS,
-  RADIO_OPTIONS,
-} from '../../constants/constants';
+import { MOVIE_CATEGORIES, OccasionOption, OCCASION_OPTIONS } from '../../constants/constants';
 import './Form.css';
 import './Switcher.css';
 import { nanoid } from 'nanoid';
-import { CardProps } from '../Card/Card';
-import CategoriesInput from './CategoriesInput/CategoriesInput';
-import DateInput from './DateInput/DateInput';
-import OccasionInput from './OccasionInput/OccasionInput';
-import ImageInput from './ImageInput/ImageInput';
-import RadioInput from './RadioInput/RadioInput';
 import { ConfirmMessage } from '../ConfirmMessage/ConfirmMessage';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { useForm, Controller } from 'react-hook-form';
@@ -25,18 +14,12 @@ export interface FormValues {
   occasion: string;
   categories: string[];
   image: string;
-  recommended?: boolean;
+  recommended: string;
 }
 
-type FormState = {
+interface FormState extends FormValues {
   id: string;
-  name: string;
-  date: string;
-  occasion: string;
-  categories: string[];
-  image: string;
-  recommended?: boolean;
-};
+}
 
 interface FormProps {
   onAddCard: (card: FormState) => void;
@@ -48,38 +31,19 @@ const Form: FC<FormProps> = ({ onAddCard }) => {
     handleSubmit,
     formState: { errors },
     control,
+    reset,
   } = useForm<FormValues>();
 
-  const onSubmit = (data: FormValues) => {
-    //const rec = data.recommended === 'yes' ? true : false;
-    console.log(onAddCard({ ...data, id: nanoid() }));
-    console.log(data);
-  };
-
-  /*handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (isValid) {
-      this.props.onAddCard({
-        id: nanoid(),
-        name: this.state.name,
-        categories: this.state.categories,
-        date: this.state.date,
-        occasion: this.state.occasion,
-        image: this.state.image,
-        recommended: this.state.recommended,
-      });
-      this.setState({ isSubmitted: true, errors: {} });
-      this.handeFormReset();
-      setTimeout(() => {
-        this.setState({ isSubmitted: false });
-      }, 3000);
-    } else {
-      this.setState({ errors, isValid });
-    }
-    this.handeFormReset();
-  };*/
-
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
+  const onSubmit = (data: FormValues) => {
+    onAddCard({ ...data, id: nanoid() });
+    setIsSubmitted(true);
+    setTimeout(() => {
+      setIsSubmitted(false);
+    }, 3000);
+    reset();
+  };
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -191,210 +155,25 @@ const Form: FC<FormProps> = ({ onAddCard }) => {
 
       <label className="form__item-text">I recommend you to watch this film</label>
       <div className="switch-field">
-        <input {...register('recommended')} type="radio" id="radio-one" value="yes" />
+        <input
+          {...register('recommended')}
+          checked={true}
+          type="radio"
+          id="radio-one"
+          value="yes"
+        />
         <label htmlFor="radio-one">Yes</label>
         <input {...register('recommended')} type="radio" id="radio-two" value="no" />
         <label htmlFor="radio-two">No</label>
       </div>
 
-      <button className="form__button" type="submit">
-        Submit
-      </button>
-    </form>
-  );
-};
-
-export default Form;
-/*
-
-
-      <legend className="form__item-text">Film categories</legend>
-     
-
-
-
-
-   
-
-
-
-
-interface FormProps {
-  onAddCard?: (card: FormState) => void;
-}
-
-export type FormState = CardProps & {
-  noIsChecked?: boolean;
-  yesIsChecked?: boolean;
-  isSubmitted?: boolean;
-  errors?: { [key: string]: string };
-  isValid?: boolean;
-};
-
-
-const Form: FC<FormProps> = () => {
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const { handleSubmit } = useForm<FormValues>();
-
-  const onSubmit = handleSubmit((data) => console.log(data));
-
-  return (
-    <form onSubmit={onSubmit} className="form" noValidate>
-      <h1 className="form__title">Add your Movie</h1>
-      <NameInput label="name" name="name" />
-      <NameInput label="password" name="password" />
       {isSubmitted && <ConfirmMessage />}
+
       <button className="form__button" type="submit">
-        Add Movie
+        Add movie
       </button>
     </form>
   );
 };
 
 export default Form;
-
-
-
-      <ImageInput ref={this.fileRef} onChange={this.handleFileUpload} />
-      <ErrorMessage errorMessage={this.state.errors?.image} />
-      <label className="form__item-text">I recommend you to watch this film</label>
-      <div className="switch-field">
-        <RadioInput
-          onChange={this.handleYesChange}
-          ref={this.radioYesRef}
-          id="radio-one"
-          value="yes"
-          label="Yes"
-          name="switch-one"
-          checked={this.state.yesIsChecked}
-        />
-        <RadioInput
-          onChange={this.handleNoChange}
-          ref={this.radioNoRef}
-          id="radio-two"
-          value="no"
-          label="No"
-          name="switch-two"
-          checked={this.state.noIsChecked}
-        />
-      </div>
-
-
-this.state = {
-  id: nanoid(),
-  name: '',
-  categories: [],
-  date: '',
-  occasion: '',
-  image: '',
-  recommended: false,
-  noIsChecked: true,
-  yesIsChecked: false,
-  errors: {},
-  isButtonDisabled: true,
-};
-
- this.formRef = React.createRef<HTMLFormElement>();
-    this.handleSubmit.bind(this);
-    this.handleNameChange.bind(this);
-    this.handleCategoryChange.bind(this);
-    this.handleDateChange.bind(this);
-    this.handleOccasionChange.bind(this);
-    this.handleFileUpload.bind(this);
-    this.handleYesChange.bind(this);
-    this.handleNoChange.bind(this);
-
-
-
-
-      handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    const { errors, isValid } = validateForm(this.state);
-    event.preventDefault();
-    if (isValid) {
-      this.props.onAddCard({
-        id: nanoid(),
-        name: this.state.name,
-        categories: this.state.categories,
-        date: this.state.date,
-        occasion: this.state.occasion,
-        image: this.state.image,
-        recommended: this.state.recommended,
-      });
-      this.setState({ isSubmitted: true, errors: {} });
-      this.handeFormReset();
-      setTimeout(() => {
-        this.setState({ isSubmitted: false });
-      }, 3000);
-    } else {
-      this.setState({ errors, isValid });
-    }
-    this.handeFormReset();
-  };
-
-  handleNameChange: () => void = () => {
-    if (this.nameRef.current) {
-      this.setState({ name: this.nameRef.current.value });
-    }
-  };
-
-  handleCategoryChange: () => void = () => {
-    const filteredCategories = this.selectRefs
-      .filter((ref) => ref?.current?.checked)
-      .map((ref) => ref?.current?.name)
-      .filter((name) => name !== undefined) as string[];
-
-    this.setState((prevState) => ({
-      ...prevState,
-      categories: [...filteredCategories],
-    }));
-  };
-
-  handleDateChange: () => void = () => {
-    if (this.dateRef.current) {
-      this.setState({ date: this.dateRef.current.value });
-    }
-  };
-
-  handleOccasionChange: () => void = () => {
-    if (this.occasionRef.current) {
-      this.setState({ occasion: this.occasionRef.current.value });
-    }
-  };
-
-
-
-  handeFormReset: () => void = () => {
-    if (this.formRef.current) {
-      this.formRef.current.reset();
-    }
-    this.setState({
-      name: '',
-      date: '',
-      occasion: '',
-      categories: [],
-      image: '',
-      recommended: false,
-    });
-
-    Object.values(this.selectRefs).forEach((ref) => {
-      if (ref.current) {
-        ref.current.checked = false;
-      }
-    });
-  };
-
-  handleYesChange = () => {
-    this.setState({ recommended: true, noIsChecked: false, yesIsChecked: true });
-  };
-
-  handleNoChange = () => {
-    this.setState({ recommended: false, noIsChecked: true, yesIsChecked: false });
-  };
-
-  componentWillUnmount() {
-    if (this.state.image) {
-      URL.revokeObjectURL(this.state.image);
-    }
-  }
-
-*/

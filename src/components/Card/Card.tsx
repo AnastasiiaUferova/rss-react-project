@@ -5,7 +5,7 @@ export type CardProps = {
   id: string;
   image: string;
   name: string;
-  recommended?: boolean;
+  recommended: string;
   categories: string[];
   date: string;
   occasion: string;
@@ -13,7 +13,7 @@ export type CardProps = {
 
 export const Card: FC<CardProps> = (props: CardProps) => {
   const { name, image, categories, occasion, date, recommended } = props;
-  const recClass = recommended ? `card__button card__button_rec` : `card__button`;
+  const recClass = recommended === 'yes' ? `card__button card__button_rec` : `card__button`;
   return (
     <div className="card">
       <img className="card__pic" src={image} alt={`Picture of "${name}"`}></img>
