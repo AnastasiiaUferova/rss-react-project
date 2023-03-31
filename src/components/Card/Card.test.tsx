@@ -7,7 +7,7 @@ describe('Card', () => {
     id: '1',
     image: 'http://example.com/image.jpg',
     name: 'Example Name',
-    recommended: true,
+    recommended: 'yes',
     categories: ['Category 1', 'Category 2'],
     date: '2023-03-25',
     occasion: 'Example Occasion',
@@ -24,7 +24,7 @@ describe('Card', () => {
   });
 
   it('should render the card without recommended class when recommended is false', () => {
-    const propsWithoutRecommended = { ...props, recommended: false };
+    const propsWithoutRecommended = { ...props, recommended: 'no' };
     render(<Card {...propsWithoutRecommended} />);
     expect(screen.getByRole('button')).not.toHaveClass('card__button_rec');
   });

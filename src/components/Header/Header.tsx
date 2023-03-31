@@ -14,7 +14,7 @@ export const Header: FC = () => {
   };
   return (
     <div className="header">
-      <p>{pathNames[location.pathname] || 'Not Found'}</p>
+      <p className="header__title">{pathNames[location.pathname] || 'Not Found'}</p>
       <div className="header__navlinks">
         <NavLink to="/">Home</NavLink>
         <NavLink to="about-us">About Us</NavLink>
