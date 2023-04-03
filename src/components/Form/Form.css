@@ -11,9 +11,9 @@
   font-weight: 500;
   font-size: 24px;
   line-height: 29px;
-  color: whitesmoke;
+  color: black;
   margin-top: 0;
-  margin-bottom: 8px;
+  margin-bottom: 15px;
   align-self: center;
 }
 
@@ -21,11 +21,11 @@
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 12px;
-  color: whitesmoke;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  color: #8808a9;
+  margin-bottom: 14px;
+  margin-top: 15px;
 }
 
 .form__item-input {
@@ -42,6 +42,14 @@
   color: #000000;
   cursor: pointer;
   box-shadow: 2px 5px 5px rgb(30, 2, 58);
+}
+
+.form__item-input:focus {
+  border: 2px solid #8808a9;
+}
+
+.form__item-input:hover {
+  border: 1px solid #8808a9;
 }
 
 .form__item-input_cat {

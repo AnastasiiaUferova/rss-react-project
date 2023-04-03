@@ -35,7 +35,6 @@ export const SearchBar: React.FC = () => {
           <button className="search__form__button" type="submit"></button>
         </form>
       </div>
-      <p>Input from LocalStorage: {localStorage.getItem('query')}</p>
     </div>
   );
 };
