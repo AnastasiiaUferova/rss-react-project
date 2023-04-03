@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import './SearchBar.css';
 
-export const SearchBar = () => {
-  const [input, setInput] = useState<string | null>(
-    localStorage.getItem('input') !== null ? localStorage.getItem('inputValue') : ''
-  );
+export const SearchBar: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState<string>(() => {
+    const savedQuery = localStorage.getItem('query');
+    const initialValue = savedQuery ? JSON.parse(savedQuery) : '';
+    return initialValue;
+  });
 
   useEffect(() => {
-    if (input !== null) {
-      localStorage.setItem('inputValue', input);
-    }
-  }, [input]);
+    localStorage.setItem('query', JSON.stringify(searchQuery));
+  }, [searchQuery]);
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    const inputValue = e.currentTarget.value;
-    setInput(inputValue);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const inputValue = e.currentTarget.value.trim();
+    setSearchQuery((prevInput: string) => {
+      if (inputValue !== prevInput) {
+        return inputValue;
+      }
+      return prevInput;
+    });
   };
 
   return (
@@ -24,13 +29,13 @@ export const SearchBar = () => {
           <input
             className="search__form__input"
             type="text"
-            value={input || ''}
+            value={searchQuery}
             onChange={handleChange}
           ></input>
           <button className="search__form__button" type="submit"></button>
         </form>
       </div>
-      <p>Input from LocalStorage: {localStorage.getItem('inputValue')}</p>
+      <p>Input from LocalStorage: {localStorage.getItem('query')}</p>
     </div>
   );
 };
