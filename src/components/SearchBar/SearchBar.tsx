@@ -1,15 +1,21 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
 import './SearchBar.css';
 
 export const SearchBar: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState<string>(() => {
-    const savedQuery = localStorage.getItem('query');
-    const initialValue = savedQuery ? JSON.parse(savedQuery) : '';
-    return initialValue;
-  });
+  const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('query') || '');
+  const inputRef = useRef(searchQuery);
 
   useEffect(() => {
-    localStorage.setItem('query', JSON.stringify(searchQuery));
+    const query = localStorage.getItem('query');
+    query && setSearchQuery(query);
+
+    return () => {
+      localStorage.setItem('query', inputRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    inputRef.current = searchQuery;
   }, [searchQuery]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -27,6 +33,7 @@ export const SearchBar: React.FC = () => {
       <div className="search-container">
         <form className="search__form">
           <input
+            ref={() => inputRef}
             className="search__form__input"
             type="text"
             value={searchQuery}
