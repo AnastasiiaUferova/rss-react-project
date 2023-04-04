@@ -5,15 +5,15 @@ import { Card } from '../Card/Card';
 import { ApiCardProps } from '../ApiCard/ApiCard';
 import { ApiCard } from '../ApiCard/ApiCard';
 import { useLocation } from 'react-router-dom';
+import { TvShow } from '../../hooks/useFetch';
 
 export type CardsListProps = {
-  cards?: CardProps[] | ApiCardProps[];
+  cards?: CardProps[] | ApiCardProps[] | TvShow[];
 };
 
 export const CardsList: FC<CardsListProps> = (props: CardsListProps) => {
   const location = useLocation();
   const isForm = location.pathname === '/form';
-  console.log(isForm);
 
   function renderCards(card) {
     if (isForm)
