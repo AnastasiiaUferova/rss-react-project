@@ -5,13 +5,15 @@ export type CardProps = {
   id: string;
   image: string;
   name: string;
-  recommended: string;
-  categories: string[];
+  recommended?: string;
+  categories?: string[];
   date: string;
-  occasion: string;
+  occasion?: string;
 };
 
-export const Card: FC<CardProps> = (props: CardProps) => {
+type finalType = CardProps;
+
+export const Card: FC<CardProps> = (props: finalType) => {
   const { name, image, categories, occasion, date, recommended } = props;
   const recClass = recommended === 'yes' ? `card__button card__button_rec` : `card__button`;
   return (

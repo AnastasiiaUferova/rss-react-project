@@ -47,9 +47,9 @@ const Form: FC<FormProps> = ({ onAddCard }) => {
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)} noValidate>
-      <h1 className="form__title">Add your Movie</h1>
+      <h1 className="form__title">Add your Show</h1>
       <label htmlFor="input_name" className="form__item-text">
-        Movie Name
+        Show Name
       </label>
       <input
         {...register('name', registerOptions.name)}
@@ -74,7 +74,7 @@ const Form: FC<FormProps> = ({ onAddCard }) => {
       ></input>
       <ErrorMessage errorMessage={errors?.date && errors.date.message} />
 
-      <legend className="form__item-text">Film categories</legend>
+      <legend className="form__item-text">Show categories</legend>
       <Controller
         name="categories"
         control={control}
@@ -153,7 +153,7 @@ const Form: FC<FormProps> = ({ onAddCard }) => {
         )}
       />
 
-      <label className="form__item-text">I recommend you to watch this film</label>
+      <label className="form__item-text">I recommend you to watch this show</label>
       <div className="switch-field">
         <input
           {...register('recommended')}

@@ -18,7 +18,7 @@ export const Header: FC = () => {
       <div className="header__navlinks">
         <NavLink to="/">Home</NavLink>
         <NavLink to="about-us">About Us</NavLink>
-        <NavLink to="form">Add Your Movie</NavLink>
+        <NavLink to="form">Add Your Show</NavLink>
       </div>
     </div>
   );

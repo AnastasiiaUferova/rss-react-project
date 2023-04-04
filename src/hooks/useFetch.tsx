@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react';
-
-const API_KEY = process.env.API_KEY;
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function useFetch(url: string) {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     setLoading(true);
-    fetch(url)
-      .then((response) => response.json())
+    axios
+      .get(url)
       .then((res) => {
-        setData(res.data);
-        console.log(res.data);
+        setData(res.data.tv_shows);
       })
       .catch((err) => {
         setError(err);
