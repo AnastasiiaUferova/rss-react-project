@@ -5,6 +5,7 @@ import useFetch, { TvShow } from '../../hooks/useFetch';
 import { URL } from '../../constants/constants';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Loader } from '../Loader/Loader';
+import Popup from '../Popup/Popup';
 
 export const Home: FC = () => {
   const { data, error, loading } = useFetch(URL);
@@ -29,7 +30,7 @@ export const Home: FC = () => {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem('query')) {
+    if (!localStorage.getItem('query') && !query) {
       setCards(data);
     } else setCards(filterData);
   }, [data, filterData, query]);
@@ -44,6 +45,7 @@ export const Home: FC = () => {
       <SearchBar onQueryChange={handleQueryChange} />
       {isLoading && <Loader />}
       {renderElements()}
+      <Popup />
     </div>
   );
 };

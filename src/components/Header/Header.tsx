@@ -15,11 +15,11 @@ export const Header: FC = () => {
   return (
     <div className="header">
       <p className="header__title">{pathNames[location.pathname] || 'Not Found'}</p>
-      <div className="header__navlinks">
+      <nav className="header__navlinks">
         <NavLink to="/">Home</NavLink>
         <NavLink to="about-us">About Us</NavLink>
         <NavLink to="form">Add Your Show</NavLink>
-      </div>
+      </nav>
     </div>
   );
 };
