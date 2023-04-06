@@ -1,5 +1,6 @@
 import React from 'react';
 import './Popup.css';
+import useClickOutside from '../../hooks/useClickOutside';
 
 type popupProps = {
   popupIsOpen: boolean;
@@ -8,9 +9,14 @@ type popupProps = {
 
 const Popup: React.FC<popupProps> = (props) => {
   const popupClass = props.popupIsOpen ? `popup popup_opened` : `popup`;
+
+  const popupRef = useClickOutside(() => {
+    props.setPopupIsOpen(false);
+  });
+
   return (
     <div className={popupClass}>
-      <div className="popup__container">
+      <div ref={popupRef} className="popup__container">
         <button
           onClick={() => props.setPopupIsOpen(false)}
           className="popup__close-button popup__close-button_type_pic"
