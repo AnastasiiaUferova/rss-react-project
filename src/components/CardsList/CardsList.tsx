@@ -1,15 +1,9 @@
 import React, { FC } from 'react';
 import './CardsList.css';
-import { CardProps } from '../Card/Card';
 import { Card } from '../Card/Card';
-import { ApiCardProps } from '../ApiCard/ApiCard';
 import { ApiCard } from '../ApiCard/ApiCard';
 import { useLocation } from 'react-router-dom';
-import { TvShow } from '../../hooks/useFetch';
-
-export type CardsListProps = {
-  cards?: CardProps[] | ApiCardProps[] | TvShow[];
-};
+import { CardsListProps } from '../../types/types';
 
 export const CardsList: FC<CardsListProps> = (props: CardsListProps) => {
   const location = useLocation();

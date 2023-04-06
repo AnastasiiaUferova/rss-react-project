@@ -2,7 +2,7 @@ import Form from '../Form/Form';
 import React, { FC, useState } from 'react';
 import '../WithFormPage/WithFormPage.css';
 import { CardsList } from '../CardsList/CardsList';
-import { CardProps } from '../Card/Card';
+import { CardProps } from '../../types/types';
 
 const WithFormPage: FC = () => {
   const [cards, setCards] = useState<CardProps[]>([]);

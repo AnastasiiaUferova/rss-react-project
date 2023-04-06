@@ -7,23 +7,7 @@ import { ConfirmMessage } from '../ConfirmMessage/ConfirmMessage';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { useForm, Controller } from 'react-hook-form';
 import { registerOptions } from '../../utils/validationRules';
-
-export interface FormValues {
-  name: string;
-  date: string;
-  occasion: string;
-  categories: string[];
-  image: string;
-  recommended: string;
-}
-
-interface FormState extends FormValues {
-  id: string;
-}
-
-interface FormProps {
-  onAddCard: (card: FormState) => void;
-}
+import { FormProps, FormValues } from '../../types/types';
 
 const Form: FC<FormProps> = ({ onAddCard }) => {
   const {

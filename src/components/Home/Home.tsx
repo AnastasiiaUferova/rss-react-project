@@ -1,12 +1,13 @@
 import { SearchBar } from '../SearchBar/SearchBar';
 import React, { FC, useState, useEffect } from 'react';
 import { CardsList } from '../CardsList/CardsList';
-import useFetch, { TvShow } from '../../hooks/useFetch';
+import useFetch from '../../hooks/useFetch';
 import { URL, generalURL } from '../../constants/constants';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Loader } from '../Loader/Loader';
 import Popup from '../Popup/Popup';
 import cardContext from '../../context/cardContext';
+import { TvShow } from '../../types/types';
 
 export const Home: FC = () => {
   const { data, error, loading } = useFetch(URL);

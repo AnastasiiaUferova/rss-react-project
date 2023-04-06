@@ -1,28 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
-export interface TvShow {
-  id: number;
-  name: string;
-  permalink?: string;
-  start_date: string;
-  end_date?: string | null;
-  status: string;
-  country: string;
-  network: string;
-  image_thumbnail_path: string;
-}
-
-export interface PopupData {
-  name: string;
-  description: string;
-  network: string;
-  status: string;
-  country: string;
-  image_path: string;
-  rating: string;
-  genres: string[];
-}
+import { TvShow, PopupData } from '../types/types';
 
 interface ApiError {
   message: string;

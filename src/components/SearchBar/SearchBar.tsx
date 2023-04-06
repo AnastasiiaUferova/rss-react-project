@@ -1,9 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
 import './SearchBar.css';
-
-interface SearchBoxProps {
-  onQueryChange: (newQuery: string) => void;
-}
+import { SearchBoxProps } from '../../types/types';
 
 export const SearchBar: React.FC<SearchBoxProps> = (props) => {
   const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('query') || '');

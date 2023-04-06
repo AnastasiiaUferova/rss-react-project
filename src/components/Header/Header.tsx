@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import './Header.css';
+import { StringObject } from '../../types/types';
 
 export const Header: FC = () => {
   const location = useLocation();
-
-  type StringObject = { [key: string]: string };
 
   const pathNames: StringObject = {
     '/about-us': 'About Us',

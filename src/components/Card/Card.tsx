@@ -1,17 +1,6 @@
 import React, { FC } from 'react';
 import './Card.css';
-
-export type CardProps = {
-  id: string;
-  image: string;
-  name: string;
-  recommended?: string;
-  categories?: string[];
-  date: string;
-  occasion?: string;
-};
-
-type finalType = CardProps;
+import { CardProps, finalType } from '../../types/types';
 
 export const Card: FC<CardProps> = (props: finalType) => {
   const { name, image, categories, occasion, date, recommended } = props;
