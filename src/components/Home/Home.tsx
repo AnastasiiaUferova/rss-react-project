@@ -27,6 +27,8 @@ export const Home: FC = () => {
   const isLoading = loading || filterLoading;
   const isError = error || filterError;
 
+  console.log(popupData);
+
   const handleQueryChange = (newQuery: string) => {
     if (newQuery) {
       setQuery(newQuery);
@@ -40,8 +42,6 @@ export const Home: FC = () => {
     } else setCards(filterData);
   }, [data, filterData, query]);
 
-  console.log(popupData);
-
   function renderElements() {
     if (isError) return <ErrorMessage errorMessage={error?.message || filterError?.message} />;
     else return <CardsList cards={cards} />;
@@ -54,7 +54,7 @@ export const Home: FC = () => {
           <SearchBar onQueryChange={handleQueryChange} />
           {isLoading && <Loader />}
           {renderElements()}
-          <Popup popupIsOpen={popupIsOpen} setPopupIsOpen={setPopupIsOpen} />
+          <Popup data={popupData} popupIsOpen={popupIsOpen} setPopupIsOpen={setPopupIsOpen} />
         </div>
       </cardContext.Provider>
     </>

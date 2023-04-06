@@ -12,7 +12,6 @@ const useClickOutside = (handler: () => void): RefObject<HTMLDivElement> => {
     document.addEventListener('mousedown', maybeHandler);
 
     return () => {
-      // Cleanup the event listener
       document.removeEventListener('mousedown', maybeHandler);
     };
   }, [handler]);
