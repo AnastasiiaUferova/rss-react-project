@@ -1,13 +1,13 @@
 import { createContext } from 'react';
-import { TvShow } from '../hooks/useFetch';
 
 type cardContext = {
-  selectedCardId?: string;
   setSelectedCardId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setPopupIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const cardContext = createContext<cardContext>({
   setSelectedCardId: () => {},
+  setPopupIsOpen: () => {},
 });
 
 export default cardContext;

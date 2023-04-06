@@ -12,7 +12,12 @@ export type ApiCardProps = {
 };
 
 export const ApiCard: FC<ApiCardProps> = (props: ApiCardProps) => {
-  const { setSelectedCardId } = useContext(cardContext);
+  const { setSelectedCardId, setPopupIsOpen } = useContext(cardContext);
+
+  const onClickHandle: () => void = () => {
+    setSelectedCardId(props.id);
+    setPopupIsOpen(true);
+  };
 
   const { name, image_thumbnail_path, start_date, country, network } = props;
   return (
@@ -28,7 +33,7 @@ export const ApiCard: FC<ApiCardProps> = (props: ApiCardProps) => {
           <p className="card__subtext card__subtext_category">{network}</p>
           <p className="card__subtext">{start_date}</p>
         </div>
-        <button onClick={() => setSelectedCardId(props.id)} className="card__button_more">
+        <button onClick={onClickHandle} className="card__button_more">
           Details
         </button>
       </div>

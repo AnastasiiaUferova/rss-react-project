@@ -1,15 +1,21 @@
 import React from 'react';
 import './Popup.css';
 
-/*type popupProps = {
+type popupProps = {
+  popupIsOpen: boolean;
+  setPopupIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-}*/
-
-const Popup: React.FC = () => {
+const Popup: React.FC<popupProps> = (props) => {
+  const popupClass = props.popupIsOpen ? `popup popup_opened` : `popup`;
   return (
-    <div className="popup">
+    <div className={popupClass}>
       <div className="popup__container">
-        <button className="popup__close-button popup__close-button_type_pic" type="button"></button>
+        <button
+          onClick={() => props.setPopupIsOpen(false)}
+          className="popup__close-button popup__close-button_type_pic"
+          type="button"
+        ></button>
         <section className="popup__info-wrapper">
           <img
             src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"

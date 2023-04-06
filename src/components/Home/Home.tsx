@@ -2,7 +2,7 @@ import { SearchBar } from '../SearchBar/SearchBar';
 import React, { FC, useState, useEffect } from 'react';
 import { CardsList } from '../CardsList/CardsList';
 import useFetch, { TvShow } from '../../hooks/useFetch';
-import { URL } from '../../constants/constants';
+import { URL, generalURL } from '../../constants/constants';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Loader } from '../Loader/Loader';
 import Popup from '../Popup/Popup';
@@ -12,13 +12,16 @@ export const Home: FC = () => {
   const { data, error, loading } = useFetch(URL);
   const [query, setQuery] = useState<string>('');
   const [selectedCardId, setSelectedCardId] = useState<string>();
+  const [popupIsOpen, setPopupIsOpen] = useState<boolean>(false);
 
   const finalQuery = query ? query : localStorage.getItem('query');
   const {
     data: filterData,
     error: filterError,
     loading: filterLoading,
-  } = useFetch(`https://www.episodate.com/api/search?q=${finalQuery}&page=1`);
+  } = useFetch(`${generalURL}/search?q=${finalQuery}&page=1`);
+
+  const { popupData } = useFetch(`${generalURL}/show-details?q=${selectedCardId}`);
 
   const [cards, setCards] = useState<TvShow[]>();
   const isLoading = loading || filterLoading;
@@ -37,10 +40,7 @@ export const Home: FC = () => {
     } else setCards(filterData);
   }, [data, filterData, query]);
 
-  /*function handleCardClick(data) {
-    setSelectedCard({ name: data.name, link: data.link });
-    setIsImagePopupOpen(true);
-}*/
+  console.log(popupData);
 
   function renderElements() {
     if (isError) return <ErrorMessage errorMessage={error?.message || filterError?.message} />;
@@ -49,12 +49,12 @@ export const Home: FC = () => {
 
   return (
     <>
-      <cardContext.Provider value={{ selectedCardId, setSelectedCardId }}>
+      <cardContext.Provider value={{ setSelectedCardId, setPopupIsOpen }}>
         <div className="home">
           <SearchBar onQueryChange={handleQueryChange} />
           {isLoading && <Loader />}
           {renderElements()}
-          <Popup />
+          <Popup popupIsOpen={popupIsOpen} setPopupIsOpen={setPopupIsOpen} />
         </div>
       </cardContext.Provider>
     </>
