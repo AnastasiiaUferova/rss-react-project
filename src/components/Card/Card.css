@@ -4,6 +4,13 @@
   object-fit: cover;
 }
 
+.card__button_more {
+  cursor: pointer;
+  background-color: #be19e8;
+  border: none;
+  border-radius: 5px;
+}
+
 .card__text-container {
   width: 100%;
   display: flex;

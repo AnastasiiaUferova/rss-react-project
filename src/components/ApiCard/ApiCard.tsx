@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import '../Card/Card.css';
+import cardContext from '../../context/cardContext';
 
 export type ApiCardProps = {
   id: string;
@@ -8,11 +9,12 @@ export type ApiCardProps = {
   start_date: string;
   network: string;
   country: string;
-  status: string;
 };
 
 export const ApiCard: FC<ApiCardProps> = (props: ApiCardProps) => {
-  const { name, image_thumbnail_path, start_date, country, network, status } = props;
+  const { setSelectedCardId } = useContext(cardContext);
+
+  const { name, image_thumbnail_path, start_date, country, network } = props;
   return (
     <div className="card">
       <img className="card__pic" src={image_thumbnail_path} alt={`Picture of "${name}"`}></img>
@@ -26,7 +28,9 @@ export const ApiCard: FC<ApiCardProps> = (props: ApiCardProps) => {
           <p className="card__subtext card__subtext_category">{network}</p>
           <p className="card__subtext">{start_date}</p>
         </div>
-        <p className="card__subtext card__subtext_category">{status}</p>
+        <button onClick={() => setSelectedCardId(props.id)} className="card__button_more">
+          Details
+        </button>
       </div>
     </div>
   );
