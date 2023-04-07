@@ -18,7 +18,7 @@ export type popupProps = {
 
 export interface SearchBoxProps {
   onQueryChange: (newQuery: string) => void;
-  filterData?: TvShow[];
+  filterData?: ApiCardType[];
 }
 
 export type StringObject = { [key: string]: string };
@@ -44,7 +44,7 @@ export type ErrorProps = {
   errorMessage?: string;
 };
 
-export type ApiCardProps = {
+export type ApiCardType = {
   id: string;
   image_thumbnail_path: string;
   name: string;
@@ -56,9 +56,7 @@ export type ApiCardProps = {
 export interface TvShow {
   id: number;
   name: string;
-  permalink?: string;
   start_date: string;
-  end_date?: string | null;
   status: string;
   country: string;
   network: string;
@@ -76,6 +74,10 @@ export interface PopupData {
   genres: string[];
 }
 
+export type CardsApiListProps = {
+  cards?: ApiCardType[];
+};
+
 export type CardsListProps = {
-  cards?: CardProps[] | ApiCardProps[] | TvShow[];
+  cards?: CardProps[];
 };

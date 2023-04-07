@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { CardsList } from './CardsList';
-import { CardProps } from '../Card/Card';
+import { CardProps } from '../../types/types';
 
 describe('CardsList', () => {
   const cards: CardProps[] = [

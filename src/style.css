@@ -43,11 +43,9 @@ ul {
   list-style: none;
 }
 
-
 ::-webkit-scrollbar {
   width: 0.5vw;
 }
-
 
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px grey;
@@ -55,6 +53,6 @@ ul {
 }
 
 ::-webkit-scrollbar-thumb {
-  background:  #8808a9;
+  background: #8808a9;
   border-radius: 10px;
 }

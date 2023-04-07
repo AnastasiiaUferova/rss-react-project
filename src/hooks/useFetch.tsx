@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { TvShow, PopupData } from '../types/types';
+import { ApiCardType, PopupData } from '../types/types';
 
 interface ApiError {
   message: string;
@@ -8,7 +8,7 @@ interface ApiError {
 }
 
 export default function useFetch(url: string) {
-  const [data, setData] = useState<TvShow[]>([]);
+  const [data, setData] = useState<ApiCardType[]>([]);
   const [popupData, setPopupData] = useState<PopupData>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<ApiError | null>(null);

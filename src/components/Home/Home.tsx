@@ -1,13 +1,13 @@
 import { SearchBar } from '../SearchBar/SearchBar';
 import React, { FC, useState, useEffect } from 'react';
-import { CardsList } from '../CardsList/CardsList';
 import useFetch from '../../hooks/useFetch';
 import { URL, generalURL } from '../../constants/constants';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Loader } from '../Loader/Loader';
 import Popup from '../Popup/Popup';
 import cardContext from '../../context/cardContext';
-import { TvShow } from '../../types/types';
+import { ApiCardType } from '../../types/types';
+import { ApiCardsList } from '../ApiCardList/ApiCardList';
 
 export const Home: FC = () => {
   const { data, error, loading } = useFetch(URL);
@@ -26,11 +26,9 @@ export const Home: FC = () => {
 
   console.log(filterData);
 
-  const [cards, setCards] = useState<TvShow[]>();
+  const [cards, setCards] = useState<ApiCardType[]>();
   const isLoading = loading || filterLoading;
   const isError = error || filterError;
-
-  console.log(popupData);
 
   const handleQueryChange = (newQuery: string) => {
     if (newQuery) {
@@ -47,7 +45,7 @@ export const Home: FC = () => {
 
   function renderElements() {
     if (isError) return <ErrorMessage errorMessage={error?.message || filterError?.message} />;
-    else return <CardsList cards={cards} />;
+    else return <ApiCardsList cards={cards} />;
   }
 
   return (

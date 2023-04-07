@@ -35,7 +35,7 @@ export const SearchBar: React.FC<SearchBoxProps> = (props) => {
   return (
     <div id="search" className="search">
       <div className="search-container">
-        <form className="search__form" onSubmit={handleSubmit}>
+        <form data-testid="form" className="search__form" onSubmit={handleSubmit}>
           <input
             ref={() => inputRef}
             className="search__form__input"
