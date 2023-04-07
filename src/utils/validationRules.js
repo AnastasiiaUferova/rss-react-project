@@ -1,4 +1,4 @@
-const getDateLimitations = (date) => {
+export const getDateLimitations = (date) => {
   const d = new Date(date);
   const yearLimitations = d.getFullYear() < 2024 && d.getFullYear() > 1900;
   if (!yearLimitations) {

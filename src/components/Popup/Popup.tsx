@@ -11,8 +11,13 @@ const Popup: React.FC<popupProps> = (props) => {
   });
 
   return (
-    <div className={popupClass}>
-      <div ref={popupRef} className="popup__container" aria-label="popup content">
+    <div data-testid="popup" className={popupClass}>
+      <div
+        data-testid="popup-content"
+        ref={popupRef}
+        className="popup__container"
+        aria-label="popup content"
+      >
         <button
           onClick={() => props.setPopupIsOpen(false)}
           className="popup__close-button popup__close-button_type_pic"

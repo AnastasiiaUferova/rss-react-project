@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Form from './Form';
 import { vi } from 'vitest';
 
@@ -22,4 +22,20 @@ test('should render the basic fields', () => {
   expect(screen.getByRole('radio', { name: /Yes/i })).toBeInTheDocument();
   expect(screen.getByRole('radio', { name: /No/i })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Add movie/i })).toBeInTheDocument();
+});
+
+test('should update the name input value when typing', () => {
+  const onAddCard = vi.fn();
+  const { getByLabelText } = render(<Form onAddCard={onAddCard} />);
+  const nameInput = getByLabelText('Show Name');
+  fireEvent.change(nameInput, { target: { value: 'Sherlock' } });
+  expect(nameInput).toHaveValue('Sherlock');
+});
+
+test('should update the date input value', () => {
+  const onAddCard = vi.fn();
+  const { getByLabelText } = render(<Form onAddCard={onAddCard} />);
+  const dateInput = getByLabelText('Release Date');
+  fireEvent.change(dateInput, { target: { value: '2022-04-07' } });
+  expect(dateInput).toHaveValue('2022-04-07');
 });

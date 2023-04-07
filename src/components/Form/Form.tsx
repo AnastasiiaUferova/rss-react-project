@@ -87,7 +87,7 @@ const Form: FC<FormProps> = ({ onAddCard }) => {
                 </label>
               ))}
             </fieldset>
-            <ErrorMessage errorMessage={error && error.message} />
+            <ErrorMessage data-testid="categories-error" errorMessage={error && error.message} />
           </>
         )}
       />
