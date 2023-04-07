@@ -24,6 +24,8 @@ export const Home: FC = () => {
 
   const { popupData } = useFetch(`${generalURL}/show-details?q=${selectedCardId}`);
 
+  console.log(filterData);
+
   const [cards, setCards] = useState<TvShow[]>();
   const isLoading = loading || filterLoading;
   const isError = error || filterError;
@@ -52,7 +54,7 @@ export const Home: FC = () => {
     <>
       <cardContext.Provider value={{ setSelectedCardId, setPopupIsOpen }}>
         <div className="home">
-          <SearchBar onQueryChange={handleQueryChange} />
+          <SearchBar filterData={filterData} onQueryChange={handleQueryChange} />
           {isLoading && <Loader />}
           {renderElements()}
           <Popup data={popupData} popupIsOpen={popupIsOpen} setPopupIsOpen={setPopupIsOpen} />

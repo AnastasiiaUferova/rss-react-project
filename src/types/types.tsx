@@ -18,6 +18,7 @@ export type popupProps = {
 
 export interface SearchBoxProps {
   onQueryChange: (newQuery: string) => void;
+  filterData?: TvShow[];
 }
 
 export type StringObject = { [key: string]: string };

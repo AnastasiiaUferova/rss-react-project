@@ -1,23 +1,17 @@
 import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
 import './SearchBar.css';
 import { SearchBoxProps } from '../../types/types';
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 
 export const SearchBar: React.FC<SearchBoxProps> = (props) => {
   const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('query') || '');
   const inputRef = useRef(searchQuery);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   useEffect(() => {
     const query = localStorage.getItem('query');
     query && setSearchQuery(query);
-
-    return () => {
-      localStorage.setItem('query', inputRef.current);
-    };
   }, []);
-
-  useEffect(() => {
-    inputRef.current = searchQuery;
-  }, [searchQuery, props]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const inputValue = e.currentTarget.value.trim();
@@ -32,8 +26,11 @@ export const SearchBar: React.FC<SearchBoxProps> = (props) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     props.onQueryChange(searchQuery);
-    console.log(searchQuery);
+    localStorage.setItem('query', searchQuery);
+    setIsSubmitted(true);
   };
+
+  const isError = props.filterData?.length === 0 && isSubmitted;
 
   return (
     <div id="search" className="search">
@@ -49,6 +46,13 @@ export const SearchBar: React.FC<SearchBoxProps> = (props) => {
           <button className="search__form__button" type="submit"></button>
         </form>
       </div>
+      {isError && (
+        <ErrorMessage
+          errorMessage={`No results for ${localStorage.getItem(
+            'query'
+          )}. Try different search query.`}
+        />
+      )}
     </div>
   );
 };
