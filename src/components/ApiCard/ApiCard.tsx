@@ -13,7 +13,7 @@ export const ApiCard: FC<ApiCardType> = (props: ApiCardType) => {
 
   const { name, image_thumbnail_path, start_date, country, network } = props;
   return (
-    <div className="card">
+    <div data-testid="movie-card" className="card">
       <img className="card__pic" src={image_thumbnail_path} alt={`Picture of "${name}"`}></img>
 
       <div className="card__text-container">

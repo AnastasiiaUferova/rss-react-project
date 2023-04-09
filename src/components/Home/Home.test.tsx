@@ -1,11 +1,28 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Home } from '../Home/Home';
-import axios from 'axios';
-import { generalURL, URL } from '../../constants/constants';
-import mockDataSearch from '../../mocks/mockDataSearch.json';
-import mockDataCard from '../../mocks/mockDataCard.json';
-import mockDataGeneral from '../../mocks/mockDataGeneral.json';
+import { setupServer } from 'msw/node';
+import { handlers } from '../../mocks/handlers';
+
+const server = setupServer(...handlers);
+
+beforeAll(() => server.listen());
+afterAll(() => server.close());
+
+describe('Home', () => {
+  it('should render movie cards', async () => {
+    render(<Home />);
+    const movieCards = await screen.findAllByTestId('movie-card');
+    expect(movieCards).toHaveLength(20);
+  });
+
+  it('should render rigth cards for page 1', async () => {
+    render(<Home />);
+    await screen.findByText('Supernatural');
+    expect(screen.getByText('Supernatural')).toBeInTheDocument();
+    expect(screen.getByText('The Big Bang Theory')).toBeInTheDocument();
+  });
+});
 
 describe('Home', () => {
   test('renders SearchBar and CardsList', () => {
@@ -27,24 +44,4 @@ test('renders initial card list', () => {
 
   const cardsList = screen.getByRole('list');
   expect(cardsList).toBeInTheDocument();
-});
-
-describe('API tests', () => {
-  it('fetches data from the search endpoint', async () => {
-    const res = await axios.get(`${generalURL}/search?q=licufer&page=1`);
-    expect(res.status).toBe(200);
-    expect(res.data).toEqual(mockDataSearch);
-  });
-
-  it('fetches data from the show-details endpoint', async () => {
-    const res = await axios.get(`${generalURL}/show-details?q=2543`);
-    expect(res.status).toBe(200);
-    expect(res.data).toEqual(mockDataCard);
-  });
-
-  it('fetches data from the general endpoint', async () => {
-    const res = await axios.get(URL);
-    expect(res.status).toBe(200);
-    expect(res.data).toEqual(mockDataGeneral);
-  });
 });
