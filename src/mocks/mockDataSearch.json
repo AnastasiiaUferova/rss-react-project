@@ -1,0 +1,62 @@
+{
+  "total": "5",
+  "page": 1,
+  "pages": 1,
+  "tv_shows": [
+    {
+      "id": 49238,
+      "name": "Comet Lucifer",
+      "permalink": "comet-lucifer",
+      "start_date": "2015-10-04",
+      "end_date": null,
+      "country": "JP",
+      "network": "Tokyo MX",
+      "status": "Ended",
+      "image_thumbnail_path": "https://static.episodate.com/images/tv-show/thumbnail/49238.jpg"
+    },
+    {
+      "id": 43467,
+      "name": "Lucifer",
+      "permalink": "lucifer",
+      "start_date": "2016-01-25",
+      "end_date": null,
+      "country": "US",
+      "network": "Netflix",
+      "status": "Ended",
+      "image_thumbnail_path": "https://static.episodate.com/images/tv-show/thumbnail/43467.com"
+    },
+    {
+      "id": 77921,
+      "name": "Lucifer and the Biscuit Hammer",
+      "permalink": "lucifer-and-the-biscuit-hammer",
+      "start_date": "2022-07-09",
+      "end_date": null,
+      "country": "JP",
+      "network": "MBS",
+      "status": "Running",
+      "image_thumbnail_path": "https://static.episodate.com/images/tv-show/thumbnail/77921.jpg"
+    },
+    {
+      "id": 68482,
+      "name": "Lucifer's Kingdom",
+      "permalink": "lucifer-s-kingdom",
+      "start_date": "2020-01-31",
+      "end_date": null,
+      "country": "US",
+      "network": "Shahid",
+      "status": "To Be Determined",
+      "image_thumbnail_path": "https://static.episodate.com/images/tv-show/thumbnail/68482.jpg"
+    },
+    {
+      "id": 15060,
+      "name": "The Lucifer",
+      "permalink": "the-lucifer",
+      "start_date": "Mar/21/2007",
+      "end_date": "May/2007",
+      "country": "KR",
+      "network": "KBS2",
+      "status": "Canceled/Ended",
+      "image_thumbnail_path": "https://static.episodate.com/images/tv-show/thumbnail/15060.jpg"
+    }
+  ]
+}

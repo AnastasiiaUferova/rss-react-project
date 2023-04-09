@@ -1,59 +1,92 @@
 import { SearchBar } from '../SearchBar/SearchBar';
 import React, { FC, useState, useEffect } from 'react';
-import useFetch from '../../hooks/useFetch';
 import { URL, generalURL } from '../../constants/constants';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Loader } from '../Loader/Loader';
 import Popup from '../Popup/Popup';
 import cardContext from '../../context/cardContext';
-import { ApiCardType } from '../../types/types';
+import { ApiCardType, PopupData } from '../../types/types';
 import { ApiCardsList } from '../ApiCardList/ApiCardList';
+import axios from 'axios';
+
+interface ApiError {
+  message: string;
+  status: number;
+}
 
 export const Home: FC = () => {
-  const { data, error, loading } = useFetch(URL);
   const [query, setQuery] = useState<string>('');
   const [selectedCardId, setSelectedCardId] = useState<string>();
   const [popupIsOpen, setPopupIsOpen] = useState<boolean>(false);
+  const [popupData, setPopupData] = useState<PopupData>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<ApiError | null>(null);
 
-  const finalQuery = query ? query : localStorage.getItem('query');
-  const {
-    data: filterData,
-    error: filterError,
-    loading: filterLoading,
-  } = useFetch(`${generalURL}/search?q=${finalQuery}&page=1`);
-
-  const { popupData } = useFetch(`${generalURL}/show-details?q=${selectedCardId}`);
-
-  console.log(filterData);
+  const finalQuery = query || localStorage?.query;
 
   const [cards, setCards] = useState<ApiCardType[]>();
-  const isLoading = loading || filterLoading;
-  const isError = error || filterError;
+
+  const fetchData = (url: string) => {
+    setLoading(true);
+    axios
+      .get(url)
+      .then((res) => {
+        setCards(res.data.tv_shows);
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    if (popupIsOpen) {
+      axios
+        .get(`${generalURL}/show-details?q=${selectedCardId}`)
+        .then((res) => {
+          setPopupData(res.data.tvShow);
+        })
+        .catch((err) => {
+          setError(err);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [popupIsOpen, selectedCardId]);
+
+  useEffect(() => {
+    if (!localStorage?.query && !query) {
+      fetchData(URL);
+    } else {
+      fetchData(`${generalURL}/search?q=${finalQuery}`);
+    }
+  }, [finalQuery, query]);
 
   const handleQueryChange = (newQuery: string) => {
     if (newQuery) {
       setQuery(newQuery);
-      setCards(filterData);
+      axios
+        .get(`${generalURL}/search?q=${finalQuery}`)
+        .then((res) => {
+          setCards(res.data.tv_shows);
+        })
+        .catch((err) => {
+          setError(err);
+        })
+        .finally(() => setLoading(false));
     } else return;
   };
 
-  useEffect(() => {
-    if (!localStorage.getItem('query') && !query) {
-      setCards(data);
-    } else setCards(filterData);
-  }, [data, filterData, query]);
-
-  function renderElements() {
-    if (isError) return <ErrorMessage errorMessage={error?.message || filterError?.message} />;
+  const renderElements = () => {
+    if (error) return <ErrorMessage errorMessage={error?.message} />;
     else return <ApiCardsList cards={cards} />;
-  }
+  };
 
   return (
     <>
       <cardContext.Provider value={{ setSelectedCardId, setPopupIsOpen }}>
         <div className="home">
-          <SearchBar filterData={filterData} onQueryChange={handleQueryChange} />
-          {isLoading && <Loader />}
+          <SearchBar filterData={cards} onQueryChange={handleQueryChange} />
+          {loading && <Loader />}
           {renderElements()}
           <Popup data={popupData} popupIsOpen={popupIsOpen} setPopupIsOpen={setPopupIsOpen} />
         </div>

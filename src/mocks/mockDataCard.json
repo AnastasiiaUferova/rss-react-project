@@ -1,0 +1,50 @@
+{
+  "tvShow": {
+    "id": 2543,
+    "name": "America's Most Talented Kids",
+    "permalink": "america-s-most-talented-kids",
+    "url": "https://www.episodate.com/tv-show/america-s-most-talented-kids",
+    "description": "\nAmerica's most talented kids show off their talents, tricks, and abilities in this popular talent show.<br>\n",
+    "description_source": null,
+    "start_date": "Mar/28/2003",
+    "end_date": "2006",
+    "country": "US",
+    "status": "Canceled/Ended",
+    "runtime": 60,
+    "network": "ion TELEVISION",
+    "youtube_link": "BUfy1BHr3gU",
+    "image_path": "https://static.episodate.com/images/tv-show/full/2543.jpg",
+    "image_thumbnail_path": "https://static.episodate.com/images/tv-show/thumbnail/2543.jpg",
+    "rating": 0,
+    "rating_count": "0",
+    "countdown": null,
+    "genres": ["Music", "Children", "Talent"],
+    "pictures": [],
+    "episodes": [
+      {
+        "season": 2,
+        "episode": 1,
+        "name": "Episode #1",
+        "air_date": "2004-10-03 17:00:00"
+      },
+      {
+        "season": 2,
+        "episode": 2,
+        "name": "Episode #2",
+        "air_date": "2004-10-10 17:00:00"
+      },
+      {
+        "season": 2,
+        "episode": 3,
+        "name": "Episode dated 24 October 2004",
+        "air_date": "2004-10-24 17:00:00"
+      },
+      {
+        "season": 2,
+        "episode": 4,
+        "name": "Episode dated 30 January 2005",
+        "air_date": "2005-01-30 17:00:00"
+      }
+    ]
+  }
+}
