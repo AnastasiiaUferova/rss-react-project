@@ -1,46 +1,45 @@
-import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import './SearchBar.css';
-import { SearchBoxProps } from '../../types/types';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchState, setIsSubmitted, setQuery } from '../../redux/slices/searchSlice';
+import { useGetAllCardsQuery, useGetFilteredCardsQuery } from '../../redux/slices/apiSlice';
+import { RootState } from 'redux/store';
 
-export const SearchBar: React.FC<SearchBoxProps> = (props) => {
-  const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('query') || '');
-  const inputRef = useRef(searchQuery);
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+export const SearchBar: React.FC = () => {
+  const { data: cardsData } = useGetAllCardsQuery('');
+  // const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-  useEffect(() => {
-    const query = localStorage.getItem('query');
-    query && setSearchQuery(query);
-  }, []);
+  const query = useSelector((state: RootState) => state.setQuery.query);
+  const isSubmitted = useSelector((state: RootState) => state.setIsSubmitted.isSubmitted);
+  const dispatch = useDispatch();
+  const { data: filterData } = useGetFilteredCardsQuery(query, { skip: isSubmitted });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const inputValue = e.currentTarget.value.trim();
-    setSearchQuery((prevInput: string) => {
-      if (inputValue !== prevInput) {
-        return inputValue;
-      }
-      return prevInput;
-    });
+    dispatch(setQuery(e.target.value));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    props.onQueryChange(searchQuery);
-    localStorage.setItem('query', searchQuery);
-    setIsSubmitted(true);
+    dispatch(setIsSubmitted(true));
   };
 
-  const isError = props.filterData?.length === 0 && isSubmitted;
+  const isError = filterData?.tv_shows.length === 0 && isSubmitted;
+
+  useEffect(() => {
+    if (!isError && isSubmitted) {
+      dispatch(setIsSubmitted(false));
+    }
+  }, [isError, isSubmitted, dispatch]);
 
   return (
     <div id="search" className="search">
       <div className="search-container">
         <form data-testid="form" className="search__form" onSubmit={handleSubmit}>
           <input
-            ref={() => inputRef}
             className="search__form__input"
             type="text"
-            value={searchQuery}
+            value={query}
             onChange={handleChange}
           ></input>
           <button className="search__form__button" type="submit"></button>
@@ -48,8 +47,7 @@ export const SearchBar: React.FC<SearchBoxProps> = (props) => {
       </div>
       {isError && (
         <ErrorMessage
-          errorMessage={`No results for ${localStorage.getItem(
-            'query'
+          errorMessage={`No results for ${query}'
           )}. Try different search query.`}
         />
       )}

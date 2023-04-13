@@ -37,3 +37,4 @@ export const OCCASION_OPTIONS: OccasionOption[] = [
 
 export const URL = `https://www.episodate.com/api/most-popular?page=1`;
 export const generalURL = 'https://www.episodate.com/api';
+export const baseURL = 'https://www.episodate.com/';

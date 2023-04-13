@@ -1,96 +1,59 @@
 import { SearchBar } from '../SearchBar/SearchBar';
 import React, { FC, useState, useEffect } from 'react';
-import { URL, generalURL } from '../../constants/constants';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Loader } from '../Loader/Loader';
 import Popup from '../Popup/Popup';
-import cardContext from '../../context/cardContext';
 import { ApiCardType, PopupData } from '../../types/types';
 import { ApiCardsList } from '../ApiCardList/ApiCardList';
-import axios from 'axios';
-
-interface ApiError {
-  message: string;
-  status: number;
-}
+import { useGetAllCardsQuery, useGetFilteredCardsQuery } from '../../redux/slices/apiSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { setIsSubmitted } from '../../redux/slices/searchSlice';
+import { setApiCards } from '../../redux/slices/apiCardsSlice';
 
 export const Home: FC = () => {
-  const [query, setQuery] = useState<string>('');
-  const [selectedCardId, setSelectedCardId] = useState<string>();
   const [popupIsOpen, setPopupIsOpen] = useState<boolean>(false);
-  const [popupData, setPopupData] = useState<PopupData>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<ApiError | null>(null);
+  const query = useSelector((state: RootState) => state.setQuery.query);
+  const dispatch = useDispatch();
+  const isSubmitted = useSelector((state: RootState) => state.setIsSubmitted.isSubmitted);
+  const generalData = useSelector((state: RootState) => state.setApiCards.cards);
 
-  const finalQuery = query || localStorage?.query;
-
-  const [cards, setCards] = useState<ApiCardType[]>();
-
-  const fetchData = (url: string) => {
-    setLoading(true);
-    axios
-      .get(url)
-      .then((res) => {
-        setCards(res.data.tv_shows);
-      })
-      .catch((err) => {
-        setError(err);
-      })
-      .finally(() => setLoading(false));
-  };
+  const { data: cardsData, isLoading: isCardsLoading, isError } = useGetAllCardsQuery('');
+  const { data: filterData, isLoading } = useGetFilteredCardsQuery(query, { skip: !isSubmitted });
 
   useEffect(() => {
-    if (popupIsOpen) {
-      axios
-        .get(`${generalURL}/show-details?q=${selectedCardId}`)
-        .then((res) => {
-          setPopupData(res.data.tvShow);
-        })
-        .catch((err) => {
-          setError(err);
-        })
-        .finally(() => setLoading(false));
-    }
-  }, [popupIsOpen, selectedCardId]);
+    dispatch(setApiCards(cardsData?.tv_shows));
+  }, [cardsData?.tv_shows, dispatch]);
+
+  console.log(query && isSubmitted);
+  console.log(isLoading);
 
   useEffect(() => {
-    if (!localStorage?.query && !query) {
-      fetchData(URL);
+    if (query && isSubmitted) {
+      dispatch(setApiCards(filterData?.tv_shows));
     } else {
-      fetchData(`${generalURL}/search?q=${finalQuery}`);
+      dispatch(setApiCards(cardsData?.tv_shows));
     }
-  }, [finalQuery, query]);
+  }, [query, filterData?.tv_shows, dispatch, cardsData?.tv_shows, isSubmitted]);
 
-  const handleQueryChange = (newQuery: string) => {
-    if (newQuery) {
-      setQuery(newQuery);
-      axios
-        .get(`${generalURL}/search?q=${finalQuery}`)
-        .then((res) => {
-          setCards(res.data.tv_shows);
-        })
-        .catch((err) => {
-          setError(err);
-        })
-        .finally(() => setLoading(false));
-    } else return;
-  };
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(setIsSubmitted(false));
+    }
+  }, [isLoading, dispatch]);
 
   const renderElements = () => {
-    if (error) return <ErrorMessage errorMessage={error?.message} />;
-    else return <ApiCardsList cards={cards} />;
+    if (isError) return <ErrorMessage errorMessage="Something went wrong" />;
+    else return <ApiCardsList cards={generalData} />;
   };
 
   return (
-    <>
-      <cardContext.Provider value={{ setSelectedCardId, setPopupIsOpen }}>
-        <div className="home">
-          <SearchBar filterData={cards} onQueryChange={handleQueryChange} />
-          {loading && <Loader />}
-          {renderElements()}
-          <Popup data={popupData} popupIsOpen={popupIsOpen} setPopupIsOpen={setPopupIsOpen} />
-        </div>
-      </cardContext.Provider>
-    </>
+    <div className="home">
+      <SearchBar />
+      {(isLoading || isCardsLoading) && <Loader />}
+      {renderElements()}
+    </div>
   );
 };
+
+//<Popup popupIsOpen={popupIsOpen} setPopupIsOpen={setPopupIsOpen} />

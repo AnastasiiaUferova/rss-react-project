@@ -1,14 +1,11 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import '../Card/Card.css';
-import cardContext from '../../context/cardContext';
 import { ApiCardType } from '../../types/types';
 
 export const ApiCard: FC<ApiCardType> = (props: ApiCardType) => {
-  const { setSelectedCardId, setPopupIsOpen } = useContext(cardContext);
-
   const onClickHandle: () => void = () => {
-    setSelectedCardId(props.id);
-    setPopupIsOpen(true);
+    // setSelectedCardId(props.id);
+    //setPopupIsOpen(true);
   };
 
   const { name, image_thumbnail_path, start_date, country, network } = props;
