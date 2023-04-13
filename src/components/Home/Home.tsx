@@ -3,7 +3,6 @@ import React, { FC, useState, useEffect } from 'react';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { Loader } from '../Loader/Loader';
 import Popup from '../Popup/Popup';
-import { ApiCardType, PopupData } from '../../types/types';
 import { ApiCardsList } from '../ApiCardList/ApiCardList';
 import { useGetAllCardsQuery, useGetFilteredCardsQuery } from '../../redux/slices/apiSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +11,6 @@ import { setIsSubmitted } from '../../redux/slices/searchSlice';
 import { setApiCards } from '../../redux/slices/apiCardsSlice';
 
 export const Home: FC = () => {
-  const [popupIsOpen, setPopupIsOpen] = useState<boolean>(false);
   const query = useSelector((state: RootState) => state.setQuery.query);
   const dispatch = useDispatch();
   const isSubmitted = useSelector((state: RootState) => state.setIsSubmitted.isSubmitted);
@@ -56,5 +54,3 @@ export const Home: FC = () => {
     </div>
   );
 };
-
-//<Popup popupIsOpen={popupIsOpen} setPopupIsOpen={setPopupIsOpen} />
