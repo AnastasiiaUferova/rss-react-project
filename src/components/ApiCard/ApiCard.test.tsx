@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import cardContext from '../../context/cardContext';
 import { ApiCardType } from '../../types/types';
 import { ApiCard } from './ApiCard';
 import { vi } from 'vitest';
@@ -16,11 +15,7 @@ describe('ApiCard component', () => {
   };
 
   it('renders the component with props', () => {
-    const { getByAltText, getByText } = render(
-      <cardContext.Provider value={{ setSelectedCardId: vi.fn(), setPopupIsOpen: vi.fn() }}>
-        <ApiCard {...defaultProps} />
-      </cardContext.Provider>
-    );
+    const { getByAltText, getByText } = render(<ApiCard {...defaultProps} />);
 
     expect(getByAltText(`Picture of "${defaultProps.name}"`)).toBeInTheDocument();
     expect(getByText(defaultProps.name)).toBeInTheDocument();
@@ -32,11 +27,7 @@ describe('ApiCard component', () => {
   it('calls setSelectedCardId and setPopupIsOpen when button is clicked', () => {
     const setSelectedCardId = vi.fn();
     const setPopupIsOpen = vi.fn();
-    const { getByText } = render(
-      <cardContext.Provider value={{ setSelectedCardId, setPopupIsOpen }}>
-        <ApiCard {...defaultProps} />
-      </cardContext.Provider>
-    );
+    const { getByText } = render(<ApiCard {...defaultProps} />);
 
     const button = getByText('Details');
     fireEvent.click(button);
