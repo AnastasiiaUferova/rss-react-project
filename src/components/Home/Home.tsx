@@ -25,14 +25,14 @@ export const Home: FC = () => {
     dispatch(setApiCards(cardsData?.tv_shows));
   }, [cardsData?.tv_shows, dispatch]);
 
-  console.log(query && isSubmitted);
-  console.log(isLoading);
+  console.log(query);
+  console.log(generalData);
 
   useEffect(() => {
-    if (query && isSubmitted) {
-      dispatch(setApiCards(filterData?.tv_shows));
-    } else {
+    if (!query) {
       dispatch(setApiCards(cardsData?.tv_shows));
+    } else {
+      dispatch(setApiCards(filterData?.tv_shows));
     }
   }, [query, filterData?.tv_shows, dispatch, cardsData?.tv_shows, isSubmitted]);
 

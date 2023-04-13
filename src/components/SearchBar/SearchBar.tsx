@@ -13,7 +13,7 @@ export const SearchBar: React.FC = () => {
   const query = useSelector((state: RootState) => state.setQuery.query);
   const isSubmitted = useSelector((state: RootState) => state.setIsSubmitted.isSubmitted);
   const dispatch = useDispatch();
-  const { data: filterData } = useGetFilteredCardsQuery(query, { skip: isSubmitted });
+  const { data: filterData } = useGetFilteredCardsQuery(query, { skip: !isSubmitted });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     dispatch(setQuery(e.target.value));
@@ -26,11 +26,11 @@ export const SearchBar: React.FC = () => {
 
   const isError = filterData?.tv_shows.length === 0 && isSubmitted;
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (!isError && isSubmitted) {
       dispatch(setIsSubmitted(false));
     }
-  }, [isError, isSubmitted, dispatch]);
+  }, [isError, isSubmitted, dispatch]);*/
 
   return (
     <div id="search" className="search">
