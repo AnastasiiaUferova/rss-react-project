@@ -3,12 +3,16 @@ import setQueryReducer from './slices/searchSlice';
 import setisSubmittedReducer from './slices/searchSlice';
 import { showApi } from './slices/apiSlice';
 import setApiCardsReducer from './slices/apiCardsSlice';
+import setPopupDataReducer from './slices/popupSlice';
+import setIOpenPopupReducer from './slices/popupSlice';
 
 export const store = configureStore({
   reducer: {
     setQuery: setQueryReducer,
     setIsSubmitted: setisSubmittedReducer,
     setApiCards: setApiCardsReducer,
+    setPopupData: setPopupDataReducer,
+    setIsOpenPopup: setIOpenPopupReducer,
     [showApi.reducerPath]: showApi.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(showApi.middleware),

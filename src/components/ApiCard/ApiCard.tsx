@@ -1,11 +1,14 @@
 import React, { FC } from 'react';
 import '../Card/Card.css';
 import { ApiCardType } from '../../types/types';
+import { setIsPopupOpen } from '../../redux/slices/popupSlice';
+import { useDispatch } from 'react-redux';
 
 export const ApiCard: FC<ApiCardType> = (props: ApiCardType) => {
+  const dispatch = useDispatch();
   const onClickHandle: () => void = () => {
     // setSelectedCardId(props.id);
-    //setPopupIsOpen(true);
+    dispatch(setIsPopupOpen(true));
   };
 
   const { name, image_thumbnail_path, start_date, country, network } = props;

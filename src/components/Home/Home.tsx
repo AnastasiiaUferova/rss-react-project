@@ -52,6 +52,7 @@ export const Home: FC = () => {
       <SearchBar />
       {(isLoading || isCardsLoading) && <Loader />}
       {renderElements()}
+      <Popup />
     </div>
   );
 };

@@ -2,12 +2,20 @@ import React from 'react';
 import './Popup.css';
 import useClickOutside from '../../hooks/useClickOutside';
 import { popupProps } from '../../types/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { setIsPopupOpen } from '../../redux/slices/popupSlice';
 
-const Popup: React.FC<popupProps> = (props) => {
-  const popupClass = props.popupIsOpen ? `popup popup_opened` : `popup`;
+const Popup: React.FC = (props) => {
+  const dispatch = useDispatch();
+  const isOpen = useSelector((state: RootState) => state.setIsOpenPopup.isPopupOpen);
+
+  console.log(isOpen);
+
+  const popupClass = isOpen ? `popup popup_opened` : `popup`;
 
   const popupRef = useClickOutside(() => {
-    props.setPopupIsOpen(false);
+    dispatch(setIsPopupOpen(false));
   });
 
   return (
@@ -19,12 +27,19 @@ const Popup: React.FC<popupProps> = (props) => {
         aria-label="popup content"
       >
         <button
-          onClick={() => props.setPopupIsOpen(false)}
+          onClick={() => dispatch(setIsPopupOpen(false))}
           className="popup__close-button popup__close-button_type_pic"
           type="button"
           aria-label="close popup"
         ></button>
-        {props.data ? (
+      </div>
+    </div>
+  );
+};
+
+export default Popup;
+
+/*  {props.data ? (
           <>
             <section className="popup__info-wrapper">
               <img src={props.data.image_path} className="popup__pic" alt="popup picture" />
@@ -53,9 +68,4 @@ const Popup: React.FC<popupProps> = (props) => {
         ) : (
           <div>Loading...</div>
         )}
-      </div>
-    </div>
-  );
-};
-
-export default Popup;
+        */
