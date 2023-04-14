@@ -8,8 +8,11 @@ import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { useForm, Controller } from 'react-hook-form';
 import { registerOptions } from '../../utils/validationRules';
 import { FormProps, FormValues } from '../../types/types';
+import { useDispatch } from 'react-redux';
+import { setFormCards } from '../../redux/slices/formCardsSlice';
 
 const Form: FC<FormProps> = ({ onAddCard }) => {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -21,7 +24,7 @@ const Form: FC<FormProps> = ({ onAddCard }) => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const onSubmit = (data: FormValues) => {
-    onAddCard({ ...data, id: nanoid() });
+    dispatch(setFormCards([{ ...data, id: nanoid() }]));
     setIsSubmitted(true);
     setTimeout(() => {
       setIsSubmitted(false);

@@ -2,13 +2,11 @@ export type CardProps = {
   id: string;
   image: string;
   name: string;
-  recommended?: string;
-  categories?: string[];
+  recommended: string;
+  categories: string[];
   date: string;
-  occasion?: string;
+  occasion: string;
 };
-
-export type finalType = CardProps;
 
 export type popupProps = {
   popupIsOpen: boolean;

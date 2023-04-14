@@ -13,7 +13,7 @@ export const ApiCard: FC<ApiCardType> = (props: ApiCardType) => {
   console.log(data);
   const onClickHandle: () => void = () => {
     console.log(data);
-    dispatch(setPopupData(data.tvShow));
+    dispatch(setPopupData(data?.tvShow));
     dispatch(setIsPopupOpen(true));
   };
 

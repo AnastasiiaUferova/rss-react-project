@@ -14,7 +14,7 @@ const WithFormPage: FC = () => {
   return (
     <div className="with-form">
       <Form onAddCard={onAddCard} />
-      <CardsList cards={cards} />
+      <CardsList />
     </div>
   );
 };

@@ -4,7 +4,8 @@ import setisSubmittedReducer from './slices/searchSlice';
 import { showApi } from './slices/apiSlice';
 import setApiCardsReducer from './slices/apiCardsSlice';
 import setPopupDataReducer from './slices/popupSlice';
-import setIOpenPopupReducer from './slices/popupSlice';
+import setIsOpenPopupReducer from './slices/popupSlice';
+import setFormCardsReducer from './slices/formCardsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
     setIsSubmitted: setisSubmittedReducer,
     setApiCards: setApiCardsReducer,
     setPopupData: setPopupDataReducer,
-    setIsOpenPopup: setIOpenPopupReducer,
+    setIsOpenPopup: setIsOpenPopupReducer,
+    setFormCards: setFormCardsReducer,
     [showApi.reducerPath]: showApi.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(showApi.middleware),
