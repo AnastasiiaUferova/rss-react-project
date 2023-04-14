@@ -1,15 +1,12 @@
-import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import './SearchBar.css';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchState, setIsSubmitted, setQuery } from '../../redux/slices/searchSlice';
-import { useGetAllCardsQuery, useGetFilteredCardsQuery } from '../../redux/slices/apiSlice';
+import { setIsSubmitted, setQuery } from '../../redux/slices/searchSlice';
+import { useGetFilteredCardsQuery } from '../../redux/slices/apiSlice';
 import { RootState } from 'redux/store';
 
 export const SearchBar: React.FC = () => {
-  const { data: cardsData } = useGetAllCardsQuery('');
-  //const [searchQuery, setSearchQuery] = useState<string>('');
-
   const query = useSelector((state: RootState) => state.setQuery.query);
   const isSubmitted = useSelector((state: RootState) => state.setIsSubmitted.isSubmitted);
   const dispatch = useDispatch();
@@ -32,6 +29,7 @@ export const SearchBar: React.FC = () => {
       <div className="search-container">
         <form data-testid="form" className="search__form" onSubmit={handleSubmit}>
           <input
+            data-testid="form-input"
             defaultValue={query}
             ref={inputRef}
             className="search__form__input"

@@ -61,6 +61,7 @@ const Popup: React.FC = () => {
           className="popup__close-button popup__close-button_type_pic"
           type="button"
           aria-label="close popup"
+          data-testid="popup-close-button"
         ></button>
       </div>
     </div>

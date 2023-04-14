@@ -1,40 +1,41 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import Popup from './Popup';
 import React from 'react';
-import { vi } from 'vitest';
+import { render, fireEvent } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
+import Popup from './Popup';
+import { setIsPopupOpen } from '../../redux/slices/popupSlice';
 
-const data = {
-  name: 'Stranger Things',
-  status: 'Ended',
-  rating: '8.7',
-  genres: ['Drama', 'Fantasy', 'Horror'],
-  country: 'United States',
-  network: 'Netflix',
-  image_path: 'stranger-things.png',
-  description:
-    'A group of friends search for their missing friend who they discover is connected to supernatural mysteries in the town.',
-};
+const mockStore = configureMockStore();
 
-describe('Popup', () => {
-  it('should render popup content when data is passed', () => {
-    render(<Popup popupIsOpen={true} setPopupIsOpen={vi.fn()} data={data} />);
-    expect(screen.getByTestId('popup')).toBeInTheDocument();
-    expect(screen.getByTestId('popup-content')).toBeInTheDocument();
-    expect(screen.getByLabelText('close popup')).toBeInTheDocument();
-    expect(screen.getByText(data.name)).toBeInTheDocument();
-    expect(screen.getByText(`${data.status}`)).toBeInTheDocument();
-    expect(screen.getByText(`${data.rating}`)).toBeInTheDocument();
-    expect(screen.getByText(`${data.genres.join(', ')}`)).toBeInTheDocument();
-    expect(screen.getByText(`${data.country}`)).toBeInTheDocument();
-    expect(screen.getByText(`${data.network}`)).toBeInTheDocument();
-    expect(screen.getByText(data.description)).toBeInTheDocument();
-  });
+describe('Popup component', () => {
+  it('should dispatch setIsPopupOpen action when close button is clicked', () => {
+    const store = mockStore({
+      setIsOpenPopup: {
+        isPopupOpen: true,
+      },
+      setPopupData: {
+        data: {
+          name: 'Test Show',
+          image_path: 'https://example.com/test.jpg',
+          status: 'Active',
+          rating: 7.5,
+          genres: ['Action', 'Drama'],
+          country: 'USA',
+          network: 'HBO',
+          description: 'A test show for testing purposes.',
+        },
+      },
+    });
 
-  it('should close the popup when close button is clicked', () => {
-    const setPopupIsOpen = vi.fn();
-    render(<Popup popupIsOpen={true} setPopupIsOpen={setPopupIsOpen} data={data} />);
-    const closeButton = screen.getByLabelText('close popup');
-    fireEvent.click(closeButton);
-    expect(setPopupIsOpen).toHaveBeenCalledWith(false);
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <Popup />
+      </Provider>
+    );
+
+    fireEvent.click(getByTestId('popup-close-button'));
+
+    const actions = store.getActions();
+    expect(actions).toEqual([setIsPopupOpen(false)]);
   });
 });

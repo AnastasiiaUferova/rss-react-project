@@ -9,7 +9,7 @@ export const CardsList: FC = () => {
   const cards = useSelector((state: RootState) => state.setFormCards.cards);
   return (
     <div>
-      <div className="card-list">
+      <div data-testid="cards-list" className="card-list">
         <ul className="card-list__container">
           {cards?.map((card: CardProps) => {
             return (

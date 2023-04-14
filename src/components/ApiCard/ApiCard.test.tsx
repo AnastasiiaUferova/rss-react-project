@@ -1,38 +1,51 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import { ApiCardType } from '../../types/types';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
 import { ApiCard } from './ApiCard';
-import { vi } from 'vitest';
+
+const mockStore = configureMockStore();
 
 describe('ApiCard component', () => {
-  const defaultProps: ApiCardType = {
-    id: '1',
-    image_thumbnail_path: 'http://example.com/image.jpg',
-    name: 'Test Show',
-    start_date: '2022-01-01',
-    network: 'ABC',
+  const cardData = {
+    id: 'lfl',
+    name: 'The Office',
+    image_thumbnail_path: 'https://example.com/the-office.jpg',
+    start_date: '2005-03-24',
     country: 'USA',
+    network: 'NBC',
   };
 
-  it('renders the component with props', () => {
-    const { getByAltText, getByText } = render(<ApiCard {...defaultProps} />);
+  it('renders card data correctly', () => {
+    const store = mockStore({});
+    render(
+      <Provider store={store}>
+        <ApiCard {...cardData} />
+      </Provider>
+    );
 
-    expect(getByAltText(`Picture of "${defaultProps.name}"`)).toBeInTheDocument();
-    expect(getByText(defaultProps.name)).toBeInTheDocument();
-    expect(getByText(defaultProps.country)).toBeInTheDocument();
-    expect(getByText(defaultProps.network)).toBeInTheDocument();
-    expect(getByText(defaultProps.start_date)).toBeInTheDocument();
+    expect(screen.getByText(cardData.name)).toBeInTheDocument();
+    expect(screen.getByText(cardData.country)).toBeInTheDocument();
+    expect(screen.getByText(cardData.network)).toBeInTheDocument();
+    expect(screen.getByAltText(`Picture of "${cardData.name}"`)).toHaveAttribute(
+      'src',
+      cardData.image_thumbnail_path
+    );
   });
 
-  it('calls setSelectedCardId and setPopupIsOpen when button is clicked', () => {
-    const setSelectedCardId = vi.fn();
-    const setPopupIsOpen = vi.fn();
-    const { getByText } = render(<ApiCard {...defaultProps} />);
+  it('dispatches correct actions when Details button is clicked', () => {
+    const store = mockStore({});
+    render(
+      <Provider store={store}>
+        <ApiCard {...cardData} />
+      </Provider>
+    );
 
-    const button = getByText('Details');
-    fireEvent.click(button);
+    fireEvent.click(screen.getByText('Details'));
 
-    expect(setSelectedCardId).toHaveBeenCalledWith(defaultProps.id);
-    expect(setPopupIsOpen).toHaveBeenCalledWith(true);
+    expect(store.getActions()).toEqual([
+      { type: 'popup/setPopupData', payload: { tvShow: undefined } },
+      { type: 'popup/setIsPopupOpen', payload: true },
+    ]);
   });
 });
