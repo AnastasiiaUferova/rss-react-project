@@ -7,10 +7,11 @@ import { RootState } from 'redux/store';
 import { useGetCardQuery } from '../../redux/slices/apiSlice';
 
 export const ApiCard: FC<ApiCardType> = (props: ApiCardType) => {
-  const isOpen = useSelector((state: RootState) => state.setIsOpenPopup.isPopupOpen);
+  //const isOpen = useSelector((state: RootState) => state.setIsOpenPopup.isPopupOpen);
   const dispatch = useDispatch();
-  const { data } = useGetCardQuery(props.id, { skip: !isOpen });
+  const { data } = useGetCardQuery(props.id);
   console.log(data);
+  //console.log(isOpen);
   const onClickHandle: () => void = () => {
     console.log(data);
     dispatch(setPopupData(data?.tvShow));

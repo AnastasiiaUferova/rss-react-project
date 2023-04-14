@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { Slice, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { PopupData } from '../../types/types';
 
@@ -23,7 +23,7 @@ export const popupSlice = createSlice({
       state.isPopupOpen = action.payload;
     },
   },
-});
+}) as Slice<popupState>;
 
 export const { setPopupData, setIsPopupOpen } = popupSlice.actions;
 export default popupSlice.reducer;

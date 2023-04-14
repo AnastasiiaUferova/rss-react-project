@@ -7,7 +7,6 @@ import { RootState } from 'redux/store';
 
 export const CardsList: FC = () => {
   const cards = useSelector((state: RootState) => state.setFormCards.cards);
-  console.log(cards);
   return (
     <div>
       <div className="card-list">

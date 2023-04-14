@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { Slice, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { CardProps } from '../../types/types';
 
@@ -18,7 +18,7 @@ export const formCardsSlice = createSlice({
       state.cards = action.payload;
     },
   },
-});
+}) as Slice<formCard>;
 
 export const { setFormCards } = formCardsSlice.actions;
 export default formCardsSlice.reducer;

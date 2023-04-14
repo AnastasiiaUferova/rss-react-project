@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-//import { ApiCardType } from '../../types/types';
 import { baseURL } from '../../constants/constants';
 
 export const showApi = createApi({

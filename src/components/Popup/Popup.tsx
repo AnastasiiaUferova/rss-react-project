@@ -11,13 +11,13 @@ const Popup: React.FC = () => {
 
   const popupData = useSelector((state: RootState) => state.setPopupData.data);
 
-  console.log(isOpen);
-
   const popupClass = isOpen ? `popup popup_opened` : `popup`;
 
   const popupRef = useClickOutside(() => {
     dispatch(setIsPopupOpen(false));
   });
+
+  console.log(popupData);
 
   return (
     <div data-testid="popup" className={popupClass}>

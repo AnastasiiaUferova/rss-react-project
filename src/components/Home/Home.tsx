@@ -17,7 +17,11 @@ export const Home: FC = () => {
   const generalData = useSelector((state: RootState) => state.setApiCards.cards);
 
   const { data: cardsData, isLoading: isCardsLoading, isError } = useGetAllCardsQuery('');
-  const { data: filterData, isLoading } = useGetFilteredCardsQuery(query, { skip: !isSubmitted });
+  const {
+    data: filterData,
+    isLoading,
+    isError: isFilterError,
+  } = useGetFilteredCardsQuery(query, { skip: !isSubmitted });
 
   useEffect(() => {
     dispatch(setApiCards(cardsData?.tv_shows));
@@ -41,7 +45,7 @@ export const Home: FC = () => {
   }, [isLoading, dispatch]);
 
   const renderElements = () => {
-    if (isError) return <ErrorMessage errorMessage="Something went wrong" />;
+    if (isError || isFilterError) return <ErrorMessage errorMessage="Something went wrong" />;
     else return <ApiCardsList cards={generalData} />;
   };
 
