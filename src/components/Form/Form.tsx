@@ -7,11 +7,12 @@ import { ConfirmMessage } from '../ConfirmMessage/ConfirmMessage';
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import { useForm, Controller } from 'react-hook-form';
 import { registerOptions } from '../../utils/validationRules';
-import { FormProps, FormValues } from '../../types/types';
-import { useDispatch } from 'react-redux';
+import { FormValues } from '../../types/types';
+import { useDispatch, useSelector } from 'react-redux';
 import { setFormCards } from '../../redux/slices/formCardsSlice';
+import { RootState } from 'redux/store';
 
-const Form: FC<FormProps> = ({ onAddCard }) => {
+const Form: FC = () => {
   const dispatch = useDispatch();
   const {
     register,
@@ -22,9 +23,10 @@ const Form: FC<FormProps> = ({ onAddCard }) => {
   } = useForm<FormValues>();
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const cards = useSelector((state: RootState) => state.setFormCards.cards);
 
   const onSubmit = (data: FormValues) => {
-    dispatch(setFormCards([{ ...data, id: nanoid() }]));
+    dispatch(setFormCards([...cards, { ...data, id: nanoid() }]));
     setIsSubmitted(true);
     setTimeout(() => {
       setIsSubmitted(false);
