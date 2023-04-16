@@ -18,6 +18,3 @@ export const showApi = createApi({
 });
 
 export const { useGetAllCardsQuery, useGetCardQuery, useGetFilteredCardsQuery } = showApi;
-
-//`${generalURL}/search?q=${finalQuery}`)
-// .get(`${generalURL}/show-details?q=${selectedCardId}`)

@@ -10,7 +10,6 @@ export const ApiCard: FC<ApiCardType> = (props: ApiCardType) => {
   const { data } = useGetCardQuery(props.id);
 
   const onClickHandle: () => void = () => {
-    console.log(data);
     dispatch(setPopupData(data?.tvShow));
     dispatch(setIsPopupOpen(true));
   };
