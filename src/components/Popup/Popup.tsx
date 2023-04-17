@@ -17,8 +17,6 @@ const Popup: React.FC = () => {
     dispatch(setIsPopupOpen(false));
   });
 
-  console.log(popupData);
-
   return (
     <div data-testid="popup" className={popupClass}>
       <div

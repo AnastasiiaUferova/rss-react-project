@@ -17,11 +17,7 @@ export const Home: FC = () => {
   const generalData = useSelector((state: RootState) => state.setApiCards.cards);
 
   const { data: cardsData, isLoading: isCardsLoading, isError } = useGetAllCardsQuery('');
-  const {
-    data: filterData,
-    isLoading,
-    isError: isFilterError,
-  } = useGetFilteredCardsQuery(query, { skip: !isSubmitted });
+  const { data: filterData, isLoading, isError: isFilterError } = useGetFilteredCardsQuery(query);
 
   useEffect(() => {
     dispatch(setApiCards(cardsData?.tv_shows));
