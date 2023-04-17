@@ -39,3 +39,21 @@ describe('Popup component', () => {
     expect(actions).toEqual([setIsPopupOpen(false)]);
   });
 });
+
+describe('Popup is open', () => {
+  const initialState = { setIsOpenPopup: { isPopupOpen: true }, setPopupData: { data: null } };
+  const store = mockStore(initialState);
+
+  it('should close popup when clicked outside the container', () => {
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <Popup />
+      </Provider>
+    );
+    const popupContent = getByTestId('popup-content');
+    expect(popupContent).toBeInTheDocument();
+    fireEvent.mouseDown(document);
+    expect(store.getActions()).toContainEqual(setIsPopupOpen(false));
+    expect(store.getActions()).toContainEqual(setIsPopupOpen(false));
+  });
+});
