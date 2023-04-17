@@ -1,0 +1,24 @@
+.header {
+  background-color: #060009;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  font-size: 20px;
+}
+
+.header__navlinks {
+  display: flex;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-content: flex-end;
+    justify-content: center;
+  }
+
+  .header__navlinks {
+    flex-direction: column;
+  }
+}

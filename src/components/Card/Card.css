@@ -1,0 +1,127 @@
+.card__pic {
+  width: 100%;
+  height: 151px;
+  object-fit: cover;
+}
+
+.card__button_more {
+  cursor: pointer;
+  background-color: #be19e8;
+  border: none;
+  border-radius: 5px;
+}
+
+.card__text-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e8e8e8;
+  height: 42px;
+  margin-top: 14px;
+}
+
+.card__pic-link:hover {
+  opacity: 0.6;
+  transition: opacity ease-in-out 0.5s;
+  cursor: pointer;
+}
+
+.card__subtext-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.card__button {
+  background-image: url('../../images/empty-heart.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 20px;
+  height: 13px;
+  align-self: center;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.card__button_rec {
+  background-image: url('../../images/filled-heart.svg');
+}
+
+.card__subtext_date-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.card__button-container {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 19px;
+  align-self: self-end;
+}
+
+.card__text {
+  max-width: 226px;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 16px;
+  color: #8808a9;
+  padding-bottom: 13px;
+  margin-top: 0;
+}
+
+.card__text_category {
+  color: #ada4a4;
+  font-size: 15px;
+}
+
+.card__subtext {
+  margin-top: 6px;
+  margin-bottom: 0;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: #ada4a4;
+}
+
+.card__subtext_category {
+  color: rgb(15, 2, 2);
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .card__text {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .card__pic {
+    height: 190px;
+  }
+}
+
+@media (max-width: 500px) {
+  .card__text {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .card__subtext {
+    font-size: 10px;
+    line-height: 12px;
+  }
+
+  .card__pic {
+    height: 168px;
+  }
+}
